@@ -3,11 +3,19 @@
 
 :root {
   /* ── Colour Tokens ── */
-  --color-bg: #F4F0E8;
+  --color-bg: #F4F3F0;
   --color-accent: #5C8C3A;
   --color-accent-bright: #8FC45A;
   --color-accent-deep: #2F5527;
   --color-border: rgba(47, 85, 39, 0.12);
+
+  /* ── Figma Wireframe Tokens ── */
+  --color-rangoon: #141412;
+  --color-springwood: #FBFAF8;
+  --color-timberwolf: #D6D4CB;
+  --color-ash: #C9C7BD;
+  --color-dawn: #A8A69B;
+  --color-lemongrass: #9A9A90;
 
   /* ── Radius ── */
   --radius-pill: 999px;
@@ -18,14 +26,16 @@
   /* ── Easing ── */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* ── Font Family Aliases (mapping Tailwind names to CSS vars) ── */
-  --font-dm-sans: "DM Sans", system-ui, sans-serif;
-  --font-heading: "HeadingNow", var(--font-dm-sans);
-  --font-headingNow: "HeadingNow", var(--font-dm-sans);
-  --font-hiruko: "HirukoBlackAlternate", var(--font-heading), sans-serif;
-  --font-display: "MADEOkineSansPERSONALUSE Bold", var(--font-heading), sans-serif;
+  /* ── Font Family Aliases (mapping to Baloo 2 and Inter) ── */
+  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-baloo: 'Baloo 2', cursive, system-ui, sans-serif;
+  --font-dm-sans: var(--font-inter);
+  --font-heading: var(--font-baloo);
+  --font-headingNow: var(--font-baloo);
+  --font-hiruko: var(--font-baloo);
+  --font-display: var(--font-baloo);
   --font-geist-mono: "Geist Mono", ui-monospace, monospace;
-  --font-bebas: "Bebas Neue", var(--font-headingNow), sans-serif;
+  --font-bebas: var(--font-baloo);
 
   /* ── Spacing ── */
   --padding-x: clamp(1rem, 2.5vw, 2rem);
@@ -33,6 +43,67 @@
   /* ── Sponsor section stage dims ── */
   --sxp-win-w: 100vw;
   --sxp-win-h: 100vh;
+}
+
+/* ── Figma Wireframe Button Classes ── */
+.btn-pill-primary {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 270px;
+  max-width: 100%;
+  height: 60px;
+  background: #141412;
+  color: #FBFAF8;
+  border-radius: 999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(20, 20, 18, 0.22);
+  transition: all 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.btn-pill-primary:hover {
+  background: #242420;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(20, 20, 18, 0.32);
+}
+.btn-pill-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-pill-secondary {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  max-width: 100%;
+  height: 60px;
+  background: transparent;
+  color: #141412;
+  border: 2px solid #141412;
+  border-radius: 999px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.btn-pill-secondary:hover {
+  background: #141412;
+  color: #FBFAF8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(20, 20, 18, 0.18);
+}
+.btn-pill-secondary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 html,

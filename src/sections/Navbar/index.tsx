@@ -21,11 +21,14 @@ export const Navbar = () => {
   }, [menuOpen]);
 
   const navLinks = [
-    { href: "#about", label: "The Chair" },
-    { href: "#themes", label: "Themes" },
-    { href: "#judges", label: "Judges" },
+    { href: "#about", label: "Why No-Code" },
+    { href: "#perks", label: "What You Get" },
+    { href: "#eligibility", label: "Who Can Join" },
+    { href: "#timeline", label: "Timeline" },
+    { href: "#gallery", label: "Gallery" },
     { href: "#sponsors", label: "Sponsors" },
     { href: "#faq", label: "FAQ" },
+    { href: "#contact", label: "Contact Us" },
   ];
 
   return (
@@ -81,7 +84,7 @@ export const Navbar = () => {
         <div className="limelq-nav-screen">
           {/* Header with brand + close */}
           <div className="limelq-head">
-            <span className="limelq-brand">RECURSIVE</span>
+            <span className="limelq-brand font-headingNow font-black tracking-wider text-xl text-[#111a12]">IGNITE</span>
             <button
               type="button"
               className="limelq-close"

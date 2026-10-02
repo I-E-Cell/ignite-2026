@@ -1,13 +1,22 @@
 export const NavbarBrand = () => {
   return (
     <a
-      aria-label="RECURSIVE – home"
+      aria-label="IGNITE — Home"
       href="/"
-      className="items-center box-border caret-transparent gap-x-2 flex shrink-0 isolate min-h-[auto] min-w-[auto] outline-[3px] relative gap-y-2 no-underline translate-x-[-3.5px] translate-y-[-0.5px] overflow-hidden px-[10.4px] py-[5.6px] rounded-full md:transform-none md:px-[13.6px] md:py-2"
+      className="items-center box-border caret-transparent gap-x-2.5 flex shrink-0 isolate min-h-[auto] min-w-[auto] outline-none relative no-underline px-[12px] py-[6px] rounded-full transition-opacity hover:opacity-90"
     >
-      <span className="items-center box-border caret-transparent gap-x-[8.8px] flex min-h-[auto] min-w-[auto] outline-[3px] relative gap-y-[8.8px] no-underline z-[-2]">
-        <span className="box-border caret-transparent text-black block text-[16.8px] font-black tracking-[-0.336px] leading-[18.48px] min-h-[auto] min-w-[auto] outline-[3px] no-underline uppercase text-nowrap font-hiruko md:text-[18.88px] md:tracking-[-0.3776px] md:leading-[29.264px]">
-          RECURSIVE
+      <span className="items-center box-border caret-transparent gap-x-2 flex min-h-[auto] min-w-[auto] outline-none relative no-underline">
+        <span
+          className="box-border caret-transparent text-[#141412] block text-[19px] font-black tracking-[-0.01em] leading-none outline-none no-underline uppercase md:text-[21px]"
+          style={{ fontFamily: "'Baloo 2', cursive, sans-serif", fontWeight: 800 }}
+        >
+          IGNITE
+        </span>
+        <span
+          className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#141412] text-[#FBFAF8]"
+          style={{ fontFamily: "'Inter', sans-serif" }}
+        >
+          I&amp;E CELL
         </span>
       </span>
     </a>

@@ -11,17 +11,17 @@ export const HeroScrollCue = () => {
 
       <a
         href="#about"
-        aria-label="Scroll to learn about the chair"
+        aria-label="Scroll to learn about why no-code"
         className="hero-cue-text-block"
       >
         <p className="hero-cue-line">
           bro put a plastic chair on a hill
           <br />
-          and called it a hackathon
+          and built a 20-week startup
         </p>
 
         <span className="hero-cue-hint">
-          scroll for lore ↓
+          scroll for more ↓
         </span>
       </a>
 

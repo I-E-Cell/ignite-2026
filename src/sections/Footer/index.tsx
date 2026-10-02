@@ -13,13 +13,13 @@ export const Footer = () => {
       {/* Giant RECURSIVE Wordmark */}
       <div className="footer-wordmark-wrap">
         <span className="sr-only">
-          RECURSIVE — ACM Hackathon 2026 | GNIT Kolkata ACM Student Chapter, Guru Nanak Institute of Technology, Kolkata
+          IGNITE — No-Code Startup Hackathon 2026 | I&amp;E Cell, Guru Nanak Institute of Technology, Kolkata
         </span>
         <div
           className="warp-text relative w-full max-w-[100vw] h-full pointer-events-auto"
           role="heading"
           aria-level={2}
-          aria-label="RECURSIVE"
+          aria-label="IGNITE"
         >
           <div
             className="warp-text-fallback-txt absolute inset-0 flex items-end justify-center font-headingNow font-black text-[min(clamp(7.5rem,34vw,42rem),60vh)] tracking-[-0.035em] leading-[0.82] select-none"
@@ -30,7 +30,7 @@ export const Footer = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            RECURSIVE
+            IGNITE
           </div>
         </div>
       </div>

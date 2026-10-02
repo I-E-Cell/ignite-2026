@@ -3,12 +3,12 @@ import gsap from "gsap";
 import { LiquidMetalButton } from "./LiquidMetalButton";
 
 const lines = [
-  { words: ["Welcome", "to", "the", "bottom."] },
-  { words: ["Do", "you", "know", "what's", "at", "the", "top?"] },
-  { words: ["Yep.", "A", "single", "plastic", "chair."] },
-  { words: ["Hundreds", "of", "hackers…", "but", "only", "ONE", "team", "gets", "to", "sit."], accent: "ONE" },
-  { words: ["So", "here's", "the", "dare:", "can", "you", "conquer", "it?"] },
-  { words: ["Let's", "find", "out."] },
+  { words: ["Welcome", "to", "the", "starting", "line."] },
+  { words: ["It's", "not", "a", "weekend", "hackathon."] },
+  { words: ["It's", "a", "startup,", "built", "over", "20", "weeks."] },
+  { words: ["No", "code", "required.", "Just", "pure", "conviction."], accent: "conviction" },
+  { words: ["Are", "you", "ready", "to", "build?"] },
+  { words: ["Let's", "IGNITE."] },
 ];
 
 const timings: [number, number][] = [
@@ -400,7 +400,7 @@ export const IntroOverlay: React.FC = () => {
               />
             </div>
             <div ref={welcomeBlockRef} className="intro-welcome-block">
-              <h1 className="intro-welcome-title" aria-label="Hi There, Hackers!">
+              <h1 className="intro-welcome-title" aria-label="Hi There, Founders!">
                 <span className="intro-welcome-word">
                   <span className="intro-welcome-word-i">Hi</span>
                 </span>
@@ -408,10 +408,10 @@ export const IntroOverlay: React.FC = () => {
                   <span className="intro-welcome-word-i">There,</span>
                 </span>
                 <span className="intro-welcome-word">
-                  <span className="intro-welcome-word-i">Hackers!</span>
+                  <span className="intro-welcome-word-i">Founders!</span>
                 </span>
               </h1>
-              <span className="intro-welcome-sub">RECURSIVE 2026</span>
+              <span className="intro-welcome-sub">IGNITE 2026 · NO-CODE STARTUP</span>
             </div>
           </div>
         </div>

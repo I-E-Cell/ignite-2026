@@ -54,35 +54,78 @@ export const HeroSection = () => {
               transition: `opacity 0.7s ${easeCurve} 0.02s, transform 0.7s ${easeCurve} 0.02s`,
             }}
           >
-            <h1 className="sr-only">RECURSIVE 2026 — ACM Hackathon by GNIT Kolkata ACM Student Chapter</h1>
-            <p className="sr-only">Official website for RECURSIVE Hackathon 2026 at Guru Nanak Institute of Technology (GNIT), Kolkata. An 8-hour sprint in AI, Web3, FinTech, HealthTech, CyberSecurity, and Open Innovation. Register on Devfolio.</p>
-            
-            <div className="hero-warp-wrap">
+            <h1 className="sr-only">IGNITE 2026 — No-Code Startup Hackathon by I&amp;E Cell</h1>
+            <p className="sr-only">Official website for IGNITE 2026 No-Code Startup Hackathon. Round 1 in Sept 2026. A 20-week startup journey with ₹1,00,000 grant.</p>
+
+            {/* Pill Badge matching div.powered-pill */}
+            <div
+              className="inline-flex items-center justify-center gap-2.5 px-[22px] h-[42px] rounded-full shadow-xs mb-2 sm:mb-3"
+              style={{
+                backgroundColor: "#FBFAF8",
+                border: "1px solid #D6D4CB",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "12px",
+                  height: "12px",
+                  borderRadius: "6px",
+                  backgroundColor: "#141412",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "13px",
+                  lineHeight: "18px",
+                  letterSpacing: "1.8px",
+                  textTransform: "uppercase",
+                  color: "#141412",
+                }}
+              >
+                Round 1 · Sept 2026
+              </span>
+            </div>
+
+            {/* Monumental IGNITE Brand Title matching h1.hero-wordmark */}
+            <div className="hero-warp-wrap flex items-center justify-center">
               <div
                 role="heading"
                 aria-level={2}
-                aria-label="RECURSIVE — Bend the moment"
-                className="warp-text"
-                style={{ position: "relative", width: "100%", height: "100%", pointerEvents: "auto" }}
+                aria-label="IGNITE"
+                className="warp-text flex items-center justify-center w-full"
+                style={{ position: "relative", pointerEvents: "auto" }}
               >
-                <img
-                  src="https://www.recursiveacm.in/images/brand/logo.png"
-                  alt="RECURSIVE"
-                  className="warp-text-fallback-img"
-                  loading="eager"
+                <span
+                  className="uppercase select-none text-[clamp(4.2rem,14vw,176px)] leading-[0.86]"
                   style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                    objectPosition: "center",
-                    pointerEvents: "none",
-                    userSelect: "none",
-                    filter: "brightness(0) drop-shadow(0 4px 16px rgba(0,0,0,0.25))",
+                    fontFamily: "'Baloo 2', cursive, sans-serif",
+                    fontWeight: 800,
+                    letterSpacing: "1.76px",
+                    color: "#141412",
+                    filter: "drop-shadow(0 4px 20px rgba(20, 20, 18, 0.15))",
                   }}
-                />
+                >
+                  IGNITE
+                </span>
               </div>
+            </div>
+
+            {/* NO-CODE STARTUP HACKATHON Subtitle */}
+            <div className="mt-1">
+              <span
+                className="uppercase select-none text-[clamp(1.1rem,2.6vw,30.4px)] leading-[1.3] block"
+                style={{
+                  fontFamily: "'Baloo 2', cursive, sans-serif",
+                  fontWeight: 700,
+                  letterSpacing: "1.824px",
+                  color: "#141412",
+                }}
+              >
+                NO-CODE STARTUP HACKATHON
+              </span>
             </div>
           </div>
         </div>
@@ -197,24 +240,20 @@ export const HeroSection = () => {
           position: relative;
           width: 100%;
           max-width: min(92vw, 1150px);
-          aspect-ratio: 1559 / 702;
-          height: clamp(125px, min(24svh, 25vw), 285px);
-          max-height: 28svh;
+          height: auto;
+          min-height: clamp(80px, 16svh, 180px);
           display: flex;
           justify-content: center;
           align-items: center;
           margin-inline: auto;
         }
 
-        .hero-warp-wrap canvas,
-        .hero-warp-wrap img,
         .hero-warp-wrap .warp-text {
-          width: 100% !important;
-          height: 100% !important;
-          max-width: 100% !important;
-          max-height: 100% !important;
-          object-fit: contain !important;
-          margin-inline: auto !important;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-inline: auto;
         }
 
         .hero-ground-zone {

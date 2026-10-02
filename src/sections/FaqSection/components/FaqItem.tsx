@@ -18,11 +18,27 @@ export const FaqItem = (props: FaqItemProps) => {
         className="items-center bg-transparent caret-transparent flex justify-between gap-4 text-left w-full px-2 py-5 md:px-5 md:py-6 group cursor-pointer hover:bg-stone-50/50 transition-colors"
       >
         <div className="flex items-baseline gap-4 md:gap-6 flex-1">
-          <span className="text-green-900 font-bold shrink-0 text-xl md:text-3xl font-bebasNeue">
+          <span
+            className="shrink-0 text-lg md:text-xl"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: 700,
+              color: "#A8A69B",
+            }}
+          >
             {props.number}
           </span>
 
-          <span className="text-base md:text-xl font-bold font-display uppercase tracking-tight text-neutral-900 group-hover:text-lime-900 transition-colors">
+          <span
+            className="transition-colors group-hover:text-stone-700"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: 700,
+              fontSize: "18.4px",
+              lineHeight: "22px",
+              color: "#141412",
+            }}
+          >
             {props.question}
           </span>
         </div>

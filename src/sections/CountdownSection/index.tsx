@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FlipClock, type ClockUnit } from "./components/FlipClock";
 
 export const CountdownSection = () => {
-  const targetTime = new Date("2026-10-08T03:30:00Z").getTime();
+  const targetTime = new Date("2026-09-30T18:29:59Z").getTime();
 
   const getUnits = (): ClockUnit[] => {
     const diffSeconds = Math.floor(Math.max(0, targetTime - Date.now()) / 1000);
@@ -48,7 +48,7 @@ export const CountdownSection = () => {
         {/* Heading */}
         <div className="cd-head-wrap w-full text-center">
           <h2 className="cd-heading font-headingNow font-medium text-[clamp(2.6rem,5.8vw,4.6rem)] leading-[1.1] tracking-[-0.035em] text-[#111a12]">
-            Countdown to Launch
+            Countdown to Round 1 Deadline
           </h2>
         </div>
 
@@ -85,7 +85,7 @@ export const CountdownSection = () => {
                     <circle cx="12" cy="12" r="1.05" fill="#2F5527" />
                   </svg>
                 </span>
-                Gates open in
+                Round 1 closes in
               </span>
 
               <span className="text-[#5C8C3A]/50">·</span>
@@ -107,8 +107,8 @@ export const CountdownSection = () => {
                 <rect x="9.2" y="11.8" width="3.6" height="3.6" rx="1" fill="url(#cdp-cal)" />
               </svg>
 
-              <time className="cd-plaque-date font-medium" dateTime="2026-10-08T09:00:00+05:30">
-                October 08, 2026
+              <time className="cd-plaque-date font-medium" dateTime="2026-09-30T23:59:59+05:30">
+                September 30, 2026
               </time>
             </span>
 

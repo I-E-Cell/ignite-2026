@@ -1,14 +1,16 @@
 import { RevealWords } from "@/components/RevealWords";
 
 export const ChairStorySection = () => {
-  const storyParagraph =
-    "The plastic chair is an everyday staple across Kolkata, scattered on college terraces, roadside tea stalls, and neighborhood corners where people gather to talk for hours. For this hackathon, four of these chairs sit together on the hill as an open table for your team. You arrive with people you know or team up in the morning, claim your spot, and spend eight focused hours turning an idea into working software before the day ends.";
+  const storyParagraphs = [
+    "It's not a weekend hackathon. It's a startup, built over 20 weeks. Your idea can come from anywhere — EdTech, health, fintech, sustainability, campus life, whatever you actually care about solving.",
+    "Why no-code? Because your idea shouldn't have to wait for someone who knows how to code. Take your seat, validate with real users, and turn an ambitious concept into a funded, registered company.",
+  ];
 
   return (
     <section
       id="about"
-      aria-label="About the Chair"
-      className="ab relative w-full bg-transparent text-[#111a12] pt-[clamp(6rem,13vh,10rem)] pb-[clamp(3.5rem,8vh,6.5rem)] overflow-hidden z-[1]"
+      aria-label="Why No-Code"
+      className="ab relative w-full bg-transparent text-[#111a12] pt-[clamp(5rem,11vh,8rem)] pb-[clamp(3rem,7vh,5.5rem)] overflow-hidden z-[1]"
     >
       <div className="ab-inner relative max-w-[96rem] mx-auto px-4 md:px-8 text-center flex flex-col items-center">
         {/* Top Ornament */}
@@ -24,18 +26,41 @@ export const ChairStorySection = () => {
 
         {/* Heading */}
         <div className="ab-head-wrap w-full text-center">
-          <h2 className="rh ab-heading font-headingNow font-medium text-[clamp(2.6rem,5.8vw,4.6rem)] leading-[1.1] tracking-[-0.035em] text-[#111a12] text-center">
+          <span
+            className="block text-center mb-3"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: 700,
+              fontSize: "13px",
+              lineHeight: "16px",
+              letterSpacing: "1.3px",
+              textTransform: "uppercase",
+              color: "#9A9A90",
+            }}
+          >
+            (About &amp; Mission)
+          </span>
+          <h2
+            className="rh ab-heading leading-[1.1] text-center"
+            style={{
+              fontFamily: "'Baloo 2', cursive, sans-serif",
+              fontWeight: 700,
+              fontSize: "clamp(2.4rem, 5vw, 48px)",
+              color: "#141412",
+            }}
+          >
             <span className="rh-line flex justify-center">
-              <span className="rh-inner">The Story of the Chair</span>
+              <span className="rh-inner">Why No-Code?</span>
             </span>
           </h2>
         </div>
 
-        {/* Story Text with Word-by-Word Scroll Glow Reveal */}
-        <div className="ab-story-wrap mt-[clamp(2.75rem,6vh,4.5rem)] w-full max-w-[88rem]">
+        {/* Story Text with Word-by-Word Scroll Glow Reveal matching wireframe Inter Bold 32px */}
+        <div className="ab-story-wrap mt-[clamp(2rem,5vh,3.5rem)] w-full max-w-[80rem]">
           <RevealWords
-            paragraphs={[storyParagraph]}
-            className="ab-story flex flex-col items-center text-center font-dm_sans text-[clamp(1.0rem,11.93px+1.13vw,1.65rem)] font-normal leading-[1.68] tracking-[-0.012em] text-[#18261A]"
+            paragraphs={storyParagraphs}
+            className="ab-story flex flex-col items-center text-center font-bold text-[clamp(1.15rem,2.2vw,32px)] leading-[1.38] text-[#141412] space-y-6"
+            style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 700 }}
           />
         </div>
       </div>
