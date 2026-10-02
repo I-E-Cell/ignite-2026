@@ -6,6 +6,7 @@ import { Main } from "@/sections/Main";
 import { Footer } from "@/sections/Footer";
 import { IntroOverlay } from "@/components/IntroOverlay";
 import { RegistrationPage } from "@/pages/RegistrationPage";
+import { ShowcasePage } from "@/pages/ShowcasePage";
 import { initSmoothScroll, getLenis } from "@/utils/smoothScroll";
 
 export const App = () => {
@@ -57,6 +58,8 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/register" element={<RegistrationPage />} />
+        <Route path="/showcase" element={<ShowcasePage />} />
+        <Route path="/submissions" element={<Navigate to="/showcase" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 

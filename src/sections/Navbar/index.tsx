@@ -27,6 +27,7 @@ export const Navbar = () => {
     { href: "/#timeline", label: "Timeline" },
     { href: "/#gallery", label: "Gallery" },
     { href: "/#faq", label: "FAQ" },
+    { href: "/showcase", label: "Project Showcase" },
     { href: "/register", label: "Register for Ignite" },
   ];
 

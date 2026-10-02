@@ -12,14 +12,13 @@ export const HeroActions = () => {
         <span>Register for Round 1</span>
       </Link>
 
-      <a
-        href="#about"
+      <Link
+        to="/showcase"
         className="pill-btn pill-btn-secondary"
-        aria-label="Why No-Code?"
+        aria-label="Explore Project Showcase"
       >
-        <span>Why No-Code?</span>
-        <span className="arrow-down" aria-hidden="true">↓</span>
-      </a>
+        <span>Project Showcase</span>
+      </Link>
 
       <style>{`
         .hero-ctas {
