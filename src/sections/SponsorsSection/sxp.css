@@ -157,7 +157,7 @@
           position: absolute;
           inset: 0;
           background-color: var(--color-bg);
-          background-image: url("/images/bg/cloud.jpg");
+          background-image: url("https://www.recursiveacm.in/images/bg/cloud.jpg");
           background-size: cover;
           background-position: center 25%;
           background-repeat: no-repeat;

@@ -28,8 +28,8 @@ export const HeroMedia = () => {
   return (
     <div className="hero-video-wrap">
       <img
-        src="https://www.recursiveacm.in/images/hero/hero_poster.jpg"
-        alt=""
+        src="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
+        alt="The Chair on the Hill"
         aria-hidden="true"
         draggable="false"
         className="hero-video hero-poster"
@@ -37,8 +37,8 @@ export const HeroMedia = () => {
 
       <video
         ref={videoRef}
-        src="https://www.recursiveacm.in/bg/hero_bg.mp4"
-        poster="https://www.recursiveacm.in/images/hero/hero_poster.jpg"
+        src="https://www.recursiveacm.in/bg/hero_loop_pp.mp4"
+        poster="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
         autoPlay
         loop
         muted

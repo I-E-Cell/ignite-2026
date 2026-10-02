@@ -371,8 +371,8 @@ export const IntroOverlay: React.FC = () => {
             <div ref={focusRef} className="intro-focus">
               <video
                 ref={videoRef}
-                src="https://www.recursiveacm.in/bg/hero_bg.mp4"
-                poster="https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/hero_poster.jpg"
+                src="https://www.recursiveacm.in/bg/hero_loop_pp.mp4"
+                poster="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
                 autoPlay
                 loop
                 muted
