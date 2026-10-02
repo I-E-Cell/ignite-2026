@@ -1,0 +1,52 @@
+@import "../tailwind.css";
+@import "./recursive.css";
+
+:root {
+  /* ── Colour Tokens ── */
+  --color-bg: #F4F0E8;
+  --color-accent: #5C8C3A;
+  --color-accent-bright: #8FC45A;
+  --color-accent-deep: #2F5527;
+  --color-border: rgba(47, 85, 39, 0.12);
+
+  /* ── Radius ── */
+  --radius-pill: 999px;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+
+  /* ── Easing ── */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* ── Font Family Aliases (mapping Tailwind names to CSS vars) ── */
+  --font-dm-sans: "DM Sans", system-ui, sans-serif;
+  --font-heading: "HeadingNow", var(--font-dm-sans);
+  --font-headingNow: "HeadingNow", var(--font-dm-sans);
+  --font-hiruko: "HirukoBlackAlternate", var(--font-heading), sans-serif;
+  --font-display: "MADEOkineSansPERSONALUSE Bold", var(--font-heading), sans-serif;
+  --font-geist-mono: "Geist Mono", ui-monospace, monospace;
+  --font-bebas: "Bebas Neue", var(--font-headingNow), sans-serif;
+
+  /* ── Spacing ── */
+  --padding-x: clamp(1rem, 2.5vw, 2rem);
+
+  /* ── Sponsor section stage dims ── */
+  --sxp-win-w: 100vw;
+  --sxp-win-h: 100vh;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}

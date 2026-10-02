@@ -1,0 +1,160 @@
+@font-face {
+  /* @FONTWARNING[{"type":"restricted","family":"bebasNeue","weight":"400","style":"normal","allowsCrossOrigin":true}] */
+  font-family: 'bebasNeue';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/BebasNeue_Regular-s.p.12892w_vpp2qa.ttf')
+    format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  /* @FONTWARNING[{"type":"restricted","family":"headingNow","weight":"500","style":"normal","allowsCrossOrigin":true}] */
+  font-family: 'headingNow';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/HeadingNowTrial_45Medium.p.1zjwigtmc3cih.ttf')
+    format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  /* @FONTWARNING[{"type":"restricted","family":"display","weight":"700","style":"normal","allowsCrossOrigin":true}] */
+  font-family: 'display';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/MADEOkineSansPERSONALUSE_Bold-s.p.2awjf0g9gs2-r.otf')
+    format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/797e433ab948586e-s.p.1v5bejj26fx9h.woff2')
+    format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
+    format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  /* @FONTWARNING[{"type":"restricted","family":"hiruko","weight":"900","style":"normal","allowsCrossOrigin":true}] */
+  font-family: 'hiruko';
+  src: url('https://www.recursiveacm.in/_next/static/immutable/media/HirukoBlackAlternate-s.p.30-3_2xqoy8r0.ttf')
+    format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --card: transparent;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71.4% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --card: transparent;
+    --card-foreground: 213 31% 91%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+}
