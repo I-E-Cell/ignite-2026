@@ -21,14 +21,13 @@ export const Navbar = () => {
   }, [menuOpen]);
 
   const navLinks = [
-    { href: "#about", label: "Why No-Code" },
-    { href: "#perks", label: "What You Get" },
-    { href: "#eligibility", label: "Who Can Join" },
-    { href: "#timeline", label: "Timeline" },
-    { href: "#gallery", label: "Gallery" },
-    { href: "#sponsors", label: "Sponsors" },
-    { href: "#faq", label: "FAQ" },
-    { href: "#contact", label: "Contact Us" },
+    { href: "/#about", label: "Why No-Code" },
+    { href: "/#perks", label: "What You Get" },
+    { href: "/#eligibility", label: "Who Can Join" },
+    { href: "/#timeline", label: "Timeline" },
+    { href: "/#gallery", label: "Gallery" },
+    { href: "/#faq", label: "FAQ" },
+    { href: "/register", label: "Register for Ignite" },
   ];
 
   return (
@@ -37,7 +36,7 @@ export const Navbar = () => {
         <div className="nav-glass-container">
           <div className="relative isolate overflow-hidden select-none pointer-events-auto"
             style={{
-              borderRadius: "999px",
+              borderRadius: "4px",
               background: "rgba(255,255,255,0.42)",
               backdropFilter: "blur(34px) saturate(190%)",
               WebkitBackdropFilter: "blur(34px) saturate(190%)",
@@ -115,13 +114,11 @@ export const Navbar = () => {
           {/* Footer CTAs */}
           <div className="limelq-foot" style={{ flexDirection: "column", gap: "0.65rem" }}>
             <a
-              href="https://recursiveacm.devfolio.co"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/register"
               className="limelq-cta-btn"
               onClick={() => setMenuOpen(false)}
             >
-              <span>Apply with Devfolio</span>
+              <span>Register for Ignite 2026</span>
               <span className="limelq-cta-arrow">→</span>
             </a>
             <a
@@ -196,7 +193,7 @@ export const Navbar = () => {
           width: 18px;
           height: 2.75px;
           background: #121A12;
-          border-radius: 999px;
+          border-radius: 2px;
           transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
           transform-origin: center;
         }
@@ -366,7 +363,7 @@ export const Navbar = () => {
           align-items: center;
           gap: 0.55rem;
           padding: 0.65rem 1.25rem;
-          border-radius: 6px;
+          border-radius: 0;
           background: #5865F2;
           color: #FFFFFF;
           font-family: var(--font-dm-sans), sans-serif;
