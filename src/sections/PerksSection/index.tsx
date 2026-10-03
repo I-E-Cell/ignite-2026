@@ -1,233 +1,247 @@
 import { useState } from "react";
-import { 
-  Banknote, 
-  Users, 
-  Compass, 
-  ShieldCheck, 
-  Trophy, 
-  LifeBuoy, 
-  Sparkles,
-  GraduationCap,
-  HeartPulse,
-  TrendingUp,
-  Leaf,
-  School,
-} from "lucide-react";
+import { RotateCcw } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  DraggableCardContainer,
+  DraggableCardBody,
+} from "@/components/ui/draggable-card";
+import { DomainCarousel } from "./DomainCarousel";
 
-interface PerkItem {
+interface BenefitCardData {
   id: string;
-  icon: typeof Banknote;
-  badge: string;
   title: string;
+  badge: string;
   description: string;
-  details: string;
-  highlight?: boolean;
+  image: string;
+  initialRotation: number;
+  mobileClass: string;
+  desktopClass: string;
+  zIndex: number;
 }
 
-const perks: PerkItem[] = [
+const benefitCards: BenefitCardData[] = [
   {
     id: "grant",
-    icon: Banknote,
-    badge: "Non-Dilutive Funding",
-    title: "₹1,00,000 Grant",
-    description: "Substantial milestone-based equity-free seed grant to convert your no-code prototype into a production venture.",
-    details: "Zero equity taken. Funds are unlocked for domain hosting, no-code platform subscriptions, marketing trials, and initial customer discovery.",
-    highlight: true,
+    title: "₹1,00,000 Seed Grant",
+    badge: "Non-Dilutive Capital",
+    description:
+      "Milestone-based equity-free seed grant to convert your prototype into a production venture.",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
+    initialRotation: -7,
+    mobileClass: "left-[calc(50%-125px)] top-[14%]",
+    desktopClass: "md:left-[5%] md:top-[8%] lg:left-[8%]",
+    zIndex: 14,
   },
   {
     id: "mentorship",
-    icon: Users,
-    badge: "Direct Access",
-    title: "Mentor, Founder & VC Sessions",
-    description: "Weekly 1-on-1 office hours with venture capitalists, funded alumni operators, and seasoned startup mentors.",
-    details: "Personalized roadmap reviews, business model deconstruction, and tactical feedback on product-market fit.",
+    title: "Founder & VC Sessions",
+    badge: "1-on-1 Office Hours",
+    description:
+      "Weekly direct office hours with venture capitalists, funded alumni operators, and seasoned mentors.",
+    image:
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop",
+    initialRotation: 6,
+    mobileClass: "left-[calc(50%-125px)] top-[17%]",
+    desktopClass: "md:left-auto md:right-[5%] md:top-[6%] lg:right-[8%]",
+    zIndex: 15,
   },
   {
     id: "visits",
-    icon: Compass,
-    badge: "Immersion",
-    title: "Industry & Ecosystem Visits",
-    description: "Curated delegation visits to premier startup incubators, tech parks, VC fund offices, and innovation hubs across the region.",
-    details: "Network with high-growth startup leaders in person and experience real venture acceleration hubs first-hand.",
+    title: "Ecosystem & Tech Visits",
+    badge: "Venture Immersion",
+    description:
+      "Curated delegation visits to premier startup incubators, tech parks, and regional VC offices.",
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+    initialRotation: -4,
+    mobileClass: "left-[calc(50%-125px)] top-[20%]",
+    desktopClass: "md:left-[2%] md:top-[38%] lg:left-[4%]",
+    zIndex: 12,
   },
   {
     id: "registration",
-    icon: ShieldCheck,
-    badge: "Legal & Entity",
-    title: "Startup Registration Support",
-    description: "End-to-end guidance on company incorporation (Pvt Ltd/LLP), DPIIT recognition, trademarking, and IP protection.",
-    details: "Full advisory support covering banking, founder equity structuring, compliances, and government grant schemes.",
+    title: "Startup Registration",
+    badge: "Legal & Entity Support",
+    description:
+      "End-to-end guidance on company incorporation (Pvt Ltd), DPIIT recognition, trademarking, and IP.",
+    image:
+      "https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=800&auto=format&fit=crop",
+    initialRotation: 5,
+    mobileClass: "left-[calc(50%-125px)] top-[23%]",
+    desktopClass: "md:left-auto md:right-[2%] md:top-[36%] lg:right-[4%]",
+    zIndex: 13,
   },
   {
     id: "demo-day",
-    icon: Trophy,
-    badge: "The Grand Stage",
     title: "Final Pitch / Demo Day",
-    description: "Pitch live on stage in front of active angel syndicates, venture capitalists, corporate partners, and press.",
-    details: "Showcase traction, user testimonials, and live product demos to unlock follow-on angel checks and incubation seats.",
-    highlight: true,
+    badge: "The Grand Stage",
+    description:
+      "Pitch live on stage in front of active angel syndicates, venture capitalists, corporate partners, and press.",
+    image:
+      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=800&auto=format&fit=crop",
+    initialRotation: -8,
+    mobileClass: "left-[calc(50%-125px)] top-[26%]",
+    desktopClass: "md:left-[7%] md:top-auto md:bottom-[7%] lg:left-[11%]",
+    zIndex: 16,
   },
   {
     id: "support",
-    icon: LifeBuoy,
-    badge: "20-Week Backbone",
     title: "Program Support & Credits",
-    description: "Hands-on venture management, dedicated workspace access, premium no-code tools, and cloud credits.",
-    details: "Includes Notion, Airtable, Webflow, Bubble, and Make credits along with access to the campus I&E Cell maker facility.",
+    badge: "20-Week Backbone",
+    description:
+      "Hands-on venture management, dedicated maker lab access, cloud credits, and no-code tool stacks.",
+    image:
+      "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=800&auto=format&fit=crop",
+    initialRotation: 7,
+    mobileClass: "left-[calc(50%-125px)] top-[29%]",
+    desktopClass: "md:left-auto md:right-[7%] md:top-auto md:bottom-[6%] lg:right-[11%]",
+    zIndex: 17,
   },
 ];
 
-const ideaDomains = [
-  { name: "EdTech & Learning", icon: GraduationCap, description: "Tools for students, skill building, and campus workflows" },
-  { name: "Health & Wellness", icon: HeartPulse, description: "Preventative health, mental wellness, diagnostics, and patient care" },
-  { name: "FinTech & Payments", icon: TrendingUp, description: "Micro-savings, student credit, budget intelligence, and payments" },
-  { name: "Sustainability & Climate", icon: Leaf, description: "Waste reduction, green mobility, energy conservation, circular tools" },
-  { name: "Campus Life & Community", icon: School, description: "Solving hyper-local challenges for college and youth communities" },
-  { name: "Open Innovation", icon: Sparkles, description: "Radical software ideas that break conventional boundaries" },
-];
-
 export const PerksSection = () => {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [resetKey, setResetKey] = useState(0);
+
+  const handleReset = () => {
+    setResetKey((prev) => prev + 1);
+  };
 
   return (
     <section
       id="perks"
       aria-label="What You Get in IGNITE"
-      className="relative w-full pt-20 pb-28 px-5 md:px-12 lg:px-16 text-lime-50 overflow-hidden"
+      className="relative w-full bg-black text-lime-50 overflow-hidden"
     >
-      <div className="max-w-[1340px] mx-auto flex flex-col items-center">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto flex flex-col items-center mb-16">
-          <span
-            className="block text-center mb-3"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 700,
-              fontSize: "13px",
-              lineHeight: "16px",
-              letterSpacing: "1.3px",
-              textTransform: "uppercase",
-              color: "#9A9A90",
-            }}
-          >
-            (What You Get)
-          </span>
+      {/* ─── WIDE BLACK TRANSITION & BOTANICAL ORNAMENT ("WHAT YOU GET") ─── */}
+      <div className="relative w-full pt-20 sm:pt-28 md:pt-36 pb-6 md:pb-8 flex flex-col items-center justify-center text-center z-20 pointer-events-none select-none">
+        {/* Botanical Motif */}
+        <div className="flex justify-center mb-3 md:mb-4">
+          <img
+            src="https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/artifact.png"
+            alt=""
+            aria-hidden="true"
+            draggable="false"
+            className="w-[clamp(114px,56.87px+15.87vw,240px)] h-auto opacity-[0.88] select-none pointer-events-none"
+          />
+        </div>
 
+        {/* Eyebrow in place of 'THE SIX TRACKS' */}
+        <span className="text-[11.5px] md:text-[13px] font-medium font-mono uppercase tracking-[0.25em] text-[#8FC45A] select-none">
+          WHAT YOU GET
+        </span>
+      </div>
+
+      {/* ─── FULL-SCREEN DRAGGABLE CARD STAGE ─── */}
+      <div className="relative w-full min-h-[760px] md:min-h-[820px] lg:min-h-[880px] flex items-center justify-center overflow-hidden pb-12 select-none">
+        {/* Subtle radial depth lighting behind stage */}
+        <div
+          className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(92,140,58,0.12)_0%,rgba(0,0,0,0)_75%)]"
+          aria-hidden="true"
+        />
+
+        {/* Top Controls: Interactive pill hint and Reset button */}
+        <div className="absolute top-2 md:top-4 inset-x-4 md:inset-x-8 flex items-center justify-between pointer-events-auto z-30">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#8FC45A] animate-pulse" />
+            <span className="text-[11px] font-mono uppercase tracking-wider text-stone-300">
+              Drag cards anywhere
+            </span>
+          </div>
+
+          <button
+            onClick={handleReset}
+            type="button"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/10 text-xs font-mono text-stone-300 hover:text-white transition-all cursor-pointer shadow-lg backdrop-blur-md active:scale-95"
+            title="Reset all cards to starting positions"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset Cards</span>
+          </button>
+        </div>
+
+        {/* ─── BACKGROUND HEADER (BEHIND ALL CARDS) ─── */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none select-none z-0 px-6 max-w-4xl mx-auto">
           <h2
-            className="tracking-tight leading-[1.12] text-lime-50"
+            className="tracking-tight leading-[1.08] text-neutral-800 dark:text-neutral-700 font-black text-4xl sm:text-6xl md:text-7xl select-none"
             style={{
               fontFamily: "'Baloo 2', cursive, sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(2.2rem, 4.5vw, 44px)",
             }}
           >
             Everything to Build a Real Company
           </h2>
 
           <p
-            className="mt-4 text-base md:text-lg text-stone-300 max-w-2xl leading-relaxed"
-            style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+            className="mt-6 text-base sm:text-lg md:text-xl text-neutral-600 dark:text-neutral-500 max-w-2xl leading-relaxed select-none"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            Not just trophies or certificates. IGNITE provides non-dilutive capital, elite founder mentorship, and institutional machinery to help you scale.
+            Not just trophies or certificates. IGNITE provides non-dilutive
+            capital, elite founder mentorship, and institutional machinery to
+            help you scale.
           </p>
         </div>
 
-        {/* 6 Perks Grid */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch">
-          {perks.map((perk) => {
-            const Icon = perk.icon;
-            const isHovered = hoveredCard === perk.id;
-
-            return (
-              <div
-                key={perk.id}
-                onMouseEnter={() => setHoveredCard(perk.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className={`relative rounded-2xl p-7 md:p-8 flex flex-col justify-between transition-all duration-300 border ${
-                  perk.highlight
-                    ? "bg-gradient-to-b from-[#182C18] to-[#0D180E] border-[#5C8C3A]/60 shadow-[0_12px_40px_rgba(47,85,39,0.28)]"
-                    : "bg-[#0E1710]/80 border-white/[0.08] hover:border-[#5C8C3A]/40 shadow-[0_8px_32px_rgba(0,0,0,0.36)]"
-                } backdrop-blur-md`}
-              >
-                {/* Subtle top glow line */}
-                <div
-                  className={`absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#8FC45A]/50 to-transparent transition-opacity duration-300 ${
-                    isHovered || perk.highlight ? "opacity-100" : "opacity-0"
-                  }`}
-                  aria-hidden="true"
+        {/* ─── 6 DRAGGABLE POLAROID CARDS ─── */}
+        <DraggableCardContainer
+          key={resetKey}
+          className="relative z-10 w-full min-h-[760px] md:min-h-[820px] lg:min-h-[880px] flex items-center justify-center"
+        >
+          {benefitCards.map((card, idx) => (
+            <DraggableCardBody
+              key={card.id}
+              style={{
+                rotate: card.initialRotation,
+                zIndex: card.zIndex,
+              }}
+              className={cn(
+                "draggable-card-item absolute cursor-grab active:cursor-grabbing",
+                "w-[250px] sm:w-[270px] min-h-[330px] sm:min-h-[340px] p-3.5 bg-[#141414] dark:bg-[#141414] border border-white/[0.12] shadow-[0_18px_50px_rgba(0,0,0,0.85),0_0_1px_rgba(255,255,255,0.2)]",
+                card.mobileClass,
+                card.desktopClass
+              )}
+            >
+              {/* Photo Area */}
+              <div className="card-image-box relative w-full h-40 sm:h-44 overflow-hidden rounded-lg bg-neutral-950 border border-black/40">
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="w-full h-full object-cover pointer-events-none select-none"
+                  loading="lazy"
+                  draggable={false}
                 />
-
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-6">
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300 ${
-                        perk.highlight
-                          ? "bg-[#5C8C3A] text-white shadow-md shadow-[#5C8C3A]/30"
-                          : "bg-white/[0.06] text-[#8FC45A] border border-white/[0.08]"
-                      }`}
-                    >
-                      <Icon className="w-6 h-6" />
-                    </div>
-
-                    <span className="text-[11px] font-semibold font-geist_mono tracking-wider uppercase px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-stone-300">
-                      {perk.badge}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl sm:text-2xl font-bold font-headingNow text-lime-50 tracking-tight mb-3">
-                    {perk.title}
-                  </h3>
-
-                  <p className="text-sm md:text-[15px] font-dm_sans text-stone-300 leading-relaxed mb-4">
-                    {perk.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-white/[0.06] mt-auto">
-                  <p className="text-xs font-dm_sans text-stone-400 leading-normal">
-                    {perk.details}
-                  </p>
+                <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/65 backdrop-blur-md border border-white/10 text-[10px] font-mono text-lime-300 font-bold card-badge">
+                  0{idx + 1}
                 </div>
               </div>
-            );
-          })}
-        </div>
 
-        {/* Idea Domains Showcase Banner */}
-        <div className="w-full mt-16 p-8 md:p-10 rounded-2xl bg-gradient-to-r from-[#122214]/90 via-[#172d1a]/80 to-[#101e12]/90 border border-[#5C8C3A]/30 backdrop-blur-md">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8">
-            <div>
-              <span className="text-xs font-semibold font-geist_mono uppercase tracking-widest text-[#8FC45A]">
-                Any Domain Welcome
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-bold font-headingNow text-lime-50 mt-1">
-                Your Idea Can Come From Anywhere
-              </h3>
-            </div>
-            <p className="text-sm font-dm_sans text-stone-300 max-w-md leading-relaxed">
-              We care about real problem solving. Build solutions for problems you or your community experience daily.
-            </p>
-          </div>
+              {/* Caption Area (Polaroid Footer) */}
+              <div className="mt-3 px-0.5 flex flex-col">
+                <span className="text-[10.5px] font-semibold tracking-wider uppercase font-mono text-[#8FC45A]">
+                  {card.badge}
+                </span>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-            {ideaDomains.map((domain, i) => {
-              const DomainIcon = domain.icon;
-              return (
-                <div
-                  key={i}
-                  className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-[#5C8C3A]/50 transition-all flex flex-col items-center text-center group"
+                <h3
+                  className="text-base font-bold text-white tracking-tight mt-1 leading-snug"
+                  style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
                 >
-                  <div className="w-9 h-9 rounded-lg bg-[#5C8C3A]/15 text-[#8FC45A] flex items-center justify-center mb-2.5 group-hover:scale-110 transition-transform">
-                    <DomainIcon className="w-4 h-4" />
-                  </div>
-                  <h4 className="text-xs font-semibold font-dm_sans text-lime-50 group-hover:text-[#8FC45A] transition-colors">
-                    {domain.name}
-                  </h4>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+                  {card.title}
+                </h3>
+
+                <p
+                  className="text-[11.5px] text-stone-300 mt-1 line-clamp-2 leading-relaxed"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {card.description}
+                </p>
+              </div>
+            </DraggableCardBody>
+          ))}
+        </DraggableCardContainer>
+      </div>
+
+      {/* ─── IDEA DOMAINS AUTO-SHIFTING 3D COVERFLOW SECTION ─── */}
+      <div className="relative w-full pb-24 z-20 overflow-hidden">
+        <DomainCarousel />
       </div>
     </section>
   );

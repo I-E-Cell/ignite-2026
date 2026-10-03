@@ -139,6 +139,11 @@ export const CountdownSection = () => {
           className="cd-valley-img w-full h-auto object-cover object-bottom"
           loading="eager"
         />
+        {/* Atmospheric fade into black transition */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-44 md:h-64 bg-gradient-to-b from-transparent via-[#010301]/75 to-[#000000] pointer-events-none"
+          aria-hidden="true"
+        />
       </div>
 
       <style>{`
