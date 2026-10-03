@@ -1,5 +1,3 @@
-import { ThunderBackground } from "@/components/ThunderBackground";
-
 export type BackgroundLayerProps = {
   variant?: string;
   layerClassName?: string;
@@ -10,10 +8,6 @@ export type BackgroundLayerProps = {
 };
 
 export const BackgroundLayer = (props: BackgroundLayerProps) => {
-  if (props.variant === "thunder") {
-    return <ThunderBackground className={props.layerClassName} />;
-  }
-
   if (props.variant === "image") {
     return (
       <img
