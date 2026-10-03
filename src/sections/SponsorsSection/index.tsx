@@ -339,53 +339,46 @@ export const SponsorsSection = () => {
                         </div>
                       </div>
                     </div>
-
-
-
-
                   </div>
                 </div>
+
+                {/* Media Tier */}
+                <div className="sxp-partner-tier sxp-media-tier">
+                  <span className="sxp-tier-badge">MEDIA PARTNERS</span>
+                </div>
+
+                <span className="sxp-unrevealed-note">
+                  More community partners & sponsors revealing soon.
+                </span>
               </div>
 
-              {/* Media Tier */}
-              <div className="sxp-partner-tier sxp-media-tier">
-                <span className="sxp-tier-badge">MEDIA PARTNERS</span>
-              </div>
-
-              <span className="sxp-unrevealed-note">
-                More community partners & sponsors revealing soon.
-              </span>
-
-
-            </div>
-
-            {/* Right Wing Artifacts */}
-            <div className="sxp-artifacts-wing sxp-wing-right" aria-hidden="true">
-              <div className="sxp-polaroid-group sxp-polaroid-group-right">
-                <img
-                  src="https://www.recursiveacm.in/images/ui/polaroid_howrah.png"
-                  alt=""
-                  className="sxp-art-img sxp-polaroid-howrah-img"
-                  width={250}
-                  height={189}
-                />
-              </div>
-              <div className="sxp-artifact-item sxp-art-doodle-right">
-                <img
-                  src="https://www.recursiveacm.in/images/ui/doodle_building_tomorrow.png"
-                  alt=""
-                  className="sxp-art-img sxp-doodle-tomorrow-img"
-                  width={165}
-                  height={134}
-                />
+              {/* Right Wing Artifacts */}
+              <div className="sxp-artifacts-wing sxp-wing-right" aria-hidden="true">
+                <div className="sxp-polaroid-group sxp-polaroid-group-right">
+                  <img
+                    src="https://www.recursiveacm.in/images/ui/polaroid_howrah.png"
+                    alt=""
+                    className="sxp-art-img sxp-polaroid-howrah-img"
+                    width={250}
+                    height={189}
+                  />
+                </div>
+                <div className="sxp-artifact-item sxp-art-doodle-right">
+                  <img
+                    src="https://www.recursiveacm.in/images/ui/doodle_building_tomorrow.png"
+                    alt=""
+                    className="sxp-art-img sxp-doodle-tomorrow-img"
+                    width={165}
+                    height={134}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <span className="sxp-keyline" aria-hidden="true" />
-    </div>
-    </section >
+        <span className="sxp-keyline" aria-hidden="true" />
+      </div>
+    </section>
   );
 };
