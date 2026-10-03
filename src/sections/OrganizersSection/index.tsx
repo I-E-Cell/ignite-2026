@@ -123,7 +123,7 @@ export const OrganizersSection = () => {
         {/* Story Text */}
         <div className="max-w-2xl mt-10 space-y-4 font-dm_sans text-stone-700 text-base md:text-lg leading-relaxed">
           <p>
-            In collaboration with the Department of Information Technology, Army Institute of Technology, Pune.
+            In collaboration with the Innovation and Entrepreneurship Cell, Army Institute of Technology, Pune.
           </p>
           <p className="text-sm md:text-base text-stone-600">
             The I&amp;E Cell nurtures student innovators from early ideation to registered enterprises. Through the 20-week IGNITE framework, we provide founder mentorship, prototype seed grants, and direct VC access so you can build with confidence.
@@ -181,7 +181,7 @@ export const OrganizersSection = () => {
           <span>·</span>
           <span>Round 1 · Sept 2026</span>
           <span>·</span>
-          <span>20-Week Online Startup Hackathon</span>
+          <span>20-Week Startup Hackathon</span>
           <span>·</span>
           <span>₹1,00,000 Grant</span>
         </div>
