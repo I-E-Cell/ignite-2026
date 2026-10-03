@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FileText, Mic2, Award, Hammer, Rocket } from "lucide-react";
 
-const HEADER_SUBTEXT =
-  "A clear, deliberate progression from back-of-the-napkin spark to an operational, funded student startup.";
 
 const steps = [
   {
@@ -284,17 +282,11 @@ export const TimelineSection = () => {
             style={{
               fontFamily: "'Baloo 2', sans-serif",
               fontWeight: 700,
-              fontSize: "clamp(2.2rem, 4vw, 38.4px)",
+              fontSize: "clamp(2.2rem, 5vw, 54.4px)",
             }}
           >
             How the 20 weeks actually happen.
           </h2>
-          <p
-            className="mt-3 text-base md:text-lg text-stone-600 max-w-xl leading-relaxed"
-            style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
-          >
-            {HEADER_SUBTEXT}
-          </p>
         </div>
 
         {/* Route + cards */}
@@ -353,10 +345,10 @@ export const TimelineSection = () => {
                 key={steps[i].num}
                 aria-hidden="true"
                 className={`absolute z-10 h-5 w-5 -ml-2.5 -mt-2.5 rounded-full border-2 transition-all duration-300 motion-reduce:transition-none ${isActive
-                    ? "bg-[#5C8C3A] border-[#5C8C3A] scale-125 shadow-[0_0_0_6px_rgba(92,140,58,0.25)]"
-                    : isReached
-                      ? "bg-[#8FB06F] border-[#8FB06F]"
-                      : "bg-white border-[#BFD3AD]"
+                  ? "bg-[#5C8C3A] border-[#5C8C3A] scale-125 shadow-[0_0_0_6px_rgba(92,140,58,0.25)]"
+                  : isReached
+                    ? "bg-[#8FB06F] border-[#8FB06F]"
+                    : "bg-white border-[#BFD3AD]"
                   }`}
                 style={{ left: p.x, top: p.y, width: 20, height: 20, borderRadius: "9999px" }}
               />
@@ -444,8 +436,8 @@ export const TimelineSection = () => {
                         <span
                           key={tag}
                           className={`px-3 py-1 rounded-full text-[11px] font-semibold font-geist_mono uppercase tracking-wide border transition-colors duration-300 ${isActive
-                              ? "bg-[#141412] text-white border-[#141412]"
-                              : "bg-white/70 text-stone-700 border-stone-300"
+                            ? "bg-[#141412] text-white border-[#141412]"
+                            : "bg-white/70 text-stone-700 border-stone-300"
                             }`}
                         >
                           {tag}

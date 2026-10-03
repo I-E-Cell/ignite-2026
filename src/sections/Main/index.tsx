@@ -1,5 +1,4 @@
 import { HeroSection } from "@/sections/HeroSection";
-import { ChairStorySection } from "@/sections/ChairStorySection";
 import { CountdownSection } from "@/sections/CountdownSection";
 import { PerksSection } from "@/sections/PerksSection";
 import { MentorsJudgesSection } from "@/sections/MentorsJudgesSection";
@@ -17,8 +16,8 @@ export const Main = () => {
       {/* 1. Hero: Brand, Round 1 Pill, 20-Week Startup Tagline, CTA Actions */}
       <HeroSection />
 
-      {/* 2. Philosophy: Why No-Code? / The 20-Week Startup Story */}
-      <ChairStorySection />
+      {/* 2. Timeline: How the 20 Weeks Actually Happen (5 Steps, emerging from Hero bushes) */}
+      <TimelineSection />
 
       {/* 3. Countdown: Real-time tick to September 2026 Round 1 Deadline */}
       <CountdownSection />
@@ -35,10 +34,7 @@ export const Main = () => {
       {/* 6. Who Can Join: Eligibility, Year, Team Size, Cross-Branch Rules */}
       <EligibilitySection />
 
-      {/* 7. Timeline: How the 20 Weeks Actually Happen (5 Steps) */}
-      <TimelineSection />
-
-      {/* 8. Gallery: Pitches, Mentor Sessions, Top 10, Demo Day, Alumni */}
+      {/* 7. Gallery: Pitches, Mentor Sessions, Top 10, Demo Day, Alumni */}
       <GallerySection />
 
       {/* 9. FAQ: The 6 Exact Questions on Eligibility, Grant, Team & IP */}

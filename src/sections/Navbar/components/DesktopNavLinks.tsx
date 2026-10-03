@@ -9,10 +9,10 @@ export const DesktopNavLinks = () => {
   return (
     <div className="items-center box-border caret-transparent gap-x-1 hidden outline-none px-1 md:flex">
       <a
-        href={getAnchor("about")}
+        href={getAnchor("timeline")}
         className="box-border text-neutral-800 text-[13px] font-medium leading-[20px] outline-none no-underline text-nowrap px-3 py-1.5 rounded-full hover:bg-black/5 transition-colors"
       >
-        Why No-Code
+        Timeline
       </a>
 
       <a
@@ -27,13 +27,6 @@ export const DesktopNavLinks = () => {
         className="box-border text-neutral-800 text-[13px] font-medium leading-[20px] outline-none no-underline text-nowrap px-3 py-1.5 rounded-full hover:bg-black/5 transition-colors"
       >
         Who Can Join
-      </a>
-
-      <a
-        href={getAnchor("timeline")}
-        className="box-border text-neutral-800 text-[13px] font-medium leading-[20px] outline-none no-underline text-nowrap px-3 py-1.5 rounded-full hover:bg-black/5 transition-colors"
-      >
-        Timeline
       </a>
 
       <a

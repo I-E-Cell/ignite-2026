@@ -10,8 +10,8 @@ export const HeroScrollCue = () => {
       />
 
       <a
-        href="#about"
-        aria-label="Scroll to learn about why no-code"
+        href="#timeline"
+        aria-label="Scroll to timeline"
         className="hero-cue-text-block"
       >
         <p className="hero-cue-line">

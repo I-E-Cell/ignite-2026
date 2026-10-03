@@ -21,10 +21,9 @@ export const Navbar = () => {
   }, [menuOpen]);
 
   const navLinks = [
-    { href: "/#about", label: "Why No-Code" },
+    { href: "/#timeline", label: "Timeline" },
     { href: "/#perks", label: "What You Get" },
     { href: "/#eligibility", label: "Who Can Join" },
-    { href: "/#timeline", label: "Timeline" },
     { href: "/#gallery", label: "Gallery" },
     { href: "/#faq", label: "FAQ" },
     { href: "/showcase", label: "Project Showcase" },
