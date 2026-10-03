@@ -18,7 +18,7 @@ export const CountdownSection = () => {
   const [units, setUnits] = useState<ClockUnit[]>(getUnits);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let timeoutId: NodeJS.Timeout;
     const tick = () => {
       setUnits(getUnits());
       timeoutId = setTimeout(tick, 1000 - (Date.now() % 1000) + 15);
@@ -56,7 +56,7 @@ export const CountdownSection = () => {
         <div className="cd-plaque-block mt-[clamp(1.2rem,2.5vh,2rem)] flex justify-center w-full">
           <div className="cd-plaque flex items-center justify-center gap-3 md:gap-4 max-w-full">
             <span className="cd-plaque-rule cd-plaque-rule-l w-12 md:w-20 h-[1px] bg-gradient-to-r from-transparent to-[#5C8C3A]/50" aria-hidden="true" />
-            
+
             <span className="cd-plaque-core inline-flex items-center gap-2 md:gap-3 px-4 py-1.5 rounded-full bg-[#182a14]/5 border border-[#5C8C3A]/25 backdrop-blur-sm shadow-sm text-xs md:text-sm font-geist_mono text-[#244626]">
               <span className="cd-plaque-eyebrow inline-flex items-center gap-1.5 font-semibold text-[#2F5527]">
                 <span className="cd-dial relative w-4 h-4 flex-shrink-0" aria-hidden="true">
