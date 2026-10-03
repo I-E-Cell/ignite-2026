@@ -270,7 +270,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
           </div>
           <h1
             className="text-3xl md:text-5xl lg:text-6xl font-black text-[#141412] tracking-tight leading-[1.08] mb-4"
-            style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.025em" }}
           >
             Cohort Project Showcase
           </h1>
@@ -428,7 +428,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
           </div>
           <h3
             className="text-2xl font-black text-[#141412] mb-2"
-            style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.015em" }}
           >
             No Submissions Yet
           </h3>
@@ -516,7 +516,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                     )}
                     <h3
                       className="text-2xl font-black text-white tracking-tight leading-tight drop-shadow-sm"
-                      style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                      style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
                     >
                       {project.title}
                     </h3>
@@ -617,7 +617,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
           </div>
           <h2
             className="text-2xl md:text-4xl font-black tracking-tight mb-3 text-white"
-            style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.02em" }}
           >
             Ready to Build Your Own Startup?
           </h2>
@@ -700,7 +700,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
 
               <h2
                 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-2"
-                style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.02em" }}
               >
                 {selectedProject.title}
               </h2>
@@ -915,7 +915,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                 <div>
                   <h3
                     className="text-xl font-black text-[#141412]"
-                    style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                    style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
                   >
                     Supabase Database Setup Guide
                   </h3>

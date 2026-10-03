@@ -199,11 +199,11 @@ export const HeroSection = () => {
         }
 
         .hero-wordmark-title {
-          font-family: 'Baloo 2', cursive, sans-serif;
+          font-family: var(--font-headingNow), 'Plus Jakarta Sans', 'Geist', sans-serif;
           font-weight: 800;
           font-size: clamp(3.6rem, 11.5vw, 300px);
-          line-height: 0.82;
-          letter-spacing: 1.6px;
+          line-height: 0.84;
+          letter-spacing: -0.035em;
           text-transform: uppercase;
           color: #141412;
           user-select: none;
@@ -216,16 +216,16 @@ export const HeroSection = () => {
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-top: clamp(4px, 1vh, 8px);
+          margin-top: clamp(6px, 1.2vh, 12px);
           padding: 0;
         }
 
         .hero-tagline-title {
-          font-family: 'Baloo 2', cursive, sans-serif;
+          font-family: var(--font-headingNow), 'Plus Jakarta Sans', 'Geist', sans-serif;
           font-weight: 700;
-          font-size: clamp(1.05rem, 2.2vw, 24px);
-          line-height: 1.15;
-          letter-spacing: 2px;
+          font-size: clamp(0.95rem, 2vw, 22px);
+          line-height: 1.2;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           color: #141412;
           user-select: none;

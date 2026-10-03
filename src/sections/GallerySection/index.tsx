@@ -91,7 +91,7 @@ export function GallerySection() {
     <section id="gallery" aria-label="IGNITE Gallery & Past Moments" className="relative w-full pt-16 pb-28 px-5 md:px-12 lg:px-16 text-neutral-900 bg-transparent overflow-hidden">
       <div className="max-w-[1280px] mx-auto flex flex-col items-center">
         <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: 13, lineHeight: "16px", letterSpacing: "1.3px", textTransform: "uppercase", color: "#9A9A90" }}>(Gallery)</span>
-        <h2 className="tracking-tight leading-[1.1] text-[#141412] mt-3 text-center" style={{ fontFamily: '"Baloo 2", sans-serif', fontWeight: 700, fontSize: "clamp(2.2rem,4.5vw,44px)" }}>Program Moments &amp; Highlights</h2>
+        <h2 className="tracking-tight leading-[1.1] text-[#141412] mt-3 text-center" style={{ fontFamily: 'var(--font-headingNow), "Plus Jakarta Sans", sans-serif', fontWeight: 800, fontSize: "clamp(2.2rem,4.5vw,44px)" }}>Program Moments &amp; Highlights</h2>
         <p className="mt-3 text-base md:text-lg text-stone-600 leading-relaxed text-center mb-8" style={{ fontFamily: "Inter, sans-serif" }}>From preliminary pitches to demo day checks&mdash;glimpses of the venture builder journey.</p>
 
         <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
@@ -137,7 +137,7 @@ export function GallerySection() {
                         <img src={c.item.image} alt={c.item.title} draggable={false} loading="lazy" decoding="async" className="h-full w-full object-contain bg-[#FBFAF8]" />
                         <figcaption className={`absolute inset-x-0 bottom-0 bg-[#141412]/85 px-2 py-1.5 transition-transform duration-300 group-hover:translate-y-0 ${open ? "translate-y-0" : "translate-y-full"}`}>
                           <span className="block text-[9px] font-bold uppercase tracking-wider text-[#A9C78F]" style={{ fontFamily: "Inter, sans-serif" }}>{c.item.badge}</span>
-                          <span className="block text-xs text-white" style={{ fontFamily: '"Baloo 2", sans-serif', fontWeight: 700 }}>{c.item.title}</span>
+                          <span className="block text-xs text-white" style={{ fontFamily: 'var(--font-headingNow), "Plus Jakarta Sans", sans-serif', fontWeight: 700 }}>{c.item.title}</span>
                         </figcaption>
                       </figure>
                     );

@@ -59,8 +59,8 @@ export const EligibilitySection = () => {
           <h2
             className="tracking-tight leading-[1.1] text-[#141412]"
             style={{
-              fontFamily: "'Baloo 2', cursive, sans-serif",
-              fontWeight: 700,
+              fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif",
+              fontWeight: 800,
               fontSize: "clamp(2.2rem, 4.5vw, 44px)",
             }}
           >

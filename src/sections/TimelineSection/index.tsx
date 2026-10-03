@@ -280,8 +280,8 @@ export const TimelineSection = () => {
           <h2
             className="tracking-tight leading-[1.2] text-[#141412]"
             style={{
-              fontFamily: "'Baloo 2', sans-serif",
-              fontWeight: 700,
+              fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif",
+              fontWeight: 800,
               fontSize: "clamp(2.2rem, 5vw, 54.4px)",
             }}
           >
@@ -412,11 +412,11 @@ export const TimelineSection = () => {
                         <h3
                           className="text-[#141412]"
                           style={{
-                            fontFamily: "'Baloo 2', sans-serif",
+                            fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif",
                             fontWeight: 700,
                             fontSize: "22px",
                             lineHeight: "32px",
-                            letterSpacing: "0.48px",
+                            letterSpacing: "-0.01em",
                           }}
                         >
                           {step.title}
