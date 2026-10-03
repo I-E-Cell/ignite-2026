@@ -38,7 +38,7 @@ export const Footer = () => {
       {/* Doodle Army Canvas */}
       <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
         <CrowdCanvas
-          src="https://www.recursiveacm.in/images/peeps/all-peeps.png"
+          src="/images/peeps/all-peeps.png"
           rows={15}
           cols={7}
         />
