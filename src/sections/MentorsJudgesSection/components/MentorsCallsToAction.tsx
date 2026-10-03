@@ -1,30 +1,31 @@
 export const MentorsCallToAction = () => {
   return (
-    <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline">
-      <div className="items-center box-border caret-transparent gap-x-[18.4px] flex flex-col outline-[3px] gap-y-[18.4px] no-underline mt-[45px]">
-        <p className="box-border caret-transparent text-stone-300/40 text-[10.56px] font-semibold tracking-[1.4784px] leading-[16.368px] min-h-[auto] min-w-[auto] outline-[3px] no-underline uppercase font-geist_mono">
-          Mentor &amp; judge profiles are currently locked · Revealing soon
-        </p>
+    <div className="w-full mt-12 md:mt-14 flex flex-col items-center">
+      <p className="text-stone-300/70 text-xs md:text-sm font-semibold tracking-widest uppercase font-geist_mono mb-4 text-center">
+        Mentor &amp; judge profiles are currently locked · Revealing with cohort lineup
+      </p>
 
-        <button
-          type="button"
-          aria-label="Explore all mentors and judges - Currently Locked"
-          disabled={true}
-          className="items-center bg-lime-950/90 caret-transparent text-stone-200 gap-x-[10.4px] flex text-[14.08px] font-semibold justify-center leading-[21.824px] min-h-[auto] min-w-[272px] outline-[3px] relative gap-y-[10.4px] no-underline border border-lime-200/20 overflow-hidden px-[20.1325px] py-[11.52px] rounded-full font-dm_sans md:px-7"
+      <button
+        type="button"
+        aria-label="Explore all mentors and judges - Currently Locked"
+        disabled={true}
+        className="inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-full bg-lime-950/80 text-lime-300 font-semibold text-sm border border-lime-700/40 shadow-md backdrop-blur-sm transition-all duration-200 cursor-not-allowed select-none opacity-90"
+      >
+        <svg
+          className="w-4 h-4 text-lime-400"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
         >
-          <span className="items-center box-border caret-transparent text-lime-300 grid h-5 justify-items-center min-h-[auto] min-w-[auto] outline-[3px] no-underline w-5">
-            <img
-              src="https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/icon-30.svg"
-              alt="Icon"
-              className="box-border caret-transparent h-[15.2px] outline-[3px] no-underline w-[15.2px]"
-            />
-          </span>
-
-          <span className="box-border caret-transparent block min-h-[auto] min-w-[auto] outline-[3px] no-underline">
-            Explore all mentors &amp; judges
-          </span>
-        </button>
-      </div>
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        <span>Explore all mentors &amp; judges</span>
+      </button>
     </div>
   );
 };
