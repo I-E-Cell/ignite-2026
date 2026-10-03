@@ -126,7 +126,7 @@ export const DomainCarousel = () => {
       <div className="text-center mb-12 sm:mb-16">
         <h3
           className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-lime-50 tracking-tight leading-tight"
-          style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+          style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.02em" }}
         >
           Your Idea Can Come From Anywhere
         </h3>
@@ -273,7 +273,7 @@ export const DomainCarousel = () => {
                     "text-xl sm:text-2xl font-bold tracking-tight leading-snug transition-colors",
                     isCenter ? "text-lime-50" : "text-stone-300"
                   )}
-                  style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                  style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
                 >
                   {domain.name}
                 </h4>

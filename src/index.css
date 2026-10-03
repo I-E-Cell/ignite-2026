@@ -27,16 +27,20 @@
   /* ── Easing ── */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* ── Font Family Aliases (mapping to Baloo 2 and Inter) ── */
+  /* ── Font Family System (Plus Jakarta Sans, Geist, Geist Mono, Inter) ── */
   --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-baloo: 'Baloo 2', cursive, system-ui, sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-geist: 'Geist', system-ui, -apple-system, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Master display and heading tokens */
+  --font-display: 'Plus Jakarta Sans', 'Geist', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', 'Geist', sans-serif;
+  --font-headingNow: 'Plus Jakarta Sans', 'Geist', sans-serif;
+  --font-hiruko: 'Plus Jakarta Sans', 'Geist', sans-serif;
+  --font-bebas: 'Plus Jakarta Sans', 'Geist', sans-serif;
+  --font-baloo: 'Plus Jakarta Sans', 'Geist', sans-serif;
   --font-dm-sans: var(--font-inter);
-  --font-heading: var(--font-baloo);
-  --font-headingNow: var(--font-baloo);
-  --font-hiruko: var(--font-baloo);
-  --font-display: var(--font-baloo);
-  --font-geist-mono: "Geist Mono", ui-monospace, monospace;
-  --font-bebas: var(--font-baloo);
 
   /* ── Spacing ── */
   --padding-x: clamp(1rem, 2.5vw, 2rem);
@@ -111,6 +115,9 @@ body {
   padding: 0;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {

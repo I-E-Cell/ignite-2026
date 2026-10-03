@@ -163,9 +163,10 @@ export const PerksSection = () => {
         {/* ─── BACKGROUND HEADER (BEHIND ALL CARDS) ─── */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none select-none z-0 px-6 max-w-4xl mx-auto">
           <h2
-            className="tracking-tight leading-[1.08] text-neutral-800 dark:text-neutral-700 font-black text-4xl sm:text-6xl md:text-7xl select-none"
+            className="tracking-tight leading-[1.08] text-neutral-800 dark:text-neutral-700 font-extrabold text-4xl sm:text-6xl md:text-7xl select-none"
             style={{
-              fontFamily: "'Baloo 2', cursive, sans-serif",
+              fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif",
+              letterSpacing: "-0.025em",
             }}
           >
             Everything to Build a Real Company
@@ -222,7 +223,7 @@ export const PerksSection = () => {
 
                 <h3
                   className="text-base font-bold text-white tracking-tight mt-1 leading-snug"
-                  style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                  style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
                 >
                   {card.title}
                 </h3>

@@ -357,7 +357,7 @@ export const RegistrationPage = () => {
 
           <h1
             className="text-3xl md:text-5xl font-black text-[#141412] tracking-tight leading-tight mb-3"
-            style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.025em" }}
           >
             Welcome to Ignite 2026!
           </h1>
@@ -477,7 +477,7 @@ export const RegistrationPage = () => {
           </div>
           <h1
             className="text-3xl md:text-5xl font-black text-[#141412] tracking-tight leading-[1.08] mb-3"
-            style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.025em" }}
           >
             Apply for Ignite 2026
           </h1>
@@ -561,7 +561,7 @@ export const RegistrationPage = () => {
               <div>
                 <h2
                   className="text-2xl font-black text-[#141412] tracking-tight mb-1"
-                  style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                  style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.015em" }}
                 >
                   Step 1: Choose Your Team Name &amp; Domain Track
                 </h2>
@@ -645,7 +645,7 @@ export const RegistrationPage = () => {
               <div>
                 <h2
                   className="text-2xl font-black text-[#141412] tracking-tight mb-1"
-                  style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                  style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.015em" }}
                 >
                   Step 2: Team Leader / Primary Point of Contact
                 </h2>
@@ -793,7 +793,7 @@ export const RegistrationPage = () => {
               <div>
                 <h2
                   className="text-2xl font-black text-[#141412] tracking-tight mb-1"
-                  style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                  style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.015em" }}
                 >
                   Step 3: Team Members Roster
                 </h2>
@@ -949,7 +949,7 @@ export const RegistrationPage = () => {
               <div>
                 <h2
                   className="text-2xl font-black text-[#141412] tracking-tight mb-1"
-                  style={{ fontFamily: "'Baloo 2', cursive, sans-serif" }}
+                  style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.015em" }}
                 >
                   Step 4: Startup Concept &amp; Tools Stack
                 </h2>
