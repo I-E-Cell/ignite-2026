@@ -203,8 +203,12 @@ export const CrowdCanvas: React.FC<CrowdCanvasProps> = ({
     };
 
     const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
+    if (src.startsWith("http://") || src.startsWith("https://")) {
+      img.crossOrigin = "anonymous";
+    }
+
+    const handleLoad = () => {
+      if (!img.naturalWidth || allPeeps.length > 0) return;
       const cellW = img.naturalWidth / rows;
       const cellH = img.naturalHeight / cols;
       const total = rows * cols;
@@ -221,7 +225,16 @@ export const CrowdCanvas: React.FC<CrowdCanvasProps> = ({
       resize();
       startAnimation();
     };
+
+    img.onload = handleLoad;
+    img.onerror = (e) => {
+      console.warn("CrowdCanvas failed to load image from:", src, e);
+    };
     img.src = src;
+
+    if (img.complete && img.naturalWidth) {
+      handleLoad();
+    }
 
     window.addEventListener("resize", resize);
 
