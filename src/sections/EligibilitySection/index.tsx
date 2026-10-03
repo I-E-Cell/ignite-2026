@@ -1,4 +1,4 @@
-import { CheckCircle2, UserCheck, Users2, Shuffle, Lock } from "lucide-react";
+import { UserCheck, Users2, Shuffle, Lock } from "lucide-react";
 
 export const EligibilitySection = () => {
   const criteria = [

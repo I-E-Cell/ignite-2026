@@ -1,5 +1,5 @@
 import { SectionHeader } from "@/components/SectionHeader";
-import { Mail, MessageSquare, MapPin, ArrowUpRight, HelpCircle } from "lucide-react";
+import { Mail, MessageSquare } from "lucide-react";
 
 export const OrganizersSection = () => {
   return (
@@ -50,7 +50,7 @@ export const OrganizersSection = () => {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 w-full">
             <a
-              href="mailto:ecell@gnit.ac.in"
+              href="mailto:ecell@aitpune.edu.in"
               className="inline-flex items-center justify-center gap-2.5 px-7 h-[56px] min-w-[150px] rounded-full shadow-xs hover:bg-[#252520] transition-all cursor-pointer"
               style={{
                 backgroundColor: "#141412",
@@ -104,12 +104,12 @@ export const OrganizersSection = () => {
             Innovation &amp; Entrepreneurship Cell (I&amp;E Cell)
           </h4>
           <p className="text-xs text-stone-500 font-dm_sans mb-4">
-            Guru Nanak Institute of Technology, Kolkata
+            Army Institute of Technology, Pune
           </p>
 
           <img
             src="https://www.recursiveacm.in/_next/image?url=%2Fcollege_logo%2Fgnitacm.png&w=750&q=75"
-            alt="I&E Cell GNIT"
+            alt="I&E Cell AIT Pune"
             className="max-h-20 object-contain my-3"
           />
 
@@ -123,7 +123,7 @@ export const OrganizersSection = () => {
         {/* Story Text */}
         <div className="max-w-2xl mt-10 space-y-4 font-dm_sans text-stone-700 text-base md:text-lg leading-relaxed">
           <p>
-            In collaboration with the Department of Information Technology, Guru Nanak Institute of Technology.
+            In collaboration with the Department of Information Technology, Army Institute of Technology, Pune.
           </p>
           <p className="text-sm md:text-base text-stone-600">
             The I&amp;E Cell nurtures student innovators from early ideation to registered enterprises. Through the 20-week IGNITE framework, we provide founder mentorship, prototype seed grants, and direct VC access so you can build with confidence.
@@ -177,11 +177,11 @@ export const OrganizersSection = () => {
 
         {/* Fact strip */}
         <div className="mt-12 flex flex-wrap items-center justify-center gap-3 text-xs md:text-sm font-mono text-stone-600 bg-stone-200/60 px-6 py-2.5 rounded-full border border-stone-300/80">
-          <span>GNIT Kolkata</span>
+          <span>AIT Pune</span>
           <span>·</span>
           <span>Round 1 · Sept 2026</span>
           <span>·</span>
-          <span>20-Week Startup Hackathon</span>
+          <span>20-Week Online Startup Hackathon</span>
           <span>·</span>
           <span>₹1,00,000 Grant</span>
         </div>

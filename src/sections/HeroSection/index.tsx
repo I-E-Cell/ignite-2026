@@ -43,11 +43,11 @@ export const HeroSection = () => {
       <HeroMedia />
 
       <div className="hero-content-flex">
-        {/* Sky Zone — top 50svh: logo lives here */}
+        {/* Sky Zone — top area: logo lockup lives here */}
         <div className="hero-sky-zone">
           <div
             id="headingrow"
-            className="hero-center-content"
+            className="hero-center-content hero-brand-lockup"
             style={{
               opacity: isRevealed ? 1 : 0,
               transform: isRevealed ? "translateY(0)" : "translateY(14px)",
@@ -55,75 +55,16 @@ export const HeroSection = () => {
             }}
           >
             <h1 className="sr-only">IGNITE 2026 — No-Code Startup Hackathon by I&amp;E Cell</h1>
-            <p className="sr-only">Official website for IGNITE 2026 No-Code Startup Hackathon. Round 1 in Sept 2026. A 20-week startup journey with ₹1,00,000 grant.</p>
-
-            {/* Pill Badge matching div.powered-pill */}
-            <div
-              className="inline-flex items-center justify-center gap-2.5 px-[22px] h-[42px] rounded-full shadow-xs mb-2 sm:mb-3"
-              style={{
-                backgroundColor: "#FBFAF8",
-                border: "1px solid #D6D4CB",
-              }}
-            >
-              <span
-                style={{
-                  display: "inline-block",
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "6px",
-                  backgroundColor: "#141412",
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "13px",
-                  lineHeight: "18px",
-                  letterSpacing: "1.8px",
-                  textTransform: "uppercase",
-                  color: "#141412",
-                }}
-              >
-                Round 1 · Sept 2026
+            {/* Monumental IGNITE Brand Title */}
+            <div className="hero-wordmark-wrap" role="heading" aria-level={2} aria-label="IGNITE">
+              <span className="hero-wordmark-title">
+                IGNITE
               </span>
             </div>
 
-            {/* Monumental IGNITE Brand Title matching h1.hero-wordmark */}
-            <div className="hero-warp-wrap flex items-center justify-center">
-              <div
-                role="heading"
-                aria-level={2}
-                aria-label="IGNITE"
-                className="warp-text flex items-center justify-center w-full"
-                style={{ position: "relative", pointerEvents: "auto" }}
-              >
-                <span
-                  className="uppercase select-none text-[clamp(4.2rem,14vw,176px)] leading-[0.86]"
-                  style={{
-                    fontFamily: "'Baloo 2', cursive, sans-serif",
-                    fontWeight: 800,
-                    letterSpacing: "1.76px",
-                    color: "#141412",
-                    filter: "drop-shadow(0 4px 20px rgba(20, 20, 18, 0.15))",
-                  }}
-                >
-                  IGNITE
-                </span>
-              </div>
-            </div>
-
             {/* NO-CODE STARTUP HACKATHON Subtitle */}
-            <div className="mt-1">
-              <span
-                className="uppercase select-none text-[clamp(1.1rem,2.6vw,30.4px)] leading-[1.3] block"
-                style={{
-                  fontFamily: "'Baloo 2', cursive, sans-serif",
-                  fontWeight: 700,
-                  letterSpacing: "1.824px",
-                  color: "#141412",
-                }}
-              >
+            <div className="hero-tagline-wrap">
+              <span className="hero-tagline-title">
                 NO-CODE STARTUP HACKATHON
               </span>
             </div>
@@ -204,17 +145,17 @@ export const HeroSection = () => {
         .hero-sky-zone {
           position: relative;
           width: 100%;
-          height: 50vh;
-          height: 50dvh;
-          height: 50svh;
-          flex: 0 0 50svh;
-          max-height: 50svh;
+          height: 44vh;
+          height: 44dvh;
+          height: 44svh;
+          flex: 0 0 44svh;
+          max-height: 44svh;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
           align-items: center;
-          padding-top: clamp(4.2rem, 7svh, 5.5rem);
-          padding-bottom: clamp(1.5rem, 3.8svh, 3.2rem);
+          padding-top: clamp(4.2rem, 7vh, 5.5rem);
+          padding-bottom: clamp(0.75rem, 2vh, 1.6rem);
           padding-inline: clamp(0.75rem, 2vw, 1.5rem);
           box-sizing: border-box;
           pointer-events: none;
@@ -228,7 +169,7 @@ export const HeroSection = () => {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-end;
           text-align: center;
           pointer-events: auto;
           will-change: transform, opacity;
@@ -236,34 +177,68 @@ export const HeroSection = () => {
           flex-shrink: 0;
         }
 
-        .hero-warp-wrap {
-          position: relative;
-          width: 100%;
-          max-width: min(92vw, 1150px);
-          height: auto;
-          min-height: clamp(80px, 16svh, 180px);
+        .hero-brand-lockup {
           display: flex;
-          justify-content: center;
+          flex-direction: column;
           align-items: center;
-          margin-inline: auto;
+          justify-content: center;
+          text-align: center;
+          gap: 0;
+          margin: 0 auto;
         }
 
-        .hero-warp-wrap .warp-text {
-          width: 100%;
+        .hero-wordmark-wrap {
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-inline: auto;
+          width: auto;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+          line-height: 0.82;
+        }
+
+        .hero-wordmark-title {
+          font-family: 'Baloo 2', cursive, sans-serif;
+          font-weight: 800;
+          font-size: clamp(3.6rem, 11.5vw, 300px);
+          line-height: 0.82;
+          letter-spacing: 1.6px;
+          text-transform: uppercase;
+          color: #141412;
+          user-select: none;
+          margin: 0;
+          padding: 0;
+          filter: drop-shadow(0 4px 18px rgba(20, 20, 18, 0.12));
+        }
+
+        .hero-tagline-wrap {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: clamp(4px, 1vh, 8px);
+          padding: 0;
+        }
+
+        .hero-tagline-title {
+          font-family: 'Baloo 2', cursive, sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.05rem, 2.2vw, 24px);
+          line-height: 1.15;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #141412;
+          user-select: none;
         }
 
         .hero-ground-zone {
           position: relative;
           width: 100%;
-          height: 50vh;
-          height: 50dvh;
-          height: 50svh;
-          flex: 0 0 50svh;
-          max-height: 50svh;
+          height: 56vh;
+          height: 56dvh;
+          height: 56svh;
+          flex: 1 1 56svh;
+          max-height: 56svh;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
@@ -332,25 +307,20 @@ export const HeroSection = () => {
         /* ── Responsive ── */
         @media (max-width: 1024px) {
           .hero-sky-zone {
-            padding-top: clamp(4.0rem, 6.8svh, 5.2rem);
-            padding-bottom: clamp(1.4rem, 3.6svh, 3.0rem);
+            height: 44svh;
+            flex: 0 0 44svh;
+            padding-top: clamp(4.0rem, 7vh, 5.2rem);
+            padding-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
           }
           .hero-ground-zone {
             padding-bottom: clamp(2.4rem, 4.8svh, 3.8rem);
           }
-          .hero-warp-wrap {
-            max-width: min(90vw, 920px);
-            height: clamp(115px, min(23svh, 24vw), 250px);
-            max-height: 26svh;
-          }
         }
 
         @media (max-width: 860px) {
-          .hero-warp-wrap {
-            width: 100% !important;
-            max-width: min(90vw, 720px) !important;
-            height: clamp(110px, min(21svh, 26vw), 215px) !important;
-            max-height: 24svh !important;
+          .hero-sky-zone {
+            height: 43svh;
+            flex: 0 0 43svh;
           }
           .hero-chair-annotation {
             left: calc(50% + 24px);
@@ -364,19 +334,22 @@ export const HeroSection = () => {
 
         @media (max-width: 600px) {
           .hero-sky-zone {
-            padding-top: clamp(3.8rem, 6.2svh, 4.8rem);
-            padding-bottom: clamp(2.2rem, 6.0svh, 3.6rem);
+            height: 42svh;
+            flex: 0 0 42svh;
+            padding-top: clamp(3.8rem, 6.5svh, 4.8rem);
+            padding-bottom: 0.4rem;
             padding-inline: clamp(0.5rem, 2.5vw, 1rem);
           }
           .hero-ground-zone {
-            padding-bottom: clamp(2.2rem, 4.5svh, 3.4rem);
+            padding-bottom: clamp(2.0rem, 4.2svh, 3.2rem);
             padding-inline: clamp(0.5rem, 2.5vw, 1rem);
           }
-          .hero-warp-wrap {
-            width: min(90vw, 420px) !important;
-            max-width: min(90vw, 420px) !important;
-            height: clamp(105px, min(19svh, 32vw), 160px) !important;
-            max-height: 20svh !important;
+          .hero-wordmark-title {
+            font-size: clamp(3rem, 13.5vw, 68px);
+          }
+          .hero-tagline-title {
+            font-size: clamp(0.85rem, 3.6vw, 15px);
+            letter-spacing: 1.2px;
           }
           .hero-chair-annotation {
             left: calc(50% + 14px);
@@ -392,12 +365,6 @@ export const HeroSection = () => {
         }
 
         @media (max-width: 480px) {
-          .hero-warp-wrap {
-            width: min(92vw, 370px) !important;
-            max-width: min(92vw, 370px) !important;
-            height: clamp(100px, min(18svh, 34vw), 150px) !important;
-            max-height: 19svh !important;
-          }
           .hero-chair-annotation {
             left: calc(50% + 12px);
             right: 8px;
@@ -407,15 +374,6 @@ export const HeroSection = () => {
         }
 
         @media (max-width: 420px) {
-          .hero-sky-zone {
-            padding-bottom: clamp(2.4rem, 6.6svh, 4.0rem);
-          }
-          .hero-warp-wrap {
-            width: min(94vw, 345px) !important;
-            max-width: min(94vw, 345px) !important;
-            height: clamp(95px, min(17.5svh, 35vw), 145px) !important;
-            max-height: 18.5svh !important;
-          }
           .hero-chair-annotation {
             left: calc(50% + 10px);
             right: 6px;
@@ -426,18 +384,15 @@ export const HeroSection = () => {
 
         @media (max-height: 560px) {
           .hero-sky-zone {
-            height: 52svh !important;
-            flex: 0 0 52svh !important;
-            padding-top: 3.0rem !important;
-            padding-bottom: 0.75rem !important;
+            height: 50svh !important;
+            flex: 0 0 50svh !important;
+            padding-top: 2.8rem !important;
+            padding-bottom: 0.5rem !important;
           }
           .hero-ground-zone {
-            height: 48svh !important;
-            flex: 0 0 48svh !important;
-            padding-bottom: 1.2rem !important;
-          }
-          .hero-warp-wrap {
-            height: clamp(75px, 20svh, 110px) !important;
+            height: 50svh !important;
+            flex: 0 0 50svh !important;
+            padding-bottom: 1.0rem !important;
           }
         }
       `}</style>

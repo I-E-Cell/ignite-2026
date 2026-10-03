@@ -29,22 +29,7 @@ export const App = () => {
   return (
     <div className="accent-auto box-border caret-transparent text-zinc-900 block text-[15px] not-italic normal-nums font-normal tracking-[-0.075px] leading-[23.23px] list-outside list-disc min-h-[1000px] outline-[3px] overflow-x-hidden overflow-y-auto overscroll-y-none pointer-events-auto relative text-start no-underline indent-[0px] normal-case visible border-separate font-dm_sans md:overscroll-y-auto before:accent-auto before:bg-stone-100 before:bg-[url('https://www.recursiveacm.in/images/bg/cloud.jpg')] before:bg-top before:bg-no-repeat before:bg-cover before:box-border before:caret-transparent before:text-zinc-900 before:block before:text-[15px] before:not-italic before:normal-nums before:font-normal before:tracking-[-0.075px] before:leading-[23.25px] before:list-outside before:list-disc before:outline-[3px] before:pointer-events-none before:fixed before:text-start before:no-underline before:indent-[0px] before:normal-case before:visible before:z-[-1] before:border-separate before:inset-0 before:font-dm_sans">
       {location.pathname === "/" && <IntroOverlay />}
-      <BackgroundLayer
-        variant="default"
-        layerClassName="hidden"
-        imageSrc=""
-        imageAlt=""
-        iframeSrc=""
-        iframeTitle=""
-      />
-      <BackgroundLayer
-        variant="default"
-        layerClassName="bg-stone-100 bg-[url('https://www.recursiveacm.in/images/bg/cloud.jpg')] bg-top bg-no-repeat bg-cover content-[''] pointer-events-none fixed z-[-1] inset-0"
-        imageSrc=""
-        imageAlt=""
-        iframeSrc=""
-        iframeTitle=""
-      />
+      {location.pathname === "/" && <BackgroundLayer variant="thunder" />}
       <Navbar />
       <BackgroundLayer
         variant="image"

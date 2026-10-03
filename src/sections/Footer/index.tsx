@@ -13,7 +13,7 @@ export const Footer = () => {
       {/* Giant RECURSIVE Wordmark */}
       <div className="footer-wordmark-wrap">
         <span className="sr-only">
-          IGNITE — No-Code Startup Hackathon 2026 | I&amp;E Cell, Guru Nanak Institute of Technology, Kolkata
+          IGNITE — No-Code Startup Hackathon 2026 | I&amp;E Cell, Army Institute of Technology, Pune
         </span>
         <div
           className="warp-text relative w-full max-w-[100vw] h-full pointer-events-auto"

@@ -1,6 +1,6 @@
 export type SectionHeaderProps = {
   variant: string;
-  title: string;
+  title?: string;
   titleLineOne?: string;
   titleLineTwo?: string;
   eyebrow?: string;

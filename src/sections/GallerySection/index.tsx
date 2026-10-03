@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Camera, Layers, ExternalLink } from "lucide-react";
 
 interface GalleryItem {
   id: string;
@@ -124,7 +123,7 @@ export const GallerySection = () => {
                 fontWeight: 700,
                 fontSize: "13px",
                 lineHeight: "18px",
-                borderRadius: "999px",
+                borderRadius: "4px",
                 padding: "8px 18px",
                 transition: "all 180ms ease",
                 cursor: "pointer",

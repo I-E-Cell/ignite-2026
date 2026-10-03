@@ -1,4 +1,4 @@
-import { Calendar, FileText, Mic2, Award, Hammer, Rocket } from "lucide-react";
+import { FileText, Mic2, Award, Hammer, Rocket } from "lucide-react";
 
 export const TimelineSection = () => {
   const steps = [
@@ -97,7 +97,6 @@ export const TimelineSection = () => {
         {/* Timeline Sequence */}
         <div className="w-full relative flex flex-col gap-6">
           {steps.map((step) => {
-            const Icon = step.icon;
             return (
               <div
                 key={step.num}

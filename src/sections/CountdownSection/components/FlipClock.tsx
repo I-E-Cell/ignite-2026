@@ -112,7 +112,7 @@ export const FlipClock: React.FC<FlipClockProps> = ({ units, className = "" }) =
         .fkc {
           --fkc-w: clamp(3.4rem, 8.2vw, 6.6rem);
           --fkc-h: calc(var(--fkc-w) * 1.42);
-          --fkc-r: calc(var(--fkc-w) * 0.14);
+          --fkc-r: 0px;
           --fkc-gap: calc(var(--fkc-w) * 0.11);
           --fkc-ink: #F4F7EC;
           --fkc-face-b: #16240F;

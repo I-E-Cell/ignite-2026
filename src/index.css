@@ -17,11 +17,11 @@
   --color-dawn: #A8A69B;
   --color-lemongrass: #9A9A90;
 
-  /* ── Radius ── */
-  --radius-pill: 999px;
-  --radius-lg: 16px;
-  --radius-md: 10px;
-  --radius-sm: 6px;
+  /* ── Radius (sharp editorial — no rounding) ── */
+  --radius-pill: 4px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
 
   /* ── Easing ── */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -56,7 +56,7 @@
   height: 60px;
   background: #141412;
   color: #FBFAF8;
-  border-radius: 999px;
+  border-radius: 4px;
   font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
   font-size: 16px;
@@ -87,7 +87,7 @@
   background: transparent;
   color: #141412;
   border: 2px solid #141412;
-  border-radius: 999px;
+  border-radius: 4px;
   font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
   font-size: 16px;
@@ -120,4 +120,30 @@ body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════════════
+   GLOBAL SHARP-EDGE OVERRIDE
+   Removes all rounded corners except structural
+   elements (hero hill, circular avatars, spinners).
+   ══════════════════════════════════════════════ */
+[class*="rounded-"] {
+  border-radius: 0 !important;
+}
+/* Preserve circles where semantically intentional */
+.rounded-full[class*="animate-pulse"],
+.rounded-full[class*="animate-spin"],
+svg .rounded-full,
+svg circle {
+  border-radius: 9999px !important;
+}
+/* Preserve the hero hill dome shape */
+.hero-hill,
+[class*="hero-hill"] {
+  border-radius: 826.08px 826.08px 0 0 !important;
+}
+/* Status dot indicators stay circular */
+span.rounded-full[class*="w-2"],
+span.rounded-full[class*="w-1"] {
+  border-radius: 9999px !important;
 }

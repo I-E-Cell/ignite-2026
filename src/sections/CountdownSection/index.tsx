@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FlipClock, type ClockUnit } from "./components/FlipClock";
 
 export const CountdownSection = () => {
-  const targetTime = new Date("2026-09-30T18:29:59Z").getTime();
+  const targetTime = new Date("2026-11-01T18:29:59Z").getTime();
 
   const getUnits = (): ClockUnit[] => {
     const diffSeconds = Math.floor(Math.max(0, targetTime - Date.now()) / 1000);
@@ -18,7 +18,7 @@ export const CountdownSection = () => {
   const [units, setUnits] = useState<ClockUnit[]>(getUnits);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const tick = () => {
       setUnits(getUnits());
       timeoutId = setTimeout(tick, 1000 - (Date.now() % 1000) + 15);
@@ -30,7 +30,7 @@ export const CountdownSection = () => {
   return (
     <section
       id="countdown"
-      aria-label="Hackathon Countdown"
+      aria-label="Online Hackathon Countdown"
       className="cd relative w-full bg-transparent text-[#111a12] pt-[clamp(3.5rem,8vh,6.5rem)] pb-[clamp(13rem,29vw,40rem)] overflow-hidden z-[1]"
     >
       <div className="cd-inner relative max-w-[104rem] mx-auto px-4 md:px-8 text-center flex flex-col items-center z-[1]">
@@ -107,8 +107,8 @@ export const CountdownSection = () => {
                 <rect x="9.2" y="11.8" width="3.6" height="3.6" rx="1" fill="url(#cdp-cal)" />
               </svg>
 
-              <time className="cd-plaque-date font-medium" dateTime="2026-09-30T23:59:59+05:30">
-                September 30, 2026
+              <time className="cd-plaque-date font-medium" dateTime="2026-11-01T23:59:59+05:30">
+                November 1, 2026
               </time>
             </span>
 
@@ -118,7 +118,7 @@ export const CountdownSection = () => {
 
         {/* Subtitle Details */}
         <p className="cd-plaque-sub mt-2 text-xs md:text-sm font-dm_sans text-[#2d4d29]/80 font-medium">
-          09:00 IST · Guru Nanak Institute of Technology (GNIT), Kolkata · Offline Hackathon
+          09:00 IST · Army Institute of Technology, Pune · Online Hackathon
         </p>
 
         {/* Split-Flap Flip Clock */}

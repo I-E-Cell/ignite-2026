@@ -244,7 +244,7 @@
           width: 18px;
           height: 2.75px;
           background: #121A12;
-          border-radius: 999px;
+          border-radius: 0;
           transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
           transform-origin: center;
         }
@@ -407,7 +407,7 @@
           text-transform: uppercase;
           color: #121A12;
           padding: 0.22rem 0.55rem;
-          border-radius: 999px;
+          border-radius: 0;
           background: rgba(18, 26, 18, 0.08);
           border: 1px solid rgba(18, 26, 18, 0.14);
         }
@@ -424,7 +424,7 @@
           align-items: center;
           gap: 0.55rem;
           padding: 0.65rem 1.25rem;
-          border-radius: 6px;
+          border-radius: 0;
           background: #5865F2;
           color: #FFFFFF;
           font-family: var(--font-dm-sans), sans-serif;
@@ -459,7 +459,7 @@
           background: #121A12;
           color: #F4F0E8;
           padding: 0.65rem 1.15rem;
-          border-radius: 4px;
+          border-radius: 0;
           font-family: var(--font-dm-sans), sans-serif;
           font-size: clamp(0.82rem, 2.2vw, 0.92rem);
           font-weight: 500;
@@ -841,7 +841,7 @@
           gap: 0.5rem;
           height: 44px;
           padding: 0 1.15rem;
-          border-radius: 6px;
+          border-radius: 0;
           background: #FFFFFF;
           color: #23272A;
           border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2724,7 +2724,7 @@
             inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.55),
             inset 0 -1px 1.5px 0 rgba(22, 45, 26, 0.03),
             0 8px 24px -8px rgba(18, 38, 22, 0.06);
-          border-radius: 1.35rem;
+          border-radius: 0;
           padding: 1.5rem;
           display: flex;
           flex-direction: column;
@@ -2926,7 +2926,7 @@
             inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.55),
             inset 0 -1px 1.5px 0 rgba(22, 45, 26, 0.03),
             0 8px 24px -8px rgba(18, 38, 22, 0.06);
-          border-radius: 1.35rem;
+          border-radius: 0;
           padding: 0.65rem;
           width: 100%;
           height: 100%;
@@ -4439,7 +4439,7 @@
           position: relative;
           width: 100%;
           aspect-ratio: 16 / 11;
-          border-radius: 20px;
+          border-radius: 0;
           overflow: hidden;
           background: #060B05;
           box-shadow:
@@ -4652,7 +4652,7 @@
           right: 0;
           bottom: 0;
           height: 2px;
-          border-radius: 2px;
+          border-radius: 0;
           background: rgba(190, 224, 168, 0.12);
           overflow: hidden;
         }
@@ -4675,7 +4675,7 @@
         .th-tab:focus-visible {
           outline: 2px solid rgba(143, 196, 90, 0.7);
           outline-offset: 4px;
-          border-radius: 4px;
+          border-radius: 0;
         }
 
         @media (max-width: 1060px) {
@@ -4882,7 +4882,7 @@
           left: var(--sxp-ix);
           right: var(--sxp-ix);
           z-index: 4;
-          border-radius: var(--sxp-r);
+          border-radius: 0;
           pointer-events: none;
           /* Fades itself out as the window loses its edge. */
           opacity: calc(1 - var(--sxp-p));
@@ -5239,7 +5239,7 @@
             inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.55),
             inset 0 -1px 1.5px 0 rgba(22, 45, 26, 0.03),
             0 8px 24px -8px rgba(18, 38, 22, 0.06);
-          border-radius: 20px;
+          border-radius: 0;
           transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, background 260ms ease, border-color 260ms ease;
           user-select: none;
         }
@@ -5295,7 +5295,7 @@
           flex: 0 0 auto !important;
           width: clamp(225px, 18.5vw, 275px) !important;
           height: clamp(68px, 7.5vh, 80px) !important;
-          border-radius: 20px !important;
+          border-radius: 0 !important;
           padding: 0 !important;
           text-decoration: none;
         }
@@ -5394,7 +5394,7 @@
           width: clamp(146px, 12.2vw, 175px) !important;
           height: clamp(146px, 12.2vw, 175px) !important;
           aspect-ratio: 1 / 1;
-          border-radius: clamp(20px, 1.6vw, 24px) !important;
+          border-radius: 0 !important;
           padding: 0.35rem !important;
           display: flex !important;
           align-items: center !important;
@@ -5437,7 +5437,7 @@
         .sxp-osen-card {
           width: clamp(135px, 11vw, 165px) !important;
           height: clamp(68px, 7.5vh, 80px) !important;
-          border-radius: 20px !important;
+          border-radius: 0 !important;
           padding: 0 0.65rem !important;
         }
 
@@ -5452,7 +5452,7 @@
         .sxp-xyz-card {
           width: clamp(105px, 8.2vw, 130px) !important;
           height: clamp(68px, 7.5vh, 80px) !important;
-          border-radius: 20px !important;
+          border-radius: 0 !important;
           padding: 0 0.5rem !important;
           text-decoration: none;
         }
@@ -5469,7 +5469,7 @@
         .sxp-lnc-card {
           width: clamp(195px, 16.5vw, 245px) !important;
           height: clamp(66px, 7.2vh, 78px) !important;
-          border-radius: 20px !important;
+          border-radius: 0 !important;
           text-decoration: none;
         }
 
@@ -5624,7 +5624,7 @@
             flex: 0 0 auto !important;
             width: clamp(170px, 20vw, 215px) !important;
             height: clamp(58px, 6.8vh, 68px) !important;
-            border-radius: 18px;
+            border-radius: 0;
           }
 
           /* Restored student ambassador card size */
@@ -5633,7 +5633,7 @@
             width: clamp(134px, 13.5vw, 160px) !important;
             height: clamp(134px, 13.5vw, 160px) !important;
             aspect-ratio: 1 / 1 !important;
-            border-radius: clamp(20px, 1.6vw, 24px) !important;
+            border-radius: 0 !important;
             padding: 0.35rem !important;
             display: flex !important;
             align-items: center !important;
@@ -5685,7 +5685,7 @@
             flex: 0 0 auto !important;
             width: clamp(215px, 26vw, 255px) !important;
             height: 64px !important;
-            border-radius: 18px !important;
+            border-radius: 0 !important;
           }
 
           .sxp-devfolio-content {
@@ -5703,14 +5703,14 @@
           .sxp-osen-card {
             width: clamp(120px, 14vw, 145px) !important;
             height: 64px !important;
-            border-radius: 18px !important;
+            border-radius: 0 !important;
             padding: 0 0.5rem !important;
           }
 
           .sxp-xyz-card {
             width: clamp(96px, 10.5vw, 118px) !important;
             height: 64px !important;
-            border-radius: 18px !important;
+            border-radius: 0 !important;
             padding: 0 0.45rem !important;
           }
 
@@ -5731,7 +5731,7 @@
           .sxp-media-grid .sxp-eventopia-card {
             width: clamp(170px, 22vw, 215px) !important;
             height: clamp(56px, 6.5vh, 66px) !important;
-            border-radius: 18px !important;
+            border-radius: 0 !important;
           }
         }
 
@@ -5841,7 +5841,7 @@
             flex: 0 0 auto !important;
             width: clamp(140px, 18vw, 168px) !important;
             height: 52px !important;
-            border-radius: 16px !important;
+            border-radius: 0 !important;
           }
 
           /* Restored student ambassador card size */
@@ -5850,7 +5850,7 @@
             width: clamp(112px, 14.5vw, 126px) !important;
             height: clamp(112px, 14.5vw, 126px) !important;
             aspect-ratio: 1 / 1 !important;
-            border-radius: 18px !important;
+            border-radius: 0 !important;
             padding: 0.35rem !important;
             display: flex !important;
             align-items: center !important;
@@ -5898,7 +5898,7 @@
             flex: 0 0 auto !important;
             width: clamp(230px, 31vw, 260px) !important;
             height: 58px !important;
-            border-radius: 16px !important;
+            border-radius: 0 !important;
           }
 
           .sxp-devfolio-content {
@@ -5917,14 +5917,14 @@
           .sxp-osen-card {
             width: clamp(102px, 13vw, 125px) !important;
             height: 58px !important;
-            border-radius: 16px !important;
+            border-radius: 0 !important;
             padding: 0 0.4rem !important;
           }
 
           .sxp-xyz-card {
             width: clamp(80px, 10vw, 98px) !important;
             height: 58px !important;
-            border-radius: 16px !important;
+            border-radius: 0 !important;
             padding: 0 0.35rem !important;
           }
 
@@ -5946,7 +5946,7 @@
             flex: 0 0 auto !important;
             width: clamp(155px, 21vw, 185px) !important;
             height: 54px !important;
-            border-radius: 18px !important;
+            border-radius: 0 !important;
           }
         }
 
@@ -6054,7 +6054,7 @@
             flex: 0 0 auto !important;
             width: clamp(190px, 55vw, 225px) !important;
             height: 46px !important;
-            border-radius: 14px !important;
+            border-radius: 0 !important;
           }
           .sxp-devfolio-content {
             padding-inline: 0.5rem !important;
@@ -6075,14 +6075,14 @@
             flex: 0 0 auto !important;
             width: clamp(100px, 30vw, 118px) !important;
             height: 46px !important;
-            border-radius: 14px !important;
+            border-radius: 0 !important;
             padding: 0 0.35rem !important;
           }
           .sxp-xyz-card {
             flex: 0 0 auto !important;
             width: clamp(80px, 23vw, 95px) !important;
             height: 46px !important;
-            border-radius: 14px !important;
+            border-radius: 0 !important;
             padding: 0 0.25rem !important;
           }
           .sxp-osen-logo {
@@ -6120,7 +6120,7 @@
             flex: 0 0 auto !important;
             width: clamp(100px, 28vw, 114px) !important;
             height: 42px !important;
-            border-radius: 12px !important;
+            border-radius: 0 !important;
             padding: 0 0.35rem !important;
           }
           .sxp-react-kolkata-card,
@@ -6167,7 +6167,7 @@
             width: clamp(84px, 23vw, 92px) !important;
             height: clamp(84px, 23vw, 92px) !important;
             aspect-ratio: 1 / 1 !important;
-            border-radius: 14px !important;
+            border-radius: 0 !important;
             padding: 0.25rem !important;
             display: flex !important;
             align-items: center !important;
@@ -6212,7 +6212,7 @@
             flex: 0 0 auto !important;
             width: clamp(140px, 42vw, 156px) !important;
             height: 44px !important;
-            border-radius: 12px !important;
+            border-radius: 0 !important;
             padding: 0 0.4rem !important;
           }
           .sxp-lnc-logo {

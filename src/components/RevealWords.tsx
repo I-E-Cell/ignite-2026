@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 export interface RevealWordsProps {
   paragraphs: string[];
   className?: string;
+  style?: CSSProperties;
   start?: string;
   end?: string;
   dim?: number;
@@ -15,6 +16,7 @@ export interface RevealWordsProps {
 export const RevealWords = ({
   paragraphs,
   className = "",
+  style,
   start = "top 84%",
   end = "bottom 38%",
   dim = 0.18,
@@ -86,7 +88,7 @@ export const RevealWords = ({
   }, [start, end, dim]);
 
   return (
-    <div ref={containerRef} className={`rw ${className}`}>
+    <div ref={containerRef} className={`rw ${className}`} style={style}>
       {paragraphs.map((para, pIdx) => (
         <p key={pIdx} className="rw-para">
           {para.split(/\s+/).map((word, wIdx) => (

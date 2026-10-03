@@ -1,13 +1,19 @@
+import { ThunderBackground } from "@/components/ThunderBackground";
+
 export type BackgroundLayerProps = {
-  variant: string;
-  layerClassName: string;
-  imageSrc: string;
-  imageAlt: string;
-  iframeSrc: string;
-  iframeTitle: string;
+  variant?: string;
+  layerClassName?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  iframeSrc?: string;
+  iframeTitle?: string;
 };
 
 export const BackgroundLayer = (props: BackgroundLayerProps) => {
+  if (props.variant === "thunder") {
+    return <ThunderBackground className={props.layerClassName} />;
+  }
+
   if (props.variant === "image") {
     return (
       <img
@@ -21,7 +27,7 @@ export const BackgroundLayer = (props: BackgroundLayerProps) => {
   if (props.variant === "iframe") {
     return (
       <div
-        className={`box-border caret-transparent outline-[3px] no-underline ${props.layerClassName}`}
+        className={`box-border caret-transparent outline-[3px] no-underline ${props.layerClassName || ""}`}
       >
         <iframe
           src={props.iframeSrc}
@@ -34,7 +40,7 @@ export const BackgroundLayer = (props: BackgroundLayerProps) => {
 
   return (
     <div
-      className={`box-border caret-transparent outline-[3px] no-underline ${props.layerClassName}`}
+      className={`box-border caret-transparent outline-[3px] no-underline ${props.layerClassName || ""}`}
     ></div>
   );
 };

@@ -44,7 +44,7 @@ export const Main = () => {
       {/* 9. FAQ: The 6 Exact Questions on Eligibility, Grant, Team & IP */}
       <FaqSection />
 
-      {/* 10. Venue: GNIT Kolkata Campus Location & Navigation */}
+      {/* 10. Venue: AIT Pune — Online Hackathon Info */}
       <VenueSection />
 
       {/* 11. Organizers & Contact Us: Reach out to I&E Cell Directly */}

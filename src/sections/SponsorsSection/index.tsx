@@ -152,7 +152,7 @@ export const SponsorsSection = () => {
           {/* Staged Frame */}
           <div className="sxp-frame">
             <div className="sxp-plate" aria-hidden="true" />
-            
+
             <div className="sxp-frame-preview" aria-hidden="true">
               <h2 className="sxp-preview-title">OUR SPONSORS</h2>
             </div>
@@ -349,12 +349,12 @@ export const SponsorsSection = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="sxp-partner-card sxp-float-card-alt sxp-gdg-card"
-                          title="Google Developer Groups On Campus • Guru Nanak Institute of Technology"
-                          aria-label="Google Developer Groups On Campus GNIT"
+                          title="Innovation and Entrepreneurship Cell, Army Institute of Technology, Pune"
+                          aria-label="Innovation and Entrepreneurship Cell, Army Institute of Technology, Pune"
                         >
                           <img
                             src="https://www.recursiveacm.in/images/sponsors/gdg-gnit-logo.png"
-                            alt="GDG On Campus GNIT"
+                            alt="Innovation and Entrepreneurship Cell, Army Institute of Technology, Pune"
                             className="sxp-partner-logo sxp-gdg-logo"
                             width={857}
                             height={344}

@@ -5,7 +5,7 @@ const faqs = [
     number: "1",
     question: "Who can apply?",
     answer:
-      "Any undergraduate student in FE (First Year), SE (Second Year), or TE (Third Year) across any academic branch or department is eligible to apply. Solo applicants and teams of 2 to 4 members are both welcome. No technical or programming background is necessary—this is a no-code startup hackathon where market insight, problem articulation, and execution velocity matter most.",
+      "Any undergraduate student in FE (First Year), SE (Second Year), or TE (Third Year) across any academic branch or department is eligible to apply. Solo applicants and teams of 2 to 4 members are both welcome. No technical or programming background is necessary—this is an online no-code startup hackathon where market insight, problem articulation, and execution velocity matter most.",
   },
   {
     number: "2",

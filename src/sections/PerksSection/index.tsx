@@ -12,7 +12,6 @@ import {
   TrendingUp,
   Leaf,
   School,
-  Flame
 } from "lucide-react";
 
 interface PerkItem {

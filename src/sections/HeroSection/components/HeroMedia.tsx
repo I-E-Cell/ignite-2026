@@ -48,6 +48,8 @@ export const HeroMedia = () => {
         className="hero-video"
       />
 
+
+
       <style>{`
         .hero-video-wrap {
           position: absolute;

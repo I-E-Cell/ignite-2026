@@ -11,9 +11,9 @@ export const StoryText = () => {
 
           {/* The same span structure continues for each word */}
           
-          The plastic chair is an everyday upgrade to edit across Kolkata, scattered on college terraces, roadside tea stalls and neighborhood corners where people gather to talk for hours.
+          The plastic chair is an everyday icon — scattered on college terraces, rooftop canteens, and hostel corridors where students gather to brainstorm for hours.
 
-          For this hackathon, our team ... in the morning, claim your spot, and spend eight focused hours turning an idea into working software before the day ends.
+          For IGNITE, grab your seat from wherever you are. This is a fully online, 20-week startup program. Log in, validate with real users, and turn an ambitious idea into a funded, registered company.
         </p>
       </div>
     </div>

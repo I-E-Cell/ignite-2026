@@ -171,8 +171,8 @@ export const TracksSection = () => {
               </div>
 
               <div className="flex items-center justify-between text-stone-400 text-xs font-geist_mono pt-3 border-t border-lime-950">
-                <span>GNIT ACM CHAPTER</span>
-                <span>RECURSIVE 2026</span>
+                <span>AIT PUNE I&amp;E CELL</span>
+                <span>IGNITE 2026</span>
               </div>
 
               {/* Ambient Glow */}
