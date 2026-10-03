@@ -2,14 +2,11 @@
         .sxp {
           position: relative;
           width: 100%;
-          /* The track supplies the scroll distance; the stage inside is one
-             viewport tall and sticks for the difference. */
-          --sxp-track: 320vh;
         }
 
         .sxp-track {
           position: relative;
-          height: var(--sxp-track);
+          width: 100%;
         }
 
         /* Every child derives its geometry from --sxp-p, so it lives here on
@@ -29,8 +26,7 @@
           --sxp-hands-h: min(clamp(280px, 36.4vw, 1400px), 66vh);
           --sxp-hands-lift: clamp(0rem, 0.8vh, 1.2rem);
 
-          position: sticky;
-          top: 0;
+          position: relative;
           height: 100vh;
           width: 100%;
           overflow: hidden;
@@ -50,7 +46,7 @@
         .sxp-night {
           position: absolute;
           inset: 0;
-          background: var(--color-night);
+          background: var(--color-night, #000000);
         }
 
         /* ── Night-side label ── */
@@ -224,8 +220,8 @@
           align-items: center;
           justify-content: center;
           padding-inline: var(--padding-x);
-          padding-top: clamp(4.5rem, 8vh, 5.8rem);
-          padding-bottom: clamp(1.2rem, 2.5vh, 2.2rem);
+          padding-top: clamp(4.6rem, 7.8vh, 5.8rem);
+          padding-bottom: clamp(1rem, 2.2vh, 1.8rem);
           opacity: 0;
           pointer-events: none;
           will-change: transform, opacity;
@@ -379,11 +375,11 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-bottom: clamp(0.35rem, 0.8vh, 0.65rem);
+          margin-bottom: clamp(0.2rem, 0.4vh, 0.45rem);
         }
 
         .sxp-crown {
-          width: clamp(114px, 56.87px + 15.87vw, 260px) !important;
+          width: clamp(80px, 7vw, 110px) !important;
           height: auto !important;
           opacity: 0.88;
           display: block;
@@ -393,31 +389,31 @@
 
         .sxp-eyebrow {
           font-family: var(--font-geist-mono), monospace;
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           font-weight: 500;
           letter-spacing: 0.22em;
           text-transform: uppercase;
           color: #2e4b2a;
           opacity: 0.95;
-          margin-bottom: 0.45rem;
+          margin-bottom: 0.2rem;
         }
 
         .sxp-heading {
-          margin: 0 0 clamp(0.35rem, 0.8vh, 0.6rem);
+          margin: 0 0 clamp(0.2rem, 0.5vh, 0.45rem);
           font-family: var(--font-dm-sans), sans-serif;
           font-weight: 700;
-          font-size: clamp(2.4rem, 5.2vw, 3.8rem);
-          line-height: 1.05;
+          font-size: clamp(2rem, 3.8vw, 2.85rem);
+          line-height: 1.08;
           letter-spacing: -0.035em;
           color: #122415;
         }
 
         .sxp-lede {
-          margin: 0 0 clamp(0.35rem, 0.7vh, 0.6rem);
+          margin: 0 0 clamp(0.25rem, 0.5vh, 0.45rem);
           max-width: 44rem;
           font-family: var(--font-dm-sans), sans-serif;
-          font-size: clamp(0.95rem, 1.35vw, 1.12rem);
-          line-height: 1.48;
+          font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+          line-height: 1.45;
           color: #384f36;
           text-wrap: pretty;
         }
@@ -427,7 +423,7 @@
           flex-direction: column;
           align-items: center;
           gap: 0.25rem;
-          margin-top: clamp(0.1rem, 0.3vh, 0.25rem);
+          margin-top: clamp(0.25rem, 0.5vh, 0.45rem);
           margin-bottom: 0;
           z-index: 10;
         }
@@ -436,8 +432,8 @@
           display: flex;
           align-items: flex-end;
           justify-content: center;
-          gap: clamp(14px, 1.8vw, 24px);
-          margin-top: clamp(0.05rem, 0.2vh, 0.2rem);
+          gap: clamp(14px, 1.8vw, 22px);
+          margin-top: clamp(0.1rem, 0.25vh, 0.25rem);
           z-index: 10;
         }
 
@@ -501,25 +497,25 @@
 
         .sxp-tier-badge {
           font-family: var(--font-geist-mono), monospace;
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           font-weight: 500;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: #2d4c29;
-          margin-bottom: 0.15rem;
+          margin-bottom: 0.12rem;
           opacity: 0.92;
         }
 
         /* ── iOS Liquid Frosted Glass Cards (Transparent Cloud View - matching Campus Address) ── */
         .sxp-partner-card {
           position: relative;
-          width: clamp(195px, 16.5vw, 245px);
-          height: clamp(66px, 7.2vh, 78px);
+          width: clamp(185px, 15vw, 225px);
+          height: clamp(54px, 6vh, 64px);
           flex: 0 0 auto;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 0 1.2rem;
+          padding: 0 1rem;
           box-sizing: border-box;
           background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 48%, rgba(220, 245, 215, 0.04) 100%);
           backdrop-filter: blur(10px) saturate(160%);
@@ -545,7 +541,7 @@
         }
 
         .sxp-partner-logo {
-          height: clamp(24px, 3vh, 32px);
+          height: clamp(22px, 2.6vh, 28px);
           width: auto;
           object-fit: contain;
           display: block;
@@ -563,7 +559,7 @@
 
         .sxp-rays {
           position: absolute;
-          width: clamp(36px, 3.6vw, 46px);
+          width: clamp(28px, 2.8vw, 36px);
           height: auto;
           pointer-events: none;
           z-index: 4;
@@ -571,21 +567,21 @@
 
         /* Shifted to left of Devfolio card, mirrored to radiate upwards-left */
         .sxp-rays-left {
-          top: -24px;
-          left: -16px;
+          top: -18px;
+          left: -12px;
           transform: scaleX(-1);
         }
 
         /* Positioned on right side of OSEN card, radiating upwards-right */
         .sxp-rays-right {
-          top: -24px;
-          right: -16px;
+          top: -18px;
+          right: -12px;
         }
 
         .sxp-devfolio-card {
           flex: 0 0 auto !important;
-          width: clamp(225px, 18.5vw, 275px) !important;
-          height: clamp(68px, 7.5vh, 80px) !important;
+          width: clamp(215px, 17vw, 260px) !important;
+          height: clamp(56px, 6.2vh, 68px) !important;
           border-radius: 0 !important;
           padding: 0 !important;
           text-decoration: none;
@@ -597,32 +593,32 @@
           justify-content: center;
           width: 100%;
           height: 100%;
-          padding-inline: clamp(0.85rem, 1.4vw, 1.3rem);
+          padding-inline: clamp(0.8rem, 1.3vw, 1.2rem);
         }
 
         .sxp-devfolio-logo {
-          height: clamp(22px, 2.8vh, 30px);
+          height: clamp(20px, 2.4vh, 26px);
           width: auto;
           object-fit: contain;
         }
 
         .sxp-devfolio-divider {
           width: 1px;
-          height: clamp(22px, 2.8vh, 30px);
+          height: clamp(20px, 2.4vh, 26px);
           background: rgba(0, 0, 0, 0.12);
-          margin-inline: clamp(0.55rem, 0.9vw, 0.85rem);
+          margin-inline: clamp(0.5rem, 0.8vw, 0.75rem);
           flex-shrink: 0;
         }
 
         .sxp-devfolio-tagline {
           display: flex;
           flex-direction: column;
-          gap: 2.5px;
+          gap: 2px;
           font-family: var(--font-geist-mono), monospace;
-          font-size: clamp(0.52rem, 0.62vw, 0.58rem);
+          font-size: clamp(0.5rem, 0.58vw, 0.56rem);
           font-weight: 600;
-          letter-spacing: 0.22em;
-          line-height: 1.25;
+          letter-spacing: 0.2em;
+          line-height: 1.22;
           color: #172c1a;
           text-align: left;
           flex-shrink: 0;
@@ -630,9 +626,9 @@
 
         /* ── Individual Partner Card Branding & Logo Sizes ── */
         .sxp-react-kolkata-logo {
-          width: clamp(120px, 12vw, 155px);
+          width: clamp(110px, 11vw, 140px);
           height: auto;
-          max-height: 38px;
+          max-height: 30px;
           object-fit: contain;
           display: block;
         }
@@ -641,12 +637,12 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: clamp(0.45rem, 0.8vw, 0.7rem);
+          gap: clamp(0.35rem, 0.6vw, 0.55rem);
         }
 
         .sxp-innofusion-logo {
-          height: clamp(26px, 3.2vh, 32px);
-          width: clamp(26px, 3.2vh, 32px);
+          height: clamp(24px, 2.8vh, 30px);
+          width: clamp(24px, 2.8vh, 30px);
           object-fit: contain;
           display: block;
           flex-shrink: 0;
@@ -655,45 +651,43 @@
         .sxp-innofusion-brand {
           font-family: var(--font-display), var(--font-heading), var(--font-dm-sans), sans-serif;
           font-weight: 800;
-          font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+          font-size: clamp(0.9rem, 1.15vw, 1.05rem);
           letter-spacing: 0.05em;
-          word-spacing: 0.2em;
+          word-spacing: 0.15em;
           color: #111a12;
           line-height: 1;
           white-space: nowrap;
         }
 
-
-
         .sxp-coderush-logo {
-          width: clamp(120px, 12vw, 155px);
+          width: clamp(110px, 11vw, 140px);
           height: auto;
-          max-height: 36px;
+          max-height: 30px;
           object-fit: contain;
           display: block;
         }
 
         .sxp-mahakash-logo {
-          width: clamp(140px, 13.5vw, 180px);
+          width: clamp(130px, 12vw, 165px);
           height: auto;
-          max-height: clamp(46px, 5.2vh, 56px);
+          max-height: clamp(36px, 4.2vh, 44px);
           object-fit: contain;
           display: block;
         }
 
         .sxp-stuamb-card {
-          width: clamp(146px, 12.2vw, 175px) !important;
-          height: clamp(146px, 12.2vw, 175px) !important;
+          width: clamp(108px, 10.5vh, 126px) !important;
+          height: clamp(108px, 10.5vh, 126px) !important;
           aspect-ratio: 1 / 1;
           border-radius: 0 !important;
-          padding: 0.35rem !important;
+          padding: 0.3rem !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
         }
 
         .sxp-stuamb-logo {
-          height: clamp(118px, 13.5vh, 150px);
+          height: clamp(84px, 8.8vh, 102px);
           width: auto;
           max-height: 94%;
           max-width: 92%;
@@ -702,88 +696,88 @@
         }
 
         .sxp-gdg-card {
-          width: clamp(185px, 15.5vw, 235px) !important;
-          height: clamp(74px, 8.4vh, 88px) !important;
+          width: clamp(175px, 14.5vw, 215px) !important;
+          height: clamp(52px, 5.8vh, 62px) !important;
           text-decoration: none;
-          padding: 0.4rem 0.8rem !important;
+          padding: 0.35rem 0.7rem !important;
         }
 
         .sxp-gdg-logo {
-          width: clamp(150px, 13.5vw, 205px);
+          width: clamp(140px, 12.5vw, 185px);
           height: auto;
-          max-height: clamp(58px, 6.8vh, 72px);
+          max-height: clamp(40px, 4.4vh, 48px);
           max-width: 94%;
           object-fit: contain;
           display: block;
         }
 
         .sxp-eventopia-logo {
-          width: clamp(110px, 11vw, 145px);
+          width: clamp(105px, 9.5vw, 135px);
           height: auto;
-          max-height: 32px;
+          max-height: 28px;
           object-fit: contain;
           display: block;
         }
 
         .sxp-osen-card {
-          width: clamp(135px, 11vw, 165px) !important;
-          height: clamp(68px, 7.5vh, 80px) !important;
+          width: clamp(125px, 10vw, 155px) !important;
+          height: clamp(56px, 6.2vh, 68px) !important;
           border-radius: 0 !important;
-          padding: 0 0.65rem !important;
+          padding: 0 0.55rem !important;
         }
 
         .sxp-osen-logo {
-          width: clamp(102px, 8.6vw, 125px);
+          width: clamp(96px, 8vw, 118px);
           height: auto;
-          max-height: 40px;
+          max-height: 34px;
           object-fit: contain;
           display: block;
         }
 
         .sxp-xyz-card {
-          width: clamp(105px, 8.2vw, 130px) !important;
-          height: clamp(68px, 7.5vh, 80px) !important;
+          width: clamp(102px, 8vw, 126px) !important;
+          height: clamp(56px, 6.2vh, 68px) !important;
           border-radius: 0 !important;
-          padding: 0 0.5rem !important;
+          padding: 0 0.45rem !important;
           text-decoration: none;
         }
 
         .sxp-xyz-logo {
           width: auto;
-          height: clamp(30px, 3.4vh, 38px);
-          max-height: 38px;
+          height: clamp(26px, 3vh, 34px);
+          max-height: 34px;
           max-width: 86%;
           object-fit: contain;
           display: block;
         }
 
         .sxp-lnc-card {
-          width: clamp(195px, 16.5vw, 245px) !important;
-          height: clamp(66px, 7.2vh, 78px) !important;
+          width: clamp(175px, 14.5vw, 215px) !important;
+          height: clamp(48px, 5.4vh, 58px) !important;
           border-radius: 0 !important;
           text-decoration: none;
         }
 
         .sxp-lnc-logo {
-          width: clamp(110px, 11vw, 145px);
+          width: clamp(105px, 9.5vw, 135px);
           height: auto;
-          max-height: 38px;
+          max-height: 30px;
           object-fit: contain;
           display: block;
         }
 
         .sxp-unrevealed-note {
           font-family: var(--font-dm-sans), sans-serif;
-          font-size: clamp(0.74rem, 0.88vw, 0.82rem);
+          font-size: clamp(0.72rem, 0.85vw, 0.8rem);
           color: #3b5039;
           letter-spacing: -0.01em;
-          margin-top: clamp(0.35rem, 0.7vh, 0.6rem);
+          margin-top: clamp(0.35rem, 0.6vh, 0.55rem);
           margin-bottom: 0;
           opacity: 0.88;
         }
 
         .sxp-cta-wrap {
-          margin-top: clamp(0.35rem, 0.8vh, 0.65rem);
+          margin-top: clamp(0.45rem, 0.9vh, 0.8rem);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -913,39 +907,39 @@
 
           .sxp-community-grid .sxp-partner-card:not(.sxp-stuamb-card) {
             flex: 0 0 auto !important;
-            width: clamp(170px, 20vw, 215px) !important;
-            height: clamp(58px, 6.8vh, 68px) !important;
+            width: clamp(155px, 18vw, 195px) !important;
+            height: clamp(48px, 5.2vh, 56px) !important;
             border-radius: 0;
           }
 
-          /* Restored student ambassador card size */
+          /* Compact student ambassador card size */
           .sxp-community-grid .sxp-stuamb-card {
             flex: 0 0 auto !important;
-            width: clamp(134px, 13.5vw, 160px) !important;
-            height: clamp(134px, 13.5vw, 160px) !important;
+            width: clamp(92px, 9vh, 108px) !important;
+            height: clamp(92px, 9vh, 108px) !important;
             aspect-ratio: 1 / 1 !important;
             border-radius: 0 !important;
-            padding: 0.35rem !important;
+            padding: 0.25rem !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
           }
 
           .sxp-community-grid .sxp-stuamb-card .sxp-stuamb-logo {
-            height: clamp(108px, 12vh, 135px) !important;
+            height: clamp(72px, 7.5vh, 88px) !important;
             width: auto !important;
             max-height: 94% !important;
             max-width: 92% !important;
           }
 
           .sxp-community-grid .sxp-gdg-card {
-            width: clamp(170px, 18vw, 215px) !important;
-            height: clamp(66px, 7.6vh, 78px) !important;
+            width: clamp(155px, 16vw, 195px) !important;
+            height: clamp(48px, 5.2vh, 56px) !important;
           }
 
           .sxp-community-grid .sxp-gdg-logo {
-            max-height: clamp(50px, 5.8vh, 60px) !important;
-            width: clamp(135px, 15vw, 175px) !important;
+            max-height: clamp(36px, 4vh, 44px) !important;
+            width: clamp(120px, 13vw, 155px) !important;
           }
 
           /* Fixed INNOFUSION: ensure logo & brand stay comfortably inside the card */
@@ -1032,7 +1026,6 @@
         }
 
         @media (max-width: 900px) {
-          .sxp { --sxp-track: 280vh; }
           .sxp-stage {
             --sxp-win-w: min(88vw, 34rem);
           }
@@ -1043,9 +1036,6 @@
         }
 
         @media (max-width: 860px) {
-          .sxp {
-            --sxp-track: 260vh;
-          }
           .sxp-preview-title {
             text-shadow: none;
           }
@@ -1245,7 +1235,6 @@
           .sxp-artifacts-wing {
             display: none !important;
           }
-          .sxp { --sxp-track: 250vh; }
           .sxp-body {
             justify-content: center !important;
             align-items: center !important;
@@ -1541,10 +1530,50 @@
           }
         }
 
-        /* Short viewports: the ornament is the first thing to give. */
-        @media (max-height: 720px) {
-          .sxp-motif { display: none; }
-          .sxp-wall { gap: 0.6rem; }
+        /* Short viewports: auto-scale smoothly so zero clipping occurs */
+        @media (max-height: 760px) {
+          .sxp-body {
+            padding-top: clamp(1.4rem, 2.8vh, 2.2rem) !important;
+            padding-bottom: 0.4rem !important;
+          }
+          .sxp-crown {
+            width: clamp(55px, 5vw, 75px) !important;
+          }
+          .sxp-heading {
+            font-size: clamp(1.5rem, 2.5vw, 1.85rem) !important;
+            margin-bottom: 0.15rem !important;
+          }
+          .sxp-stuamb-card {
+            width: 80px !important;
+            height: 80px !important;
+          }
+          .sxp-stuamb-logo {
+            height: 62px !important;
+          }
+          .sxp-partner-card {
+            height: 44px !important;
+          }
+          .sxp-devfolio-card,
+          .sxp-osen-card,
+          .sxp-xyz-card {
+            height: 46px !important;
+          }
+          .sxp-gdg-card {
+            height: 46px !important;
+          }
+          .sxp-cta-wrap {
+            margin-top: 0.2rem !important;
+          }
+        }
+
+        @media (max-height: 620px) {
+          .sxp-ornament-wrap {
+            display: none !important;
+          }
+          .sxp-body {
+            padding-top: 1rem !important;
+            padding-bottom: 0.3rem !important;
+          }
         }
 
 

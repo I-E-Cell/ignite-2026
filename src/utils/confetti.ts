@@ -79,6 +79,7 @@ export function triggerConfetti() {
       return;
     }
 
+    if (!ctx) return;
     ctx.clearRect(0, 0, width, height);
 
     for (const p of particles) {

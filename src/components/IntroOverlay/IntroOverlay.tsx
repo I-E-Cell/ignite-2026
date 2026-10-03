@@ -72,7 +72,8 @@ export const IntroOverlay: React.FC = () => {
     if (typeof document !== "undefined") {
       document.documentElement.dataset.intro = "done";
     }
-    window.dispatchEvent(new CustomEvent("recursive-intro-done"));
+    const currentTime = videoRef.current ? videoRef.current.currentTime : 0;
+    window.dispatchEvent(new CustomEvent("recursive-intro-done", { detail: { currentTime } }));
 
     // Smoothly fade out root and unmount
     if (rootRef.current) {
@@ -369,6 +370,14 @@ export const IntroOverlay: React.FC = () => {
         <div className="intro-media-clip">
           <div ref={mediaRef} className="intro-media">
             <div ref={focusRef} className="intro-focus">
+              <img
+                src="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+                decoding="async"
+                className="intro-media-poster"
+              />
               <video
                 ref={videoRef}
                 src="https://www.recursiveacm.in/bg/hero_loop_pp.mp4"
@@ -639,6 +648,7 @@ export const IntroOverlay: React.FC = () => {
           position: absolute;
           inset: 0;
           overflow: hidden;
+          background-color: #0b150d;
         }
 
         .intro-media {
@@ -653,6 +663,14 @@ export const IntroOverlay: React.FC = () => {
         .intro-focus {
           position: absolute;
           inset: 0;
+        }
+
+        .intro-media-poster {
+          z-index: 1;
+        }
+
+        .intro-focus video {
+          z-index: 2;
         }
 
         .intro-media video,

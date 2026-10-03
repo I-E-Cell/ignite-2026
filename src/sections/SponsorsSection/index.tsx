@@ -6,41 +6,36 @@ import "./sxp.css";
 gsap.registerPlugin(ScrollTrigger);
 
 export const SponsorsSection = () => {
-  const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const outroRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const track = trackRef.current;
     const stage = stageRef.current;
     const intro = introRef.current;
     const outro = outroRef.current;
     const body = bodyRef.current;
 
-    if (!track || !stage || !intro || !outro || !body) return;
+    if (!stage || !intro || !outro || !body) return;
 
     const frame = stage.querySelector<HTMLElement>(".sxp-frame");
     const keyline = stage.querySelector<HTMLElement>(".sxp-keyline");
     const night = stage.querySelector<HTMLElement>(".sxp-night");
     const plate = stage.querySelector<HTMLElement>(".sxp-plate");
+    const preview = stage.querySelector<HTMLElement>(".sxp-frame-preview");
 
     const setP = (v: number) => stage.style.setProperty("--sxp-p", v.toFixed(4));
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setP(1);
       gsap.set([intro, outro], { opacity: 0 });
+      if (preview) gsap.set(preview, { opacity: 0 });
       gsap.set(body, { opacity: 1, y: 0 });
       return;
     }
 
     setP(0);
-
-    const isTouch =
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      window.innerWidth < 860;
 
     const ctx = gsap.context(() => {
       const clamp = (e: number) => (e < 0 ? 0 : e > 1 ? 1 : e);
@@ -62,15 +57,17 @@ export const SponsorsSection = () => {
         A = b1.height;
         dummy.remove();
         const b2 = stage.getBoundingClientRect();
-        W = b2.width;
-        H = b2.height;
+        W = b2.width || window.innerWidth;
+        H = b2.height || window.innerHeight;
       };
 
       measure();
 
       const updateFrame = (prog: number) => {
         setP(prog);
-        const p = sineOut(clamp(prog / 0.55));
+
+        // Window expansion takes longer and unfolds more gradually (reaches 100% full screen by prog = 0.72)
+        const p = sineOut(clamp((prog - 0.04) / 0.68));
         const r = 1 - p;
         const iy = Math.max(0, (H - A) / 2) * r;
         const ix = Math.max(0, (W - O) / 2) * r;
@@ -88,52 +85,66 @@ export const SponsorsSection = () => {
           keyline.style.opacity = Math.max(0, (r - 0.06) / 0.94).toFixed(3);
         }
 
-        const nightOpacity = Math.max(0, Math.min(1, (1 - p) * 2.8)).toFixed(3);
+        // Night background fades as window opens to reveal daylight sky
+        const nightOpacity = Math.max(0, Math.min(1, (1 - p) * 1.8)).toFixed(3);
         if (night) night.style.opacity = nightOpacity;
         if (plate) plate.style.opacity = nightOpacity;
 
-        const introP = p1Out(clamp(prog / 0.2));
+        // Intro text dissolves smoothly (prog 0 -> 0.22)
+        const introP = p1Out(clamp(prog / 0.22));
         gsap.set(intro, { opacity: 1 - introP, y: -24 * introP });
         gsap.set(outro, { opacity: 1 - introP, y: 24 * introP });
 
-        const bodyP = p1Out(clamp((prog - 0.2) / 0.32));
-        gsap.set(body, { opacity: bodyP, y: 28 * (1 - bodyP) });
-        body.style.pointerEvents = bodyP > 0.08 ? "auto" : "none";
+        // Initial preview title inside window fades out gradually (prog 0 -> 0.18)
+        if (preview) {
+          const previewP = clamp(prog / 0.18);
+          gsap.set(preview, { opacity: 1 - previewP });
+        }
+
+        // Sponsors body appears smoothly and settles (prog 0.10 -> 0.68)
+        const bodyP = p1Out(clamp((prog - 0.10) / 0.58));
+        gsap.set(body, { opacity: bodyP, y: 16 * (1 - bodyP) });
+        body.style.pointerEvents = bodyP > 0.1 ? "auto" : "none";
       };
 
       updateFrame(0);
 
-      const animObj = { prog: 0 };
-      const tween = gsap.to(animObj, {
-        prog: 1,
-        ease: "none",
-        paused: true,
-        onUpdate: () => updateFrame(animObj.prog),
-      });
-
       ScrollTrigger.create({
-        trigger: track,
+        trigger: stage,
+        pin: true,
         start: "top top",
-        end: "bottom bottom",
-        animation: tween,
-        scrub: isTouch ? 0.14 : 0.2,
+        end: () => `+=${Math.round(window.innerHeight * 2.2)}`,
+        scrub: 0.8,
+        anticipatePin: 1,
         fastScrollEnd: false,
         preventOverlaps: true,
         invalidateOnRefresh: true,
-        onRefresh: () => {
+        onUpdate: (self) => {
+          updateFrame(self.progress);
+        },
+        onRefresh: (self) => {
           measure();
-          updateFrame(animObj.prog);
+          updateFrame(self.progress || 0);
         },
       });
-    }, track);
+
+      const handleResize = () => {
+        measure();
+        ScrollTrigger.refresh();
+      };
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, stage);
 
     return () => ctx.revert();
   }, []);
 
   return (
     <section id="sponsors" className="sxp" aria-label="Sponsors">
-      <div ref={trackRef} className="sxp-track">
-        <div ref={stageRef} className="sxp-stage">
+      <div ref={stageRef} className="sxp-stage">
           <div className="sxp-night" aria-hidden="true" />
 
           {/* Intro Labels */}
@@ -189,7 +200,7 @@ export const SponsorsSection = () => {
                       alt=""
                       aria-hidden="true"
                       draggable="false"
-                      className="orn orn-light sxp-crown block w-[clamp(114px,56.87px+15.87vw,260px)] h-auto max-w-full object-contain select-none pointer-events-none opacity-[0.88]"
+                      className="orn orn-light sxp-crown block h-auto max-w-full object-contain select-none pointer-events-none opacity-[0.88]"
                     />
                   </div>
 
@@ -437,15 +448,15 @@ export const SponsorsSection = () => {
                   </span>
 
                   {/* Partner CTA Button */}
-                  <div className="sxp-cta-wrap mt-8">
+                  <div className="sxp-cta-wrap">
                     <a
                       href="https://forms.gle/6WMzt855AmDqDUac8"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-b from-stone-900 to-black text-[#f3f8ee] font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition-all duration-200 border border-lime-800/30"
+                      className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-b from-stone-900 to-black text-[#f3f8ee] font-semibold text-xs md:text-sm shadow-md hover:scale-105 active:scale-95 transition-all duration-200 border border-lime-800/30"
                     >
                       <span>Partner with this edition</span>
-                      <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14M13 6l6 6-6 6" />
                       </svg>
                     </a>
@@ -479,7 +490,6 @@ export const SponsorsSection = () => {
 
           <span className="sxp-keyline" aria-hidden="true" />
         </div>
-      </div>
     </section>
   );
 };

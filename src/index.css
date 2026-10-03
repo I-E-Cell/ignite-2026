@@ -4,6 +4,7 @@
 :root {
   /* ── Colour Tokens ── */
   --color-bg: #F4F3F0;
+  --color-night: #000000;
   --color-accent: #5C8C3A;
   --color-accent-bright: #8FC45A;
   --color-accent-deep: #2F5527;
@@ -39,10 +40,6 @@
 
   /* ── Spacing ── */
   --padding-x: clamp(1rem, 2.5vw, 2rem);
-
-  /* ── Sponsor section stage dims ── */
-  --sxp-win-w: 100vw;
-  --sxp-win-h: 100vh;
 }
 
 /* ── Figma Wireframe Button Classes ── */

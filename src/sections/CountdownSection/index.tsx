@@ -18,7 +18,7 @@ export const CountdownSection = () => {
   const [units, setUnits] = useState<ClockUnit[]>(getUnits);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const tick = () => {
       setUnits(getUnits());
       timeoutId = setTimeout(tick, 1000 - (Date.now() % 1000) + 15);

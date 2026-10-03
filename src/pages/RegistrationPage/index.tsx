@@ -16,9 +16,15 @@ import {
   HelpCircle,
   Database,
   Loader2,
+  Bot,
+  CreditCard,
+  Leaf,
+  HeartPulse,
+  GraduationCap,
+  Zap,
 } from "lucide-react";
 import { triggerConfetti } from "@/utils/confetti";
-import { submitRegistration, isSupabaseConfigured } from "@/lib/supabase";
+import { submitRegistration } from "@/lib/supabase";
 
 interface TeamMemberData {
   name: string;
@@ -63,37 +69,37 @@ const AVAILABLE_TRACKS = [
   {
     id: "AI & Automation",
     title: "AI & Automation",
-    icon: "🤖",
+    icon: Bot,
     description: "LLM agents, automated enterprise workflows, intelligent copilots (n8n, Voiceflow, Claude/OpenAI).",
   },
   {
     id: "Fintech & Commerce",
     title: "Fintech & Commerce",
-    icon: "💳",
+    icon: CreditCard,
     description: "Escrow payments, neo-banking, local checkout, invoice automation, open finance.",
   },
   {
     id: "Climate & Sustainability",
     title: "Climate & Sustainability",
-    icon: "🌿",
+    icon: Leaf,
     description: "Agri-tech advisory, carbon accounting, EV logistics, circular waste management.",
   },
   {
     id: "HealthTech & Wellness",
     title: "HealthTech & Wellness",
-    icon: "🏥",
+    icon: HeartPulse,
     description: "Vernacular triage, patient intake, clinic scheduling, preventive wellness.",
   },
   {
     id: "EdTech & Future of Work",
     title: "EdTech & Future of Work",
-    icon: "🎓",
+    icon: GraduationCap,
     description: "Skill apprenticeships, peer study sprints, async collaboration, micro-credentials.",
   },
   {
     id: "Open Innovation",
     title: "Open Innovation",
-    icon: "⚡",
+    icon: Zap,
     description: "Bold, unconventional software products solving systemic everyday friction.",
   },
 ];
@@ -514,7 +520,6 @@ export const RegistrationPage = () => {
           ].map((item) => {
             const isActive = step === item.num;
             const isCompleted = step > item.num;
-            const IconComp = item.icon;
 
             return (
               <button
@@ -603,8 +608,8 @@ export const RegistrationPage = () => {
                           : "bg-[#FBFAF8] border-black/10 hover:border-black/25 hover:bg-white"
                           }`}
                       >
-                        <span className="text-2xl shrink-0 p-1 rounded-md bg-white border border-black/5">
-                          {t.icon}
+                        <span className="p-2 rounded-md bg-white border border-black/5 text-[#2F5527] shrink-0">
+                          <t.icon className="w-5 h-5" />
                         </span>
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
@@ -1043,7 +1048,10 @@ export const RegistrationPage = () => {
                           : "bg-[#FBFAF8] text-neutral-700 border-black/10 hover:border-black/25 hover:bg-white"
                           }`}
                       >
-                        {isSelected ? `✓ ${tool}` : `+ ${tool}`}
+                        <span className="inline-flex items-center gap-1">
+                          {isSelected ? <Check className="w-3 h-3" /> : "+"}
+                          <span>{tool}</span>
+                        </span>
                       </button>
                     );
                   })}

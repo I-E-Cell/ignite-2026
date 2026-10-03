@@ -29,17 +29,17 @@ export const Main = () => {
         <MentorsJudgesSection />
       </div>
 
-      {/* 5. Who Can Join: Eligibility, Year, Team Size, Cross-Branch Rules */}
+      {/* 5. Sponsors: Seamless Dark-to-Light Viewport Transition with Ecosystem Partners */}
+      <SponsorsSection />
+
+      {/* 6. Who Can Join: Eligibility, Year, Team Size, Cross-Branch Rules */}
       <EligibilitySection />
 
-      {/* 6. Timeline: How the 20 Weeks Actually Happen (5 Steps) */}
+      {/* 7. Timeline: How the 20 Weeks Actually Happen (5 Steps) */}
       <TimelineSection />
 
-      {/* 7. Gallery: Pitches, Mentor Sessions, Top 10, Demo Day, Alumni */}
+      {/* 8. Gallery: Pitches, Mentor Sessions, Top 10, Demo Day, Alumni */}
       <GallerySection />
-
-      {/* 8. Sponsors: Interactive GSAP 3D Stage with Ecosystem Partners */}
-      <SponsorsSection />
 
       {/* 9. FAQ: The 6 Exact Questions on Eligibility, Grant, Team & IP */}
       <FaqSection />

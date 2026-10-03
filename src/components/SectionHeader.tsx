@@ -177,20 +177,20 @@ export const SectionHeader = (props: SectionHeaderProps) => {
 
   if (props.variant === "faq") {
     return (
-      <div className="box-border caret-transparent outline-[3px] no-underline items-center flex flex-col justify-center min-h-[auto] min-w-[auto] text-center w-full mb-[28.8px] md:mb-[57.6px]">
+      <div className="box-border caret-transparent outline-[3px] no-underline items-center flex flex-col justify-center min-h-[auto] min-w-[auto] text-center w-full mb-6 md:mb-10">
         <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline">
-          <div className="box-border caret-transparent flex justify-center outline-[3px] no-underline items-center mb-3 md:mb-5">
+          <div className="box-border caret-transparent flex justify-center outline-[3px] no-underline items-center mb-2 md:mb-3">
             <img
               src={artifactUrl}
               alt=""
-              className="box-border caret-transparent max-w-full min-h-[auto] min-w-[auto] object-contain opacity-[0.88] outline-[3px] pointer-events-none no-underline w-[116.382px] md:w-[260px]"
+              className="box-border caret-transparent max-w-full min-h-[auto] min-w-[auto] object-contain opacity-[0.88] outline-[3px] pointer-events-none no-underline w-[90px] md:w-[130px]"
             />
           </div>
         </div>
 
-        <h2 className="box-border caret-transparent font-medium outline-[3px] no-underline font-headingNow text-neutral-900 text-[41.6px] tracking-[-1.456px] leading-[45.76px] min-h-[auto] min-w-[auto] uppercase md:text-[73.6px] md:tracking-[-2.576px] md:leading-[80.96px]">
-          <span className="box-border caret-transparent outline-[3px] no-underline overflow-hidden flex text-[41.6px] justify-center tracking-[-1.456px] leading-[45.76px] mb-[-3.744px] pb-[-3.744px] md:text-[73.6px] md:tracking-[-2.576px] md:leading-[80.96px]">
-            <span className="box-border caret-transparent block outline-[3px] no-underline text-[41.6px] tracking-[-1.456px] leading-[45.76px] min-h-[auto] min-w-[auto] md:text-[73.6px] md:tracking-[-2.576px] md:leading-[80.96px]">
+        <h2 className="box-border caret-transparent font-medium outline-[3px] no-underline font-headingNow text-neutral-900 text-[41.6px] tracking-[-1.456px] leading-[45.76px] min-h-[auto] min-w-[auto] uppercase md:text-[64px] md:tracking-[-2px] md:leading-[70px]">
+          <span className="box-border caret-transparent outline-[3px] no-underline overflow-hidden flex text-[41.6px] justify-center tracking-[-1.456px] leading-[45.76px] md:text-[64px] md:tracking-[-2px] md:leading-[70px]">
+            <span className="box-border caret-transparent block outline-[3px] no-underline text-[41.6px] tracking-[-1.456px] leading-[45.76px] min-h-[auto] min-w-[auto] md:text-[64px] md:tracking-[-2px] md:leading-[70px]">
               {props.title}
             </span>
           </span>

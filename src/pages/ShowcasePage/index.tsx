@@ -19,19 +19,16 @@ import {
   Cpu,
   ShieldCheck,
   Database,
-  RefreshCw,
   Copy,
-  Info,
   Loader2,
+  Trophy,
 } from "lucide-react";
 import {
-  SHOWCASE_PROJECTS,
   type ShowcaseProject,
 } from "@/data/showcaseProjects";
 import {
   fetchShowcaseProjects,
   upvoteProjectInSupabase,
-  isSupabaseConfigured,
 } from "@/lib/supabase";
 
 const TRACKS = [
@@ -262,40 +259,22 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
         >
           <span>← Back to Ignite Home</span>
         </Link>
-        
-        <div className="flex items-center gap-2.5">
-          {/* Supabase Status Pill */}
-          {isFromDatabase ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/90 border border-emerald-300 text-xs font-bold text-emerald-800 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-              <Database className="w-3 h-3 text-emerald-700" />
-              <span>Supabase Live DB Connected</span>
-            </span>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setShowSchemaModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 hover:bg-white border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] shadow-2xs transition-all cursor-pointer"
-            >
-              <Database className="w-3 h-3 text-[#5C8C3A]" />
-              <span>Connect Supabase DB</span>
-              <Info className="w-3 h-3 text-neutral-400" />
-            </button>
-          )}
-
-          <div className="hidden sm:flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#2F5527]">
-            <span className="w-2 h-2 rounded-full bg-[#8FC45A] animate-pulse" />
-            <span>Ignite 2026 Archive</span>
-          </div>
-        </div>
       </div>
 
       {/* ── Hero Showcase Banner ── */}
       <header className="relative overflow-hidden rounded-2xl bg-white/80 border border-[#5C8C3A]/25 p-6 md:p-10 mb-10 shadow-sm backdrop-blur-md">
         <div className="relative z-10 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
-            Official Submissions &amp; Prototypes
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
+              Official Submissions &amp; Prototypes
+            </div>
+            {isFromDatabase && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                Live Database Connected
+              </span>
+            )}
           </div>
           <h1
             className="text-3xl md:text-5xl lg:text-6xl font-black text-[#141412] tracking-tight leading-[1.08] mb-4"
@@ -375,9 +354,9 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
               onChange={(e) => setSortBy(e.target.value as any)}
               className="py-2.5 px-3 rounded-lg bg-white/90 border border-black/15 text-xs font-semibold text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] shadow-xs cursor-pointer"
             >
-              <option value="upvotes">🔥 Most Upvoted</option>
-              <option value="featured">✨ Featured &amp; Winners</option>
-              <option value="name">🔤 Project Name (A-Z)</option>
+              <option value="upvotes">Most Upvoted</option>
+              <option value="featured">Featured &amp; Winners</option>
+              <option value="name">Project Name (A-Z)</option>
             </select>
           </div>
         </div>
@@ -389,11 +368,10 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
               key={track}
               type="button"
               onClick={() => setSelectedTrack(track)}
-              className={`text-xs font-semibold px-3.5 py-1.5 rounded-full whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                selectedTrack === track
-                  ? "bg-[#141412] text-[#FBFAF8] shadow-sm"
-                  : "bg-white/70 text-neutral-700 hover:bg-white border border-black/10 hover:border-black/20"
-              }`}
+              className={`text-xs font-semibold px-3.5 py-1.5 rounded-full whitespace-nowrap transition-all duration-200 cursor-pointer ${selectedTrack === track
+                ? "bg-[#141412] text-[#FBFAF8] shadow-sm"
+                : "bg-white/70 text-neutral-700 hover:bg-white border border-black/10 hover:border-black/20"
+                }`}
             >
               {track}
             </button>
@@ -407,35 +385,34 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
             <button
               type="button"
               onClick={() => setAwardFilter("all")}
-              className={`px-2.5 py-1 rounded-md font-semibold ${
-                awardFilter === "all"
-                  ? "bg-[#2F5527] text-white"
-                  : "bg-white/60 text-neutral-600 hover:bg-white"
-              }`}
+              className={`px-2.5 py-1 rounded-md font-semibold ${awardFilter === "all"
+                ? "bg-[#2F5527] text-white"
+                : "bg-white/60 text-neutral-600 hover:bg-white"
+                }`}
             >
               All Projects
             </button>
             <button
               type="button"
               onClick={() => setAwardFilter("winners")}
-              className={`px-2.5 py-1 rounded-md font-semibold flex items-center gap-1 ${
-                awardFilter === "winners"
-                  ? "bg-[#2F5527] text-white"
-                  : "bg-white/60 text-neutral-600 hover:bg-white"
-              }`}
+              className={`px-2.5 py-1 rounded-md font-semibold flex items-center gap-1.5 ${awardFilter === "winners"
+                ? "bg-[#2F5527] text-white"
+                : "bg-white/60 text-neutral-600 hover:bg-white"
+                }`}
             >
-              <span>🏆 Grant Winners</span>
+              <Trophy className="w-3.5 h-3.5" />
+              <span>Grant Winners</span>
             </button>
             <button
               type="button"
               onClick={() => setAwardFilter("finalists")}
-              className={`px-2.5 py-1 rounded-md font-semibold flex items-center gap-1 ${
-                awardFilter === "finalists"
-                  ? "bg-[#2F5527] text-white"
-                  : "bg-white/60 text-neutral-600 hover:bg-white"
-              }`}
+              className={`px-2.5 py-1 rounded-md font-semibold flex items-center gap-1.5 ${awardFilter === "finalists"
+                ? "bg-[#2F5527] text-white"
+                : "bg-white/60 text-neutral-600 hover:bg-white"
+                }`}
             >
-              <span>🚀 Finalists</span>
+              <Award className="w-3.5 h-3.5" />
+              <span>Finalists</span>
             </button>
           </div>
 
@@ -609,16 +586,14 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                           type="button"
                           onClick={(e) => handleUpvote(project.id, e)}
                           aria-label={`Upvote ${project.title}`}
-                          className={`flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-md transition-all cursor-pointer ${
-                            userUpvoted
-                              ? "bg-rose-50 text-rose-600 border border-rose-200"
-                              : "bg-[#F4F3F0] hover:bg-neutral-200 text-neutral-700 border border-black/5"
-                          }`}
+                          className={`flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 rounded-md transition-all cursor-pointer ${userUpvoted
+                            ? "bg-rose-50 text-rose-600 border border-rose-200"
+                            : "bg-[#F4F3F0] hover:bg-neutral-200 text-neutral-700 border border-black/5"
+                            }`}
                         >
                           <Heart
-                            className={`w-3.5 h-3.5 ${
-                              userUpvoted ? "fill-rose-500 text-rose-500" : "text-neutral-500"
-                            }`}
+                            className={`w-3.5 h-3.5 ${userUpvoted ? "fill-rose-500 text-rose-500" : "text-neutral-500"
+                              }`}
                           />
                           <span>{upvoteCount}</span>
                         </button>
@@ -841,18 +816,16 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                 <button
                   type="button"
                   onClick={() => handleUpvote(selectedProject.id)}
-                  className={`flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-md transition-all cursor-pointer ${
-                    hasUpvoted[selectedProject.id]
-                      ? "bg-rose-50 text-rose-600 border border-rose-200"
-                      : "bg-[#F4F3F0] hover:bg-neutral-200 text-neutral-800 border border-black/10"
-                  }`}
+                  className={`flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-md transition-all cursor-pointer ${hasUpvoted[selectedProject.id]
+                    ? "bg-rose-50 text-rose-600 border border-rose-200"
+                    : "bg-[#F4F3F0] hover:bg-neutral-200 text-neutral-800 border border-black/10"
+                    }`}
                 >
                   <Heart
-                    className={`w-4 h-4 ${
-                      hasUpvoted[selectedProject.id]
-                        ? "fill-rose-500 text-rose-500"
-                        : "text-neutral-500"
-                    }`}
+                    className={`w-4 h-4 ${hasUpvoted[selectedProject.id]
+                      ? "fill-rose-500 text-rose-500"
+                      : "text-neutral-500"
+                      }`}
                   />
                   <span>{upvotes[selectedProject.id] ?? selectedProject.initialUpvotes} Upvotes</span>
                 </button>
@@ -997,7 +970,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                   <li>
                     Add your credentials in <code className="bg-neutral-100 px-1 py-0.5 rounded font-mono">.env</code>:
                     <pre className="bg-[#141412] text-[#8FC45A] p-2.5 rounded-md mt-1 font-mono text-[11px] overflow-x-auto">
-{`VITE_SUPABASE_URL=https://your-project.supabase.co
+                      {`VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key`}
                     </pre>
                   </li>
@@ -1029,7 +1002,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key`}
                   </button>
                 </div>
                 <pre className="bg-[#141412] text-neutral-200 p-3 rounded-lg font-mono text-[10px] leading-relaxed max-h-40 overflow-y-auto border border-black/10">
-{`CREATE TABLE IF NOT EXISTS public.ignite_registrations (
+                  {`CREATE TABLE IF NOT EXISTS public.ignite_registrations (
   id TEXT PRIMARY KEY,
   created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   team_name TEXT NOT NULL,
