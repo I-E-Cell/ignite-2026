@@ -7,12 +7,6 @@ export const NavbarBrand = () => {
     >
       <span className="items-center box-border caret-transparent gap-x-2 flex min-h-[auto] min-w-[auto] outline-none relative no-underline">
         <span
-          className="box-border caret-transparent text-[#141412] block text-[19px] font-black tracking-[-0.01em] leading-none outline-none no-underline uppercase md:text-[21px]"
-          style={{ fontFamily: "'Baloo 2', cursive, sans-serif", fontWeight: 800 }}
-        >
-          IGNITE
-        </span>
-        <span
           className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#141412] text-[#FBFAF8]"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >

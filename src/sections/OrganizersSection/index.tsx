@@ -107,12 +107,6 @@ export const OrganizersSection = () => {
             Army Institute of Technology, Pune
           </p>
 
-          <img
-            src="https://www.recursiveacm.in/_next/image?url=%2Fcollege_logo%2Fgnitacm.png&w=750&q=75"
-            alt="I&E Cell AIT Pune"
-            className="max-h-20 object-contain my-3"
-          />
-
           <div className="mt-4 flex items-center gap-4">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold font-geist_mono text-[#2F5527] uppercase tracking-wider">
               <span>Campus Innovation Hub</span>
@@ -132,16 +126,7 @@ export const OrganizersSection = () => {
 
         {/* Institutional Accreditation Marks */}
         <div className="w-full mt-12 pt-8 border-t border-stone-200/80">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            <div className="flex flex-col items-center p-4 bg-white/60 border border-stone-200/80 rounded-xl shadow-xs">
-              <img
-                src="https://www.recursiveacm.in/_next/image?url=%2Fcollege_logo%2Fjis.png&w=256&q=75"
-                alt="JIS Group"
-                className="h-10 object-contain mb-2"
-              />
-              <span className="text-xs font-bold text-stone-900">JIS Group</span>
-              <span className="text-[10px] text-stone-500 uppercase tracking-wider">Educational Partner</span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
 
             <div className="flex flex-col items-center p-4 bg-white/60 border border-stone-200/80 rounded-xl shadow-xs">
               <img

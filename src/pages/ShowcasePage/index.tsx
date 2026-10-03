@@ -264,17 +264,9 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
       {/* ── Hero Showcase Banner ── */}
       <header className="relative overflow-hidden rounded-2xl bg-white/80 border border-[#5C8C3A]/25 p-6 md:p-10 mb-10 shadow-sm backdrop-blur-md">
         <div className="relative z-10 max-w-3xl">
-          <div className="flex flex-wrap items-center gap-2 mb-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
-              Official Submissions &amp; Prototypes
-            </div>
-            {isFromDatabase && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                Live Database Connected
-              </span>
-            )}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
+            Official Submissions &amp; Prototypes
           </div>
           <h1
             className="text-3xl md:text-5xl lg:text-6xl font-black text-[#141412] tracking-tight leading-[1.08] mb-4"
