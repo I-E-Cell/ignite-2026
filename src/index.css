@@ -134,6 +134,24 @@ svg .rounded-full,
 svg circle {
   border-radius: 9999px !important;
 }
+/* Preserve draggable polaroid card rounded aesthetic */
+.draggable-card-item {
+  border-radius: 10px !important;
+}
+.draggable-card-item img,
+.draggable-card-item .card-image-box {
+  border-radius: 7px !important;
+}
+.draggable-card-item .card-badge {
+  border-radius: 9999px !important;
+}
+/* Preserve domain carousel card rounded aesthetic */
+.domain-carousel-card {
+  border-radius: 20px !important;
+}
+.domain-carousel-pill {
+  border-radius: 9999px !important;
+}
 /* Preserve the hero hill dome shape */
 .hero-hill,
 [class*="hero-hill"] {
