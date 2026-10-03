@@ -340,114 +340,52 @@ export const SponsorsSection = () => {
                       </div>
                     </div>
 
-                    <div className="sxp-community-col sxp-community-center">
-                      <div
-                        className="sxp-partner-card sxp-float-card sxp-stuamb-card"
-                        title="Microsoft Student Ambassador"
-                        role="img"
-                        aria-label="Microsoft Student Ambassador"
-                      >
-                        <img
-                          src="https://www.recursiveacm.in/images/sponsors/Stu_amb_clean.png"
-                          alt="Microsoft Student Ambassador"
-                          className="sxp-partner-logo sxp-stuamb-logo"
-                          width={140}
-                          height={160}
-                        />
-                      </div>
 
-                    </div>
 
-                    <div className="sxp-community-col">
-                      <div
-                        className="sxp-partner-card sxp-float-card sxp-coderush-card"
-                        title="CodeRush X"
-                        role="img"
-                        aria-label="CodeRush X"
-                      >
-                        <img
-                          src="https://www.recursiveacm.in/images/sponsors/CodeRush%20X%20Logo-dark.png"
-                          alt="CodeRush X"
-                          className="sxp-partner-logo sxp-coderush-logo"
-                          width={225}
-                          height={52}
-                        />
-                      </div>
-                    </div>
+
                   </div>
                 </div>
-
-                {/* Media Tier */}
-                <div className="sxp-partner-tier sxp-media-tier">
-                  <span className="sxp-tier-badge">MEDIA PARTNERS</span>
-                  <div className="sxp-media-grid">
-                    <a
-                      href="https://lnc-community.vercel.app"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="sxp-partner-card sxp-float-card sxp-lnc-card"
-                      title="LNC Community"
-                      aria-label="LNC Community"
-                    >
-                      <img
-                        src="https://www.recursiveacm.in/images/sponsors/LNC.png"
-                        alt="LNC Community"
-                        className="sxp-partner-logo sxp-lnc-logo"
-                        width={195}
-                        height={52}
-                      />
-                    </a>
-                    <div
-                      className="sxp-partner-card sxp-float-card-alt sxp-eventopia-card"
-                      title="Eventopia"
-                      role="img"
-                      aria-label="Eventopia"
-                    >
-                      <img
-                        src="https://www.recursiveacm.in/images/sponsors/Eventopia-Logo-04.png"
-                        alt="Eventopia"
-                        className="sxp-partner-logo sxp-eventopia-logo"
-                        width={170}
-                        height={44}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <span className="sxp-unrevealed-note">
-                  More community partners & sponsors revealing soon.
-                </span>
-
-
               </div>
 
-              {/* Right Wing Artifacts */}
-              <div className="sxp-artifacts-wing sxp-wing-right" aria-hidden="true">
-                <div className="sxp-polaroid-group sxp-polaroid-group-right">
-                  <img
-                    src="https://www.recursiveacm.in/images/ui/polaroid_howrah.png"
-                    alt=""
-                    className="sxp-art-img sxp-polaroid-howrah-img"
-                    width={250}
-                    height={189}
-                  />
-                </div>
-                <div className="sxp-artifact-item sxp-art-doodle-right">
-                  <img
-                    src="https://www.recursiveacm.in/images/ui/doodle_building_tomorrow.png"
-                    alt=""
-                    className="sxp-art-img sxp-doodle-tomorrow-img"
-                    width={165}
-                    height={134}
-                  />
-                </div>
+              {/* Media Tier */}
+              <div className="sxp-partner-tier sxp-media-tier">
+                <span className="sxp-tier-badge">MEDIA PARTNERS</span>
+              </div>
+
+              <span className="sxp-unrevealed-note">
+                More community partners & sponsors revealing soon.
+              </span>
+
+
+            </div>
+
+            {/* Right Wing Artifacts */}
+            <div className="sxp-artifacts-wing sxp-wing-right" aria-hidden="true">
+              <div className="sxp-polaroid-group sxp-polaroid-group-right">
+                <img
+                  src="https://www.recursiveacm.in/images/ui/polaroid_howrah.png"
+                  alt=""
+                  className="sxp-art-img sxp-polaroid-howrah-img"
+                  width={250}
+                  height={189}
+                />
+              </div>
+              <div className="sxp-artifact-item sxp-art-doodle-right">
+                <img
+                  src="https://www.recursiveacm.in/images/ui/doodle_building_tomorrow.png"
+                  alt=""
+                  className="sxp-art-img sxp-doodle-tomorrow-img"
+                  width={165}
+                  height={134}
+                />
               </div>
             </div>
           </div>
         </div>
-
-        <span className="sxp-keyline" aria-hidden="true" />
       </div>
-    </section>
+
+      <span className="sxp-keyline" aria-hidden="true" />
+    </div>
+    </section >
   );
 };
