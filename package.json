@@ -35,6 +35,7 @@
         "esbuild": "0.25.5",
         "globals": "15.12.0",
         "postcss": "^8.4.38",
+        "shadcn": "^4.21.1",
         "tailwindcss": "3.4.16",
         "typescript": "^7.0.2",
         "vite": "6.3.5"
