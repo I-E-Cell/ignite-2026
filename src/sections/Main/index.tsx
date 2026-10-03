@@ -3,6 +3,7 @@ import { CountdownSection } from "@/sections/CountdownSection";
 import { PerksSection } from "@/sections/PerksSection";
 import { SplashCursor } from "@/components/SplashCursor";
 import { EligibilitySection } from "@/sections/EligibilitySection";
+import { ToolsSection } from "@/sections/ToolsSection";
 import { TimelineSection } from "@/sections/TimelineSection";
 import { GallerySection } from "@/sections/GallerySection";
 import { SponsorsSection } from "@/sections/SponsorsSection";
@@ -31,6 +32,7 @@ export const Main = () => {
           SPLAT_FORCE={5500}
         />
         <PerksSection />
+        <ToolsSection />
       </div>
 
       {/* 5. Sponsors: Seamless Dark-to-Light Viewport Transition with Ecosystem Partners */}
