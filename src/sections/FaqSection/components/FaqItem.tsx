@@ -19,7 +19,7 @@ export const FaqItem = (props: FaqItemProps) => {
       >
         <div className="flex items-baseline gap-4 md:gap-6 flex-1">
           <span
-            className="shrink-0 text-lg md:text-xl"
+            className="shrink-0 text-2xl md:text-3xl"
             style={{
               fontFamily: "'Inter', sans-serif",
               fontWeight: 700,
@@ -34,8 +34,8 @@ export const FaqItem = (props: FaqItemProps) => {
             style={{
               fontFamily: "'Inter', sans-serif",
               fontWeight: 700,
-              fontSize: "18.4px",
-              lineHeight: "22px",
+              fontSize: "clamp(17px, 2vw + 8px, 22px)",
+              lineHeight: "1.3",
               color: "#141412",
             }}
           >
@@ -46,7 +46,7 @@ export const FaqItem = (props: FaqItemProps) => {
         <div className="flex shrink-0 h-8 w-8 items-center justify-center">
           <svg
             viewBox="0 0 24 24"
-            className={`w-5 h-5 transition-transform duration-300 ${
+            className={`w-6 h-6 transition-transform duration-300 ${
               isOpen ? "rotate-180 text-lime-800" : "text-stone-500"
             }`}
             fill="none"
@@ -61,7 +61,7 @@ export const FaqItem = (props: FaqItemProps) => {
       </button>
 
       {isOpen && (
-        <div className="px-2 pb-6 md:px-5 md:pl-16 text-sm md:text-base leading-relaxed text-stone-700 font-dm_sans animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="px-2 pb-6 md:px-5 md:pl-16 text-base md:text-lg leading-relaxed text-stone-700 font-dm_sans animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="whitespace-pre-line bg-white/60 p-4 md:p-6 rounded-xl border border-stone-200/80 shadow-xs">
             {props.answer}
           </div>
