@@ -37,17 +37,6 @@ export const DesktopNavLinks = () => {
         FAQ
       </a>
 
-      {/* Showcase Page Navigation */}
-      <Link
-        to="/showcase"
-        className={`text-[13px] font-bold leading-[20px] outline-none no-underline text-nowrap px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${location.pathname === "/showcase"
-          ? "bg-[#2F5527] text-white shadow-2xs"
-          : "text-[#2F5527] hover:bg-[#2F5527]/10"
-          }`}
-        style={{ fontFamily: "'Inter', sans-serif" }}
-      >
-        <span>Showcase</span>
-      </Link>
 
       {/* Register CTA Button */}
       <Link
