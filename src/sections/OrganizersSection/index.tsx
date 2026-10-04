@@ -1,174 +1,214 @@
-import { SectionHeader } from "@/components/SectionHeader";
-import { Mail, MessageSquare } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Linkedin,
+  Youtube,
+  ArrowUpRight,
+  Mail,
+} from "lucide-react";
 
 export const OrganizersSection = () => {
   return (
     <section
       id="contact"
-      aria-label="Organizers and Contact Us"
-      className="box-border caret-transparent relative w-full pt-16 pb-24 px-5 text-neutral-900 scroll-mt-20 md:pt-24 md:pb-28 md:px-16"
+      aria-label="Organizers and Contact Us" style={{ background: "linear-gradient(to bottom, rgba(28,28,28,0) 0px, rgba(28,28,28,0.04) 40px, rgba(28,28,28,0.14) 80px, rgba(28,28,28,0.3) 120px, rgba(28,28,28,0.5) 160px, rgba(28,28,28,0.72) 200px, rgba(28,28,28,0.9) 240px, rgba(28,28,28,0.98) 280px, rgb(28,28,28) 320px, rgb(28,28,28) calc(100% - 180px), rgba(28,28,28,0.96) calc(100% - 150px), rgba(28,28,28,0.85) calc(100% - 125px), rgba(28,28,28,0.65) calc(100% - 100px), rgba(28,28,28,0.42) calc(100% - 70px), rgba(28,28,28,0.2) calc(100% - 45px), rgba(28,28,28,0.06) calc(100% - 20px), rgba(28,28,28,0) 100%)" }}
+      className="box-border caret-transparent relative w-full pt-48 pb-48 px-5 text-neutral-100 scroll-mt-20 md:pt-64 md:pb-48 md:px-12 lg:px-16 overflow-hidden"
     >
-      <div className="max-w-[1280px] mx-auto flex flex-col items-center text-center">
-        <SectionHeader variant="artifactOnly" title="" />
-
-        {/* ── Contact Us Highlight Card ── */}
-        <div className="w-full max-w-3xl mb-16 p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-white/95 to-[#edf5e6]/90 border border-[#5C8C3A]/30 shadow-md flex flex-col items-center">
-          <span
-            className="block text-center mb-3"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 700,
-              fontSize: "13px",
-              lineHeight: "16px",
-              letterSpacing: "1.3px",
-              textTransform: "uppercase",
-              color: "#A8A69B",
-            }}
-          >
-            (Contact Us)
-          </span>
-
-          <h2
-            className="text-center tracking-tight"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(1.4rem, 2.8vw, 32px)",
-              lineHeight: "1.35",
-              color: "#141412",
-            }}
-          >
-            Got a question we haven&apos;t answered? Reach out to the I&amp;E Cell directly.
-          </h2>
-
-          <p
-            className="mt-3 text-sm sm:text-base text-stone-600 max-w-lg leading-relaxed text-center"
-            style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
-          >
-            Whether it&apos;s team formation, eligibility, or grant criteria, our student coordinators and mentors are ready to help.
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 w-full">
-            <a
-              href="mailto:ecell@aitpune.edu.in"
-              className="inline-flex items-center justify-center gap-2.5 px-7 h-[56px] min-w-[150px] rounded-full shadow-xs hover:bg-[#252520] transition-all cursor-pointer"
-              style={{
-                backgroundColor: "#141412",
-                color: "#FBFAF8",
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 700,
-                fontSize: "16px",
-                textDecoration: "none",
-              }}
-            >
-              <Mail className="w-4 h-4 text-[#8FC45A]" />
-              <span>Email I&amp;E Cell</span>
-            </a>
-
-            <a
-              href="#faq"
-              className="inline-flex items-center justify-center gap-2.5 px-7 h-[56px] min-w-[150px] rounded-full shadow-xs hover:bg-[#141412] hover:text-[#FBFAF8] transition-all cursor-pointer"
-              style={{
-                backgroundColor: "transparent",
-                border: "2px solid #141412",
-                color: "#141412",
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 700,
-                fontSize: "16px",
-                textDecoration: "none",
-              }}
-            >
-              <MessageSquare className="w-4 h-4 text-[#5C8C3A]" />
-              <span>Check FAQ</span>
-            </a>
-          </div>
-        </div>
-
-        {/* ── Host Chapter Section ── */}
-        <div className="mb-3">
-          <span className="text-xs uppercase font-semibold font-geist_mono tracking-widest text-[#3F6827]">
-            ORGANIZERS &amp; INCUBATION ECOSYSTEM
-          </span>
-        </div>
-
-        <h3 className="text-3xl md:text-5xl font-medium font-headingNow text-neutral-900 tracking-tight">
-          The Builders Behind IGNITE
-        </h3>
-
-        {/* Host chapter card */}
-        <div className="w-full max-w-xl mt-10 p-6 md:p-8 rounded-2xl bg-white/80 border border-stone-200/90 shadow-xs flex flex-col items-center">
-          <span className="text-xs font-semibold font-geist_mono tracking-wider text-stone-500 uppercase mb-3">
-            HOSTED &amp; INCUBATED BY
-          </span>
-          <h4 className="text-xl md:text-2xl font-bold font-headingNow text-neutral-900 mb-2">
-            Innovation &amp; Entrepreneurship Cell (I&amp;E Cell)
-          </h4>
-          <p className="text-xs text-stone-500 font-dm_sans mb-4">
-            Army Institute of Technology, Pune
-          </p>
-
-          <div className="mt-4 flex items-center gap-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold font-geist_mono text-[#2F5527] uppercase tracking-wider">
-              <span>Campus Innovation Hub</span>
+      <div className="max-w-[1280px] mx-auto flex flex-col relative z-10">
+        {/* ── Top Header & Standalone Logos (Freely placed, no box, no X symbol) ── */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-white/10">
+          <div>
+            <span className="text-[11px] sm:text-xs font-bold font-geist_mono uppercase tracking-[2.5px] text-[#A2D96B] mb-2 block">
+              (Organised by I&amp;E Cell)
             </span>
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-[1.08]"
+              style={{
+                fontFamily:
+                  "var(--font-headingNow), 'Plus Jakarta Sans', system-ui, sans-serif",
+              }}
+            >
+              Innovation &amp; Entrepreneurship Cell
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-white font-dm_sans">
+              Army Institute of Technology, Pune · Campus Innovation &amp; Incubation Hub
+            </p>
           </div>
-        </div>
 
-        {/* Story Text */}
-        <div className="max-w-2xl mt-10 space-y-4 font-dm_sans text-stone-700 text-base md:text-lg leading-relaxed">
-          <p>
-            In collaboration with the Innovation and Entrepreneurship Cell, Army Institute of Technology, Pune.
-          </p>
-          <p className="text-sm md:text-base text-stone-600">
-            The I&amp;E Cell nurtures student innovators from early ideation to registered enterprises. Through the 20-week IGNITE framework, we provide founder mentorship, prototype seed grants, and direct VC access so you can build with confidence.
-          </p>
-        </div>
-
-        {/* Institutional Accreditation Marks */}
-        <div className="w-full mt-12 pt-8 border-t border-stone-200/80">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-
-            <div className="flex flex-col items-center p-4 bg-white/60 border border-stone-200/80 rounded-xl shadow-xs">
+          {/* Pure Standalone Logos: I&E Cell & AIT (No white box, no X symbol, normal size) */}
+          <div className="flex items-center gap-8 sm:gap-12 shrink-0">
+            {/* I&E Cell Logo */}
+            <div className="group flex flex-col items-center cursor-pointer">
               <img
-                src="https://www.recursiveacm.in/_next/image?url=%2Fcollege_logo%2Faicte.png&w=256&q=75"
-                alt="AICTE Approved"
-                className="h-10 object-contain mb-2"
+                src="/images/logos/ecell-logo.png"
+                alt="I&E Cell AIT Pune"
+                className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-300 ease-out group-hover:scale-105 filter drop-shadow-md"
               />
-              <span className="text-xs font-bold text-stone-900">AICTE Approved</span>
-              <span className="text-[10px] text-stone-500 uppercase tracking-wider">Statutory Body</span>
+              <span className="mt-2 text-[10px] sm:text-[11px] font-semibold font-geist_mono uppercase tracking-wider text-white group-hover:text-white transition-colors">
+                I&amp;E Cell
+              </span>
             </div>
 
-            <div className="flex flex-col items-center p-4 bg-white/60 border border-stone-200/80 rounded-xl shadow-xs">
+            {/* AIT Logo */}
+            <div className="group flex flex-col items-center cursor-pointer">
               <img
-                src="https://www.recursiveacm.in/_next/image?url=%2Fcollege_logo%2Fnaac.png&w=256&q=75"
-                alt="NAAC Accredited"
-                className="h-10 object-contain mb-2"
+                src="/images/logos/ait-logo.png"
+                alt="Army Institute of Technology, Pune"
+                className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-300 ease-out group-hover:scale-105 filter drop-shadow-md brightness-110"
               />
-              <span className="text-xs font-bold text-stone-900">NAAC Accredited</span>
-              <span className="text-[10px] text-stone-500 uppercase tracking-wider">Institutional Quality</span>
-            </div>
-
-            <div className="flex flex-col items-center p-4 bg-white/60 border border-stone-200/80 rounded-xl shadow-xs">
-              <img
-                src="https://www.recursiveacm.in/_next/image?url=%2Fcollege_logo%2FIIC.png&w=384&q=75"
-                alt="Institution's Innovation Council"
-                className="h-10 object-contain mb-2"
-              />
-              <span className="text-xs font-bold text-stone-900">IIC</span>
-              <span className="text-[10px] text-stone-500 uppercase tracking-wider">Ministry of Education</span>
+              <span className="mt-2 text-[10px] sm:text-[11px] font-semibold font-geist_mono uppercase tracking-wider text-white group-hover:text-white transition-colors">
+                AIT Pune
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Fact strip */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-3 text-xs md:text-sm font-mono text-stone-600 bg-stone-200/60 px-6 py-2.5 rounded-full border border-stone-300/80">
-          <span>AIT Pune</span>
-          <span>·</span>
-          <span>Round 1 · Sept 2026</span>
-          <span>·</span>
-          <span>20-Week Startup Hackathon</span>
-          <span>·</span>
-          <span>₹1,00,000 Grant</span>
+        {/* ── Main Freely Floating Footer Content (As requested in reference design) ── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 pt-12 items-start relative">
+          {/* Subtle Background Watermark: I&E CELL */}
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(4rem,14vw,12rem)] font-black text-white/[0.03] select-none pointer-events-none whitespace-nowrap font-headingNow tracking-tight z-0"
+            aria-hidden="true"
+          >
+            I&amp;E CELL
+          </div>
+
+          {/* Left Column (5 cols): Map card, Address, and Circular Social Icons */}
+          <div className="md:col-span-5 flex flex-col z-10">
+            {/* Address */}
+            <p className="mt-4 text-xs sm:text-sm text-white font-dm_sans max-w-[300px] leading-relaxed">
+              Army Institute of Technology, Pune Dighi Hills Pune 411015
+            </p>
+
+            {/* Circular Social Icons: White circular pills with black symbols */}
+            <div className="mt-5 flex items-center gap-3">
+              {/* Facebook */}
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-label="Facebook"
+                className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shadow-sm hover:scale-110 hover:bg-[#8FC45A] transition-all duration-200 cursor-pointer"
+              >
+                <Facebook className="w-4 h-4 fill-current" />
+              </a>
+
+              {/* Instagram */}
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shadow-sm hover:scale-110 hover:bg-[#8FC45A] transition-all duration-200 cursor-pointer"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+
+              {/* Twitter / X */}
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-label="Twitter (X)"
+                className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shadow-sm hover:scale-110 hover:bg-[#8FC45A] transition-all duration-200 cursor-pointer"
+              >
+                <Twitter className="w-4 h-4 fill-current" />
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shadow-sm hover:scale-110 hover:bg-[#8FC45A] transition-all duration-200 cursor-pointer"
+              >
+                <Linkedin className="w-4 h-4 fill-current" />
+              </a>
+
+              {/* YouTube */}
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-label="YouTube"
+                className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shadow-sm hover:scale-110 hover:bg-[#8FC45A] transition-all duration-200 cursor-pointer"
+              >
+                <Youtube className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Middle Column (3 cols): Quick Links */}
+          <div className="md:col-span-3 flex flex-col z-10">
+            <span className="text-xs font-bold font-geist_mono uppercase tracking-[2px] text-white mb-4 block">
+              QUICK LINKS
+            </span>
+            <ul className="space-y-2.5 text-sm text-white font-dm_sans">
+              <li>
+                <a
+                  href="#timeline"
+                  className="hover:text-white hover:underline transition-colors"
+                >
+                  Timeline
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#eligibility"
+                  className="hover:text-white hover:underline transition-colors"
+                >
+                  Eligibility
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#faq"
+                  className="hover:text-white hover:underline transition-colors"
+                >
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.aitpune.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-white hover:underline transition-colors"
+                >
+                  <span>AIT Pune</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:ecell@aitpune.edu.in"
+                  className="inline-flex items-center gap-1.5 text-[#8FC45A] hover:underline transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>ecell@aitpune.edu.in</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Right Column (4 cols): Quote Box */}
+          <div className="md:col-span-4 flex flex-col z-10">
+            <div className="p-5 sm:p-6 rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-sm relative group hover:border-white/30 transition-all duration-300">
+              <p className="text-xs sm:text-[13px] leading-relaxed text-white font-dm_sans italic">
+                &ldquo;If you look at history, innovation doesn&apos;t come just from giving
+                people incentives; it comes from creating environments where their ideas can connect.&rdquo;
+              </p>
+              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs font-bold font-geist_mono text-white tracking-wider uppercase">
+                  I &amp; E Cell
+                </span>
+                <a
+                  href="mailto:ecell@aitpune.edu.in"
+                  className="inline-flex items-center gap-1 text-xs text-[#8FC45A] font-semibold hover:underline"
+                >
+                  <span>Connect</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
