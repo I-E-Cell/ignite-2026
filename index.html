@@ -32,25 +32,27 @@
   <script>
     (function() {
       try {
+        // Clear any old sessionStorage flags that permanently blocked reloads
+        sessionStorage.removeItem('recursive:intro:v1');
+        sessionStorage.removeItem('recursive:skip-intro-for-anchor');
+
         var s = window.location.search;
-        var h = window.location.hash;
         var f = s.match(/[?&]intro=([^&]+)/);
         var fv = f ? f[1] : null;
-        var ha = (h && h !== '#') || Boolean(sessionStorage.getItem('recursive:skip-intro-for-anchor'));
         var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var completed = sessionStorage.getItem('recursive:intro:v1') === '1';
 
-        if (fv !== '0' && !ha && (!r || fv === '1') && !completed) {
+        // Skip intro only if explicitly disabled via ?intro=0 or prefers-reduced-motion without override
+        if (fv === '0' || (r && fv !== '1')) {
+          document.documentElement.dataset.intro = 'done';
+        } else {
           document.documentElement.dataset.intro = 'playing';
           if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
           }
           window.scrollTo(0, 0);
-        } else {
-          document.documentElement.dataset.intro = 'done';
         }
       } catch (e) {
-        document.documentElement.dataset.intro = 'done';
+        document.documentElement.dataset.intro = 'playing';
       }
     })();
   </script>
