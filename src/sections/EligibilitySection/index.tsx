@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserCheck, Users2, Shuffle, Lock } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -12,7 +12,7 @@ export const EligibilitySection = () => {
       title: "FE / SE / TE — Any Year",
       description: "First-year (FE), second-year (SE), and third-year (TE) students from any undergraduate program are eligible to participate.",
       highlightText: "Open to all undergraduate years",
-      gradient: "linear-gradient(160deg, #A3B87A 0%, #758A4A 50%, #3F4D2A 100%)",
+      gradient: "linear-gradient(160deg, #7FB04A 0%, #5C8C3A 50%, #2F5527 100%)",
     },
     {
       icon: Users2,
@@ -21,7 +21,7 @@ export const EligibilitySection = () => {
       title: "Solo or Teams of 2–4",
       description: "Apply as an individual visionary or assemble a multidisciplinary crew of up to four students to execute faster.",
       highlightText: "1 to 4 members per squad",
-      gradient: "linear-gradient(160deg, #3F7A3A 0%, #2F5527 50%, #14301A 100%)",
+      gradient: "linear-gradient(160deg, #A3B87A 0%, #758A4A 50%, #3F4D2A 100%)",
     },
     {
       icon: Shuffle,
@@ -30,7 +30,7 @@ export const EligibilitySection = () => {
       title: "Mixed Branches Welcome",
       description: "You don't need a team of only developers. Mix computer science, design, business, mechanical, or electrical backgrounds.",
       highlightText: "Diversity strengthens startups",
-      gradient: "linear-gradient(160deg, #A3B87A 0%, #758A4A 50%, #3F4D2A 100%)",
+      gradient: "linear-gradient(160deg, #7FB04A 0%, #5C8C3A 50%, #2F5527 100%)",
     },
     {
       icon: Lock,
@@ -39,15 +39,25 @@ export const EligibilitySection = () => {
       title: "One Team Per Student",
       description: "Each participant can only be registered with one team to ensure full devotion, integrity, and focus to your venture.",
       highlightText: "100% commitment to 1 idea",
-      gradient: "linear-gradient(160deg, #3F7A3A 0%, #2F5527 50%, #14301A 100%)",
+      gradient: "linear-gradient(160deg, #A3B87A 0%, #758A4A 50%, #3F4D2A 100%)",
     },
   ];
 
-  const FRONT = 1; // "Solo or Teams of 2-4" sits on top of the collapsed stack
   const mid = (criteria.length - 1) / 2;
 
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
+  // Random card on top of the collapsed stack (and front of the fan); never the same twice in a row
+  const [front, setFront] = useState(1);
+  const pickFront = () =>
+    setFront((prev) => {
+      const others = criteria.map((_, k) => k).filter((k) => k !== prev);
+      return others[Math.floor(Math.random() * others.length)];
+    });
+  useEffect(() => {
+    pickFront();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const CardBody = ({ item }: { item: (typeof criteria)[number] }) => {
     const Icon = item.icon;
@@ -134,6 +144,7 @@ export const EligibilitySection = () => {
           onMouseLeave={() => {
             setHovered(null);
             setOpen(false);
+            pickFront();
           }}
         >
           {criteria.map((item, i) => {
@@ -181,7 +192,7 @@ export const EligibilitySection = () => {
                   boxShadow: isHover
                     ? "0 30px 60px rgba(17,26,18,0.4)"
                     : "0 20px 40px rgba(17,26,18,0.3)",
-                  zIndex: isHover ? 50 : i === FRONT ? 10 : 10 - Math.abs(i - FRONT),
+                  zIndex: isHover ? 50 : i === front ? 10 : 10 - Math.abs(i - front),
                   cursor: "pointer",
                   overflow: "hidden",
                   willChange: "transform",
