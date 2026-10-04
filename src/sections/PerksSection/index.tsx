@@ -111,7 +111,7 @@ export const PerksSection = () => {
     <section
       id="perks"
       aria-label="What You Get in IGNITE"
-      className="relative w-full bg-black text-lime-50 overflow-hidden"
+      className="relative w-full bg-transparent text-lime-50 z-[2]"
     >
       {/* ─── WIDE BLACK TRANSITION & BOTANICAL ORNAMENT ("WHAT YOU GET") ─── */}
       <div className="relative w-full pt-20 sm:pt-28 md:pt-36 pb-6 md:pb-8 flex flex-col items-center justify-center text-center z-20 pointer-events-none select-none">
@@ -133,7 +133,7 @@ export const PerksSection = () => {
       </div>
 
       {/* ─── FULL-SCREEN DRAGGABLE CARD STAGE ─── */}
-      <div className="relative w-full min-h-[760px] md:min-h-[820px] lg:min-h-[880px] flex items-center justify-center overflow-hidden pb-12 select-none">
+      <div className="relative w-full min-h-[760px] md:min-h-[820px] lg:min-h-[880px] flex items-center justify-center pb-12 select-none">
         {/* Subtle radial depth lighting behind stage */}
         <div
           className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(92,140,58,0.12)_0%,rgba(0,0,0,0)_75%)]"
@@ -241,7 +241,7 @@ export const PerksSection = () => {
       </div>
 
       {/* ─── IDEA DOMAINS AUTO-SHIFTING 3D COVERFLOW SECTION ─── */}
-      <div className="relative w-full pb-24 z-20 overflow-hidden">
+      <div className="relative w-full pb-10 z-10">
         <DomainCarousel />
       </div>
     </section>

@@ -1,6 +1,7 @@
 .sxp {
   position: relative;
   width: 100%;
+  z-index: 2;
 }
 
 .sxp-track {
@@ -31,21 +32,17 @@
   overflow: hidden;
 }
 
-/* Both the black field and the sky plate retire once the window is
-           open — see the note on .sxp-plate for why. */
-.sxp-night,
-.sxp-plate {
+/* The black night field fades out as the window opens */
+.sxp-night {
   opacity: clamp(0, calc((1 - var(--sxp-p)) * 2.8), 1);
   will-change: opacity;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
-}
-
-.sxp-night {
   position: absolute;
   inset: 0;
   background: var(--color-night, #000000);
+  z-index: 1;
 }
 
 /* ── Night-side label ── */
@@ -65,7 +62,6 @@
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
-
 /* Both anchored off the window edge, so they keep their clearance
            whatever size it is. */
 .sxp-intro {
@@ -151,8 +147,9 @@
   background-color: var(--color-bg);
   background-image: url("https://www.recursiveacm.in/images/bg/cloud.jpg");
   background-size: cover;
-  background-position: center 25%;
+  background-position: center top;
   background-repeat: no-repeat;
+  opacity: 1;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
@@ -194,7 +191,7 @@
 
 .sxp-preview-title {
   font-family: var(--font-bebas), sans-serif;
-  font-size: clamp(3.2rem, 9.2vw, 5rem);
+  font-size: clamp(3.2rem, 9.2vw, 8rem);
   font-weight: 700;
   font-style: italic;
   letter-spacing: 0.02em;

@@ -24,6 +24,8 @@ interface SplashCursorProps {
   TRANSPARENT?: boolean;
   RAINBOW_MODE?: boolean;
   COLOR?: string;
+  AUTO_SPLAT?: boolean;
+  AUTO_SPLAT_INTERVAL?: number;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -78,6 +80,8 @@ export default function SplashCursor({
   TRANSPARENT = true,
   RAINBOW_MODE = true,
   COLOR = '#ff0000',
+  AUTO_SPLAT = false,
+  AUTO_SPLAT_INTERVAL = 1100,
   className,
   style
 }: SplashCursorProps) {
@@ -1307,13 +1311,44 @@ export default function SplashCursor({
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
 
+    // Ambient drift keeps dye alive (especially the lower half) so color
+    // reaches the bottom without mouse input. Skipped for reduced-motion
+    // users and while the canvas is offscreen.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let autoTimer = 0;
+    let canvasVisible = true;
+    let canvasObserver: IntersectionObserver | null = null;
+    if (AUTO_SPLAT && !reduceMotion) {
+      startLoopIfNeeded();
+      if (typeof IntersectionObserver !== 'undefined' && canvas) {
+        canvasObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) canvasVisible = entry.isIntersecting;
+          },
+          { threshold: 0 }
+        );
+        canvasObserver.observe(canvas);
+      }
+      autoTimer = window.setInterval(() => {
+        if (document.hidden || !canvasVisible || !isRunning) return;
+        const color = generateColor();
+        const x = Math.random();
+        const y = Math.random();
+        const dx = 8 * (Math.random() - 0.5);
+        const dy = 12 * (Math.random() - 0.5);
+        splat(x, y, dx, dy, color);
+      }, AUTO_SPLAT_INTERVAL!);
+    }
+
     return () => {
       isRunning = false;
+      if (autoTimer) window.clearInterval(autoTimer);
+      if (canvasObserver) canvasObserver.disconnect();
       cancelAnimationFrame(animId);
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchend', onTouchEnd);
     };
   }, [
@@ -1332,7 +1367,9 @@ export default function SplashCursor({
     BACK_COLOR,
     TRANSPARENT,
     RAINBOW_MODE,
-    COLOR
+    COLOR,
+    AUTO_SPLAT,
+    AUTO_SPLAT_INTERVAL
   ]);
 
   return (
@@ -1351,7 +1388,6 @@ export default function SplashCursor({
     >
       <canvas
         ref={canvasRef}
-        id="fluid"
         style={{
           width: '100%',
           height: '100%',
