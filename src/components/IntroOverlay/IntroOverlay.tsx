@@ -16,24 +16,43 @@ const timings: [number, number][] = [
   [6.75, 7.5],
 ];
 
+// In-memory flag so navigating between routes in the single-page app doesn't re-trigger intro,
+// but refreshing or reloading the browser starts fresh every single time.
+let hasIntroPlayedInSpa = false;
+
 export const IntroOverlay: React.FC = () => {
   const [phase, setPhase] = useState<"pending" | "playing" | "done">(() => {
     if (typeof window === "undefined") return "done";
-    // Check if previously completed in this session
+    // Clean up any legacy persistent session storage keys
+    try {
+      sessionStorage.removeItem("recursive:intro:v1");
+      sessionStorage.removeItem("recursive:skip-intro-for-anchor");
+    } catch {
+      // ignore
+    }
+
     try {
       const search = window.location.search;
-      if (search.includes("intro=replay") || search.includes("intro=test") || search.includes("intro=1")) {
-        sessionStorage.removeItem("recursive:intro:v1");
-        delete document.documentElement.dataset.intro;
-        return "playing";
-      }
-      if (sessionStorage.getItem("recursive:intro:v1") === "1") {
+      if (search.includes("intro=0")) {
         document.documentElement.dataset.intro = "done";
         return "done";
+      }
+      if (search.includes("intro=replay") || search.includes("intro=test") || search.includes("intro=1")) {
+        hasIntroPlayedInSpa = false;
+        document.documentElement.dataset.intro = "playing";
+        return "playing";
       }
     } catch {
       // ignore
     }
+
+    // If intro has already played during this active SPA navigation session
+    if (hasIntroPlayedInSpa) {
+      document.documentElement.dataset.intro = "done";
+      return "done";
+    }
+
+    document.documentElement.dataset.intro = "playing";
     return "playing";
   });
 
@@ -59,9 +78,10 @@ export const IntroOverlay: React.FC = () => {
   const finishIntro = useCallback(() => {
     if (hasFinishedRef.current) return;
     hasFinishedRef.current = true;
+    hasIntroPlayedInSpa = true;
 
     try {
-      sessionStorage.setItem("recursive:intro:v1", "1");
+      sessionStorage.removeItem("recursive:intro:v1");
     } catch {
       // ignore
     }
