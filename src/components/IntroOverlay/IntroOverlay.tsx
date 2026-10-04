@@ -161,7 +161,7 @@ export const IntroOverlay: React.FC = () => {
       // Start video playback
       if (videoRef.current) {
         videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(() => {});
+        videoRef.current.play().catch(() => { });
       }
 
       // Initial state
@@ -507,7 +507,7 @@ export const IntroOverlay: React.FC = () => {
           align-items: center;
           justify-content: center;
           background:
-            radial-gradient(120% 70% at 50% 0%, rgba(52, 88, 38, 0.48) 0%, rgba(52, 88, 38, 0) 62%),
+            radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 62%),
             linear-gradient(180deg, #0A160A 0%, #010301 65%);
           pointer-events: none;
           overflow: hidden;
