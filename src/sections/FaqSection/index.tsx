@@ -48,12 +48,12 @@ export const FaqSection = () => {
   return (
     <section
       id="faq"
-      className="box-border caret-transparent text-neutral-900 relative w-full z-10 py-16 px-5 sm:px-8 md:py-24 md:px-12 lg:px-16 scroll-mt-20 overflow-hidden"
+      className="box-border caret-transparent text-neutral-900 relative w-full z-10 py-16 px-5 sm:px-8 md:py-24 md:px-12 lg:px-16 scroll-mt-20 overflow-hidden [overflow-anchor:none]"
     >
       <div className="max-w-[1360px] mx-auto">
         <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-14 xl:gap-16">
           {/* Left Column: Bold Chunky Headline & Info */}
-          <div className="w-full lg:w-[35%] xl:w-[32%] lg:sticky lg:top-28 lg:self-start flex flex-col">
+          <div className="w-full lg:w-[35%] xl:w-[32%] lg:self-start flex flex-col">
             {/* Eyebrow badge */}
             <div className="inline-flex items-center gap-2 mb-4">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#3f6212]/15 text-[#3f6212]">
