@@ -12,14 +12,6 @@ export const HeroActions = () => {
         <span>Register for Round 1</span>
       </Link>
 
-      <Link
-        to="/showcase"
-        className="pill-btn pill-btn-secondary"
-        aria-label="Explore Project Showcase"
-      >
-        <span>Project Showcase</span>
-      </Link>
-
       <style>{`
         .hero-ctas {
           display: flex;
@@ -37,14 +29,14 @@ export const HeroActions = () => {
           flex-direction: row;
           justify-content: center;
           align-items: center;
-          gap: 10px;
-          height: 60px;
-          border-radius: 4px;
+          gap: 8px;
+          padding: 11px 24px;
+          border-radius: 50px;
           font-family: 'Inter', system-ui, sans-serif;
           font-style: normal;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 20px;
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 18px;
           text-decoration: none;
           white-space: nowrap;
           cursor: pointer;
@@ -56,18 +48,18 @@ export const HeroActions = () => {
         }
 
         .pill-btn-primary {
-          width: 270px;
+          width: auto;
           max-width: 100%;
           background: #141412;
           color: #FBFAF8;
           border: none;
-          box-shadow: 0 4px 20px rgba(20, 20, 18, 0.25);
+          box-shadow: 0 4px 16px rgba(20, 20, 18, 0.22);
         }
 
         .pill-btn-primary:hover {
           background: #252520;
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(20, 20, 18, 0.35);
+          box-shadow: 0 6px 20px rgba(20, 20, 18, 0.3);
         }
 
         .pill-btn-primary:active {
@@ -76,58 +68,24 @@ export const HeroActions = () => {
 
         .pill-btn-primary .dot {
           display: inline-block;
-          width: 10px;
-          height: 10px;
+          width: 8px;
+          height: 8px;
           border-radius: 50%;
           background: #8FC45A;
-          box-shadow: 0 0 8px #8FC45A;
-        }
-
-        .pill-btn-secondary {
-          width: 190px;
-          max-width: 100%;
-          background: rgba(251, 250, 248, 0.85);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          color: #141412;
-          border: none;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .pill-btn-secondary:hover {
-          background: #141412;
-          color: #FBFAF8;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(20, 20, 18, 0.28);
-        }
-
-        .pill-btn-secondary:active {
-          transform: translateY(0) scale(0.98);
-        }
-
-        .pill-btn-secondary .arrow-down {
-          font-size: 17px;
-          transition: transform 180ms ease;
-        }
-
-        .pill-btn-secondary:hover .arrow-down {
-          transform: translateY(2px);
+          box-shadow: 0 0 7px #8FC45A;
         }
 
         @media (max-width: 600px) {
           .hero-ctas {
-            flex-direction: column;
-            gap: 12px;
             width: 100%;
             padding-inline: 1rem;
           }
 
-          .pill-btn-primary,
-          .pill-btn-secondary {
-            width: 100%;
-            max-width: 280px;
-            height: 54px;
-            font-size: 15px;
+          .pill-btn-primary {
+            width: auto;
+            max-width: 260px;
+            font-size: 12px;
+            padding: 9px 16px;
           }
         }
       `}</style>

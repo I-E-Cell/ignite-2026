@@ -26,7 +26,6 @@ export const Navbar = () => {
     { href: "/#eligibility", label: "Who Can Join" },
     { href: "/#gallery", label: "Gallery" },
     { href: "/#faq", label: "FAQ" },
-    { href: "/showcase", label: "Project Showcase (Admin)" },
     { href: "/register", label: "Register for Ignite" },
   ];
 
