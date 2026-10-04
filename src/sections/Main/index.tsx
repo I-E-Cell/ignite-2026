@@ -1,7 +1,6 @@
 import { HeroSection } from "@/sections/HeroSection";
 import { CountdownSection } from "@/sections/CountdownSection";
 import { PerksSection } from "@/sections/PerksSection";
-import { TracksSection } from "@/sections/TracksSection";
 import { SplashCursor } from "@/components/SplashCursor";
 import { EligibilitySection } from "@/sections/EligibilitySection";
 import { ToolsSection } from "@/sections/ToolsSection";
@@ -44,7 +43,6 @@ export const Main = () => {
           }}
         />
         <PerksSection />
-        <TracksSection />
         <ToolsSection />
       </div>
 
