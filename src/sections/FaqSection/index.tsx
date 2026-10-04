@@ -28,9 +28,9 @@ const faqItems: FaqCardItem[] = [
       "The idea and work created by the team remain 100% with the team members, as per institute policy.\n\nMake sure your submission does not copy someone else's work. Neither the college nor the I&E Cell takes equity or ownership over your startup.",
   },
   {
-    question: "What is the selection process for Round 1 and Round 2?",
+    question: "What is the selection process across the rounds?",
     answer:
-      "Round 1 is Online Idea Submission (opens September 1, 2026) where you submit problem details, target users, feasibility, and impact.\n\nAll eligible entries are reviewed by the evaluation committee. The top-performing teams are shortlisted for the Round 2 pitch before an invited panel of entrepreneurs and VCs to select the Top 10.",
+      "Round 1 is Online Idea Submission where you submit problem details, target users, feasibility, and impact.\n\nEligible teams then advance through 3 intensive mentor rounds with founders and operators to pressure-test their venture models, after which a final shortlist selects the Top 10 teams to enter the 20-week incubation and demo day.",
   },
   {
     question: "Can we add, remove, or change team members later?",

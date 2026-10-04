@@ -153,7 +153,7 @@ export const SponsorsSection = () => {
 
   return (
     <section id="sponsors" className="sxp -mt-px" aria-label="Sponsors">
-      <div ref={stageRef} className="sxp-stage">
+      <div ref={stageRef} className="sxp-stage" data-navbar-theme="dark-sponsors">
         {/* Night background with Fluid Splash Cursor strictly behind the sponsor window */}
         <div className="sxp-night" aria-hidden="true">
           <SplashCursor
