@@ -1377,13 +1377,17 @@ export default function SplashCursor({
       className={className}
       style={{
         position: 'absolute',
-        inset: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
         zIndex: 1,
         pointerEvents: 'none',
         width: '100%',
         height: '100%',
-        overflow: 'hidden',
-        ...style
+        ...style,
+        maskImage: style?.maskImage,
+        WebkitMaskImage: (style as any)?.WebkitMaskImage ?? style?.maskImage,
       }}
     >
       <canvas
@@ -1392,7 +1396,9 @@ export default function SplashCursor({
           width: '100%',
           height: '100%',
           display: 'block',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          maskImage: style?.maskImage,
+          WebkitMaskImage: (style as any)?.WebkitMaskImage ?? style?.maskImage,
         }}
       />
     </div>

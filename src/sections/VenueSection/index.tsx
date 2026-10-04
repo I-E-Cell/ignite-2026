@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   MapPin,
   Navigation,
@@ -15,9 +15,6 @@ const MAP_SRC =
 
 const FULL_ADDRESS =
   "Army Institute of Technology (AIT), Dighi Hills, Alandi Road, Pune, Maharashtra 411015";
-
-const ARTIFACT_URL =
-  "/images/ui/artifact-mark.png";
 
 const TRANSIT = [
   {
@@ -83,13 +80,6 @@ export const VenueSection = () => {
       <div className="max-w-[1280px] mx-auto flex flex-col items-center">
         {/* Section header */}
         <div className="flex flex-col items-center text-center mb-12 md:mb-16">
-          <img
-            src={ARTIFACT_URL}
-            alt=""
-            loading="lazy"
-            className="w-[140px] md:w-[220px] object-contain opacity-90 pointer-events-none mb-4"
-          />
-
           <span className="text-xs md:text-sm font-semibold tracking-widest uppercase text-[#3F6827] font-geist_mono mb-2">
             EVENT VENUE &middot; IN-PERSON
           </span>

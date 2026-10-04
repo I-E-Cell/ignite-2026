@@ -30,8 +30,6 @@ export type SectionHeaderProps = {
 };
 
 export const SectionHeader = (props: SectionHeaderProps) => {
-  const artifactUrl =
-    "/images/ui/artifact-mark.png";
 
   const renderWords = (
     words: string[] | undefined,
@@ -98,17 +96,7 @@ export const SectionHeader = (props: SectionHeaderProps) => {
   };
 
   if (props.variant === "artifactOnly") {
-    return (
-      <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline">
-        <div className="box-border caret-transparent outline-[3px] no-underline flex justify-center mb-5">
-          <img
-            src={artifactUrl}
-            alt=""
-            className="box-border caret-transparent max-w-full min-h-[auto] min-w-[auto] object-contain opacity-[0.88] outline-[3px] pointer-events-none no-underline w-[116.382px] md:w-[260px]"
-          />
-        </div>
-      </div>
-    );
+    return null;
   }
 
   if (props.variant === "tracks") {
@@ -178,15 +166,6 @@ export const SectionHeader = (props: SectionHeaderProps) => {
   if (props.variant === "faq") {
     return (
       <div className="box-border caret-transparent outline-[3px] no-underline items-center flex flex-col justify-center min-h-[auto] min-w-[auto] text-center w-full mb-6 md:mb-10">
-        <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline">
-          <div className="box-border caret-transparent flex justify-center outline-[3px] no-underline items-center mb-2 md:mb-3">
-            <img
-              src={artifactUrl}
-              alt=""
-              className="box-border caret-transparent max-w-full min-h-[auto] min-w-[auto] object-contain opacity-[0.88] outline-[3px] pointer-events-none no-underline w-[90px] md:w-[130px]"
-            />
-          </div>
-        </div>
 
         <h2 className="box-border caret-transparent font-medium outline-[3px] no-underline font-headingNow text-neutral-900 text-[41.6px] tracking-[-1.456px] leading-[45.76px] min-h-[auto] min-w-[auto] uppercase md:text-[64px] md:tracking-[-2px] md:leading-[70px]">
           <span className="box-border caret-transparent outline-[3px] no-underline overflow-hidden flex text-[41.6px] justify-center tracking-[-1.456px] leading-[45.76px] md:text-[64px] md:tracking-[-2px] md:leading-[70px]">
@@ -202,15 +181,6 @@ export const SectionHeader = (props: SectionHeaderProps) => {
   if (props.variant === "venue") {
     return (
       <div className="box-border caret-transparent outline-[3px] no-underline items-center flex flex-col min-h-[auto] min-w-[auto] mb-8 md:mb-[38.4px]">
-        <div className="box-border caret-transparent outline-[3px] no-underline min-h-[auto] min-w-[auto] opacity-100 md:opacity-0 md:translate-y-[-3.5px]">
-          <div className="box-border caret-transparent flex justify-center outline-[3px] no-underline items-center mb-4">
-            <img
-              src={artifactUrl}
-              alt=""
-              className="box-border caret-transparent max-w-full min-h-[auto] min-w-[auto] object-contain opacity-[0.88] outline-[3px] pointer-events-none no-underline w-[116.382px] md:w-[260px]"
-            />
-          </div>
-        </div>
 
         <div className="box-border caret-transparent outline-[3px] no-underline min-h-[auto] min-w-[auto] opacity-100 transform-none md:opacity-0 md:translate-y-[-2.5px]">
           <span className="box-border caret-transparent text-green-200/60 text-[12.4px] font-semibold tracking-[2.48px] leading-[19.22px] outline-[3px] no-underline uppercase mb-[13.6px] font-geist_mono">
@@ -268,15 +238,6 @@ export const SectionHeader = (props: SectionHeaderProps) => {
   if (props.variant === "countdown") {
     return (
       <div className="box-border caret-transparent outline-[3px] no-underline items-center flex flex-col max-w-[1664px] relative text-center z-[1] mx-auto px-5 md:px-16">
-        <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline">
-          <div className="box-border caret-transparent flex justify-center outline-[3px] no-underline mb-6">
-            <img
-              src={artifactUrl}
-              alt=""
-              className="box-border caret-transparent max-w-full min-h-[auto] min-w-[auto] object-contain opacity-[0.88] outline-[3px] pointer-events-none no-underline w-[116.382px] md:w-[260px]"
-            />
-          </div>
-        </div>
 
         <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline w-full">
           <h2 className="box-border caret-transparent font-medium outline-[3px] no-underline font-headingNow text-[44.8px] tracking-[-1.568px] leading-[50.176px] md:text-[76.8px] md:tracking-[-2.688px] md:leading-[86.016px]">
@@ -347,20 +308,6 @@ export const SectionHeader = (props: SectionHeaderProps) => {
         "box-border caret-transparent outline-[3px] no-underline items-center flex flex-col max-w-screen-2xl relative text-center mx-auto px-5 md:px-16"
       }
     >
-      <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline">
-        <div
-          className={
-            props.artifactInnerClassName ??
-            "box-border caret-transparent flex justify-center outline-[3px] no-underline mb-[22px]"
-          }
-        >
-          <img
-            src={artifactUrl}
-            alt=""
-            className="box-border caret-transparent max-w-full min-h-[auto] min-w-[auto] object-contain opacity-[0.88] outline-[3px] pointer-events-none no-underline w-[116.382px] md:w-[260px]"
-          />
-        </div>
-      </div>
 
       <div className="box-border caret-transparent min-h-[auto] min-w-[auto] outline-[3px] no-underline w-full">
         <h2

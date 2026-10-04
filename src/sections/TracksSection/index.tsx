@@ -111,8 +111,6 @@ export const TracksSection = () => {
       <div id="tracks" className="relative -top-14 h-0 pointer-events-none" aria-hidden="true" />
       
       <div className="max-w-[1376px] mx-auto flex flex-col items-center">
-        <SectionHeader variant="artifactOnly" title="" />
-        
         <SectionHeader
           variant="tracks"
           eyebrow="The six tracks"

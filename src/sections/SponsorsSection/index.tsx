@@ -163,6 +163,15 @@ export const SponsorsSection = () => {
             SPLAT_FORCE={5500}
             AUTO_SPLAT
             AUTO_SPLAT_INTERVAL={1100}
+            style={{
+              top: "clamp(-480px, -45vh, -320px)",
+              bottom: "auto",
+              height: "calc(100% + clamp(320px, 45vh, 480px))",
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.04) 60px, rgba(0,0,0,0.35) 150px, black 320px)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.04) 60px, rgba(0,0,0,0.35) 150px, black 320px)",
+            }}
           />
         </div>
 
@@ -213,16 +222,6 @@ export const SponsorsSection = () => {
 
               {/* Inner Content */}
               <div className="sxp-inner">
-                <div className="sxp-ornament-wrap">
-                  <img
-                    src="/images/ui/artifact-mark.png"
-                    alt=""
-                    aria-hidden="true"
-                    draggable="false"
-                    className="orn orn-light sxp-crown block h-auto max-w-full object-contain select-none pointer-events-none opacity-[0.88]"
-                  />
-                </div>
-
                 <span className="sxp-eyebrow">Supporters & partners</span>
                 <h2 className="sxp-heading">Our Sponsors</h2>
 

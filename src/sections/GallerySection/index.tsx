@@ -10,7 +10,7 @@ const ITEMS: GalleryItem[] = [
   { id: "g2", category: "mentors", title: "Mentor & VC Sessions", subtitle: "1-on-1 strategy sessions deconstructing customer acquisition and no-code workflows.", image: BASE + "polaroid_victoria.png", badge: "Mentorship" },
   { id: "g3", category: "top10", title: "Top 10 Reveal", subtitle: "Celebration of the 10 finalist teams selected for the intensive 20-week accelerator.", image: BASE + "polaroid_howrah.png", badge: "Incubation" },
   { id: "g4", category: "demoday", title: "Demo Day & Grant Awards", subtitle: "Finalists presenting live product traction on stage to secure \u20B91,00,000 seed checks.", image: BASE + "doodle_building_tomorrow.png", badge: "Demo Day" },
-  { id: "g5", category: "alumni", title: "Alumni Startups", subtitle: "Past student teams who launched products on campus and reached active paying customers.", image: BASE + "artifact.png", badge: "Success Stories" },
+  { id: "g5", category: "alumni", title: "Alumni Startups", subtitle: "Past student teams who launched products on campus and reached active paying customers.", image: BASE + "polaroid_victoria.png", badge: "Success Stories" },
 ];
 const TABS: { key: GalleryCategory; label: string }[] = [
   { key: "all", label: "All Highlights" }, { key: "pitches", label: "Round 1 Pitches" }, { key: "mentors", label: "Mentor Sessions" },
