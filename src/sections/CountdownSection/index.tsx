@@ -34,17 +34,6 @@ export const CountdownSection = () => {
       className="cd relative w-full bg-transparent text-[#111a12] pt-[clamp(3.5rem,8vh,6.5rem)] pb-[clamp(13rem,29vw,40rem)] overflow-hidden z-[1]"
     >
       <div className="cd-inner relative max-w-[104rem] mx-auto px-4 md:px-8 text-center flex flex-col items-center z-[1]">
-        {/* Ornament */}
-        <div className="cd-ornament-wrap flex justify-center mb-[clamp(1.2rem,2.4vh,1.8rem)]">
-          <img
-            src="/images/ui/artifact-mark.png"
-            alt=""
-            aria-hidden="true"
-            draggable="false"
-            className="cd-motif block w-[clamp(114px,56.87px+15.87vw,260px)] h-auto opacity-[0.88] select-none pointer-events-none"
-          />
-        </div>
-
         {/* Heading */}
         <div className="cd-head-wrap w-full text-center">
           <h2 className="cd-heading font-headingNow font-medium text-[clamp(2.6rem,5.8vw,4.6rem)] leading-[1.1] tracking-[-0.035em] text-[#111a12]">

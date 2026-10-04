@@ -113,19 +113,8 @@ export const PerksSection = () => {
       aria-label="What You Get in IGNITE"
       className="relative w-full bg-transparent text-lime-50 z-[2]"
     >
-      {/* ─── WIDE BLACK TRANSITION & BOTANICAL ORNAMENT ("WHAT YOU GET") ─── */}
+      {/* ─── WIDE BLACK TRANSITION ("WHAT YOU GET") ─── */}
       <div className="relative w-full pt-20 sm:pt-28 md:pt-36 pb-6 md:pb-8 flex flex-col items-center justify-center text-center z-20 pointer-events-none select-none">
-        {/* Botanical Motif */}
-        <div className="flex justify-center mb-3 md:mb-4">
-          <img
-            src="/images/ui/artifact-mark.png"
-            alt=""
-            aria-hidden="true"
-            draggable="false"
-            className="w-[clamp(114px,56.87px+15.87vw,240px)] h-auto opacity-[0.88] select-none pointer-events-none"
-          />
-        </div>
-
         {/* Eyebrow in place of 'THE SIX TRACKS' */}
         <span className="text-[11.5px] md:text-[13px] font-medium font-mono uppercase tracking-[0.25em] text-[#8FC45A] select-none">
           WHAT YOU GET

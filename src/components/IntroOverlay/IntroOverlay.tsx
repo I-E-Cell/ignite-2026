@@ -10,10 +10,10 @@ const lines = [
 ];
 
 const timings: [number, number][] = [
-  [4.15, 5.75],
-  [6.0, 7.7],
-  [8.0, 9.95],
-  [10.25, 11.8],
+  [1.9, 2.85],
+  [3.05, 4.05],
+  [4.25, 5.35],
+  [5.55, 6.3],
 ];
 
 export const IntroOverlay: React.FC = () => {
@@ -75,7 +75,7 @@ export const IntroOverlay: React.FC = () => {
     if (rootRef.current) {
       gsap.to(rootRef.current, {
         opacity: 0,
-        duration: 0.8,
+        duration: 0.5,
         ease: "power2.inOut",
         onComplete: () => {
           setPhase("done");
@@ -133,10 +133,10 @@ export const IntroOverlay: React.FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [phase, handleSkip]);
 
-  // Allow skip after 1s
+  // Allow skip after 500ms
   useEffect(() => {
     if (phase !== "playing") return;
-    const t = window.setTimeout(() => setCanSkip(true), 1000);
+    const t = window.setTimeout(() => setCanSkip(true), 500);
     return () => window.clearTimeout(t);
   }, [phase]);
 
@@ -220,7 +220,7 @@ export const IntroOverlay: React.FC = () => {
               scaleY: 1,
               clipPath: "inset(0% 0% 0% 0%)",
               filter: "brightness(1.2) saturate(1.15) drop-shadow(0 4px 24px rgba(0, 0, 0, 0.65))",
-              duration: 1.05,
+              duration: 0.55,
               ease: "power3.out",
             },
             0.05
@@ -229,55 +229,52 @@ export const IntroOverlay: React.FC = () => {
 
         if (artifactAura) {
           gsap.set(artifactAura, { scale: 0.35, opacity: 0, transformOrigin: "center center", force3D: true });
-          tl.to(artifactAura, { scale: 1.25, opacity: 1, duration: 0.65, ease: "power2.out" }, 0.05);
-          tl.to(artifactAura, { scale: 1, opacity: 0.8, duration: 0.45, ease: "sine.out" }, 0.7);
+          tl.to(artifactAura, { scale: 1.2, opacity: 1, duration: 0.4, ease: "power2.out" }, 0.05);
+          tl.to(artifactAura, { scale: 1, opacity: 0.7, duration: 0.3, ease: "sine.out" }, 0.45);
         }
 
         // Lift artifact
-        tl.to(artifact, { y: -32, duration: 0.85, ease: "sine.inOut" }, 1.1);
-        tl.set(welcome, { opacity: 1, pointerEvents: "auto" }, 1.15);
+        tl.to(artifact, { y: -24, duration: 0.45, ease: "sine.inOut" }, 0.6);
+        tl.set(welcome, { opacity: 1, pointerEvents: "auto" }, 0.65);
 
         if (welcomeWords.length > 0) {
           tl.to(
             welcomeWords,
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.68, ease: "power3.out", stagger: 0.09 },
-            1.18
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "power3.out", stagger: 0.05 },
+            0.68
           );
         }
 
         if (welcomeSub) {
           tl.to(
             welcomeSub,
-            { opacity: 1, y: 0, letterSpacing: isDesktop ? "0.34em" : "0.26em", duration: 0.65, ease: "power2.out" },
-            1.48
+            { opacity: 1, y: 0, letterSpacing: isDesktop ? "0.34em" : "0.26em", duration: 0.4, ease: "power2.out" },
+            0.85
           );
         }
-
-        // Gentle float
-        tl.to([artifact, welcome], { y: "-=5", duration: 1.1, ease: "sine.inOut" }, 2.0);
 
         // Veil exit
         if (welcomeWords.length > 0) {
           tl.to(
             welcomeWords,
-            { opacity: 0, y: -14, filter: "blur(6px)", duration: 0.45, ease: "power2.in", stagger: 0.03 },
-            3.05
+            { opacity: 0, y: -10, filter: "blur(4px)", duration: 0.25, ease: "power2.in", stagger: 0.02 },
+            1.4
           );
         }
         if (welcomeSub) {
-          tl.to(welcomeSub, { opacity: 0, y: -8, duration: 0.4, ease: "power2.in" }, 3.08);
+          tl.to(welcomeSub, { opacity: 0, y: -6, duration: 0.2, ease: "power2.in" }, 1.42);
         }
-        tl.to(artifact, { opacity: 0, y: "-=12", filter: "blur(8px)", duration: 0.5, ease: "power2.in" }, 3.1);
-        tl.to(veil, { autoAlpha: 0, duration: 0.85, ease: "power2.inOut" }, 3.25);
+        tl.to(artifact, { opacity: 0, y: "-=8", filter: "blur(6px)", duration: 0.3, ease: "power2.in" }, 1.45);
+        tl.to(veil, { autoAlpha: 0, duration: 0.45, ease: "power2.inOut" }, 1.55);
       }
 
       // ── Step 2: Camera Pull & Progress Bar ──
       if (mediaRef.current) {
-        tl.to(mediaRef.current, { scale: 1, yPercent: 0, duration: 8.5, ease: "power1.inOut" }, 3.7);
+        tl.to(mediaRef.current, { scale: 1, yPercent: 0, duration: 4.7, ease: "power1.inOut" }, 1.6);
       }
 
       if (progressFillRef.current) {
-        tl.fromTo(progressFillRef.current, { scaleX: 0 }, { scaleX: 1, duration: 8.2, ease: "none" }, 3.9);
+        tl.fromTo(progressFillRef.current, { scaleX: 0 }, { scaleX: 1, duration: 4.5, ease: "none" }, 1.8);
       }
 
       // ── Step 3: Sequential Captions ──
@@ -290,17 +287,17 @@ export const IntroOverlay: React.FC = () => {
           tl.fromTo(
             words,
             { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.62, ease: "power3.out", stagger: 0.036 },
+            { opacity: 1, y: 0, duration: 0.38, ease: "power3.out", stagger: 0.025 },
             startT
           );
 
           if (idx < lineRefs.current.length - 1) {
-            tl.to(words, { opacity: 0, y: -12, duration: 0.34, ease: "power2.in", stagger: 0.018 }, endT);
+            tl.to(words, { opacity: 0, y: -10, duration: 0.22, ease: "power2.in", stagger: 0.015 }, endT);
           } else {
             // Last line fade
             tl.to(
               words,
-              { opacity: 0, y: -12, scale: 0.98, duration: 0.58, ease: "power2.inOut", stagger: 0.024 },
+              { opacity: 0, y: -10, scale: 0.98, duration: 0.35, ease: "power2.inOut", stagger: 0.02 },
               endT
             );
           }
@@ -312,10 +309,10 @@ export const IntroOverlay: React.FC = () => {
         tl.fromTo(
           skipWrapRef.current,
           { opacity: 0, y: 10, pointerEvents: "none" },
-          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", pointerEvents: "auto" },
-          1.0
+          { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", pointerEvents: "auto" },
+          0.5
         );
-        tl.to(skipWrapRef.current, { opacity: 0, y: 8, duration: 0.35, ease: "power2.in", pointerEvents: "none" }, 11.5);
+        tl.to(skipWrapRef.current, { opacity: 0, y: 8, duration: 0.25, ease: "power2.in", pointerEvents: "none" }, 5.9);
       }
 
       // ── Step 5: Bloom Handoff & Completion ──
@@ -323,8 +320,8 @@ export const IntroOverlay: React.FC = () => {
         tl.fromTo(
           bloomRef.current,
           { opacity: 0, scale: 1.08 },
-          { opacity: 1, scale: 1, duration: 0.85, ease: "power1.inOut" },
-          12.0
+          { opacity: 1, scale: 1, duration: 0.45, ease: "power1.inOut" },
+          6.3
         );
       }
 
@@ -333,14 +330,14 @@ export const IntroOverlay: React.FC = () => {
           document.documentElement.dataset.intro = "done";
         }
         window.dispatchEvent(new CustomEvent("recursive-intro-done"));
-      }, undefined, 12.0);
+      }, undefined, 6.3);
 
       if (sceneRef.current) {
-        tl.to(sceneRef.current, { autoAlpha: 0, duration: 0.85, ease: "power1.inOut" }, 12.3);
+        tl.to(sceneRef.current, { autoAlpha: 0, duration: 0.45, ease: "power1.inOut" }, 6.45);
       }
 
       if (bloomRef.current) {
-        tl.to(bloomRef.current, { opacity: 0, scale: 1.04, duration: 0.9, ease: "power1.inOut" }, 12.3 + 0.85);
+        tl.to(bloomRef.current, { opacity: 0, scale: 1.04, duration: 0.55, ease: "power1.inOut" }, 6.9);
       }
     }, rootRef);
 
@@ -395,15 +392,7 @@ export const IntroOverlay: React.FC = () => {
         {/* Initial Artifact Loader & Welcome Veil */}
         <div ref={loaderVeilRef} className="intro-loader-veil">
           <div className="intro-loader-content">
-            <div ref={artifactMarkRef} className="intro-artifact-mark">
-              <div className="intro-artifact-aura" aria-hidden="true" />
-              <img
-                src="/images/ui/artifact.png"
-                alt=""
-                className="intro-artifact-img"
-                draggable={false}
-              />
-            </div>
+            <div ref={artifactMarkRef} className="intro-artifact-mark" />
             <div ref={welcomeBlockRef} className="intro-welcome-block">
               <h1 className="intro-welcome-title" aria-label="Hi There, Founders!">
                 <span className="intro-welcome-word">

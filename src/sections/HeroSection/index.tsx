@@ -27,7 +27,7 @@ export const HeroSection = () => {
     });
 
     // Fallback safeguard in case intro was bypassed or failed
-    const timer = setTimeout(() => setIsRevealed(true), 16000);
+    const timer = setTimeout(() => setIsRevealed(true), 9000);
 
     return () => {
       window.removeEventListener("recursive-intro-done", onIntroDone);
