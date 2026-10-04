@@ -595,9 +595,7 @@ export const IntroOverlay: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          background:
-            radial-gradient(ellipse 75% 60% at 50% 42%, rgba(92, 140, 58, 0.22) 0%, rgba(47, 85, 39, 0.12) 36%, rgba(8, 18, 9, 0.88) 72%, #030703 100%),
-            linear-gradient(180deg, #09150B 0%, #030704 60%, #010301 100%);
+          background: radial-gradient(circle at 50% 50%, #000000 0%, #000000 40%, #1A3413 65%, #0B1909 85%, #000000 100%);
           pointer-events: none;
           overflow: hidden;
           will-change: opacity;
@@ -627,14 +625,7 @@ export const IntroOverlay: React.FC = () => {
         }
 
         .intro-brand-aura {
-          position: absolute;
-          width: clamp(200px, 28vw, 320px);
-          height: clamp(110px, 16vw, 170px);
-          border-radius: 50%;
-          background: radial-gradient(ellipse at center, rgba(143, 196, 90, 0.2) 0%, rgba(47, 85, 39, 0.08) 48%, transparent 72%);
-          filter: blur(24px);
-          pointer-events: none;
-          transform: translateZ(0);
+          display: none;
         }
 
         .intro-ecell-logo {
