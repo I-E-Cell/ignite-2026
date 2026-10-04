@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Lock } from "lucide-react";
+
 
 export const DesktopNavLinks = () => {
   const location = useLocation();
@@ -37,32 +37,24 @@ export const DesktopNavLinks = () => {
         FAQ
       </a>
 
-      {/* Showcase Page Navigation (Admin Protected) */}
+      {/* Showcase Page Navigation */}
       <Link
         to="/showcase"
         className={`text-[13px] font-bold leading-[20px] outline-none no-underline text-nowrap px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${location.pathname === "/showcase"
-            ? "bg-[#2F5527] text-white shadow-2xs"
-            : "text-[#2F5527] hover:bg-[#2F5527]/10"
+          ? "bg-[#2F5527] text-white shadow-2xs"
+          : "text-[#2F5527] hover:bg-[#2F5527]/10"
           }`}
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         <span>Showcase</span>
-        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-1 ${
-          location.pathname === "/showcase"
-            ? "bg-white/20 text-white"
-            : "bg-amber-500/15 text-amber-900 border border-amber-500/30"
-        }`}>
-          <Lock className="w-2.5 h-2.5" />
-          <span>Admin</span>
-        </span>
       </Link>
 
       {/* Register CTA Button */}
       <Link
         to="/register"
         className={`text-[13px] font-bold leading-[20px] outline-none no-underline text-nowrap px-4 py-1.5 rounded-full transition-all shadow-xs ${location.pathname === "/register"
-            ? "bg-[#8FC45A] text-[#111a12] ring-2 ring-[#2F5527]"
-            : "bg-[#141412] text-[#FBFAF8] hover:bg-[#252520]"
+          ? "bg-[#8FC45A] text-[#111a12] ring-2 ring-[#2F5527]"
+          : "bg-[#141412] text-[#FBFAF8] hover:bg-[#252520]"
           }`}
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
