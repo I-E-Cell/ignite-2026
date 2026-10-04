@@ -1,4 +1,3 @@
-
 import { CrowdCanvas } from "@/sections/Footer/components/CrowdCanvas";
 
 export const Footer = () => {
@@ -82,7 +81,7 @@ export const Footer = () => {
 
       <style>{`
         .footer-shell {
-          margin-top: clamp(4rem, 9vh, 7.5rem);
+          margin-top: 0;
         }
 
         .footer-wordmark-wrap {

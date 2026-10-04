@@ -48,7 +48,7 @@ export const FaqSection = () => {
   return (
     <section
       id="faq"
-      className="box-border caret-transparent text-neutral-900 relative w-full z-10 py-16 px-5 sm:px-8 md:py-24 md:px-12 lg:px-16 scroll-mt-20 overflow-hidden [overflow-anchor:none]"
+      className="box-border caret-transparent text-neutral-900 relative w-full z-10 pt-16 pb-4 px-5 sm:px-8 md:pt-24 md:pb-4 md:px-12 lg:px-16 scroll-mt-20 overflow-hidden [overflow-anchor:none]"
     >
       <div className="max-w-[1360px] mx-auto">
         <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-14 xl:gap-16">
