@@ -1111,9 +1111,14 @@ export default function SplashCursor({
     }
 
     function correctRadius(radius: number) {
-      const aspectRatio = canvas!.width / canvas!.height;
-      if (aspectRatio > 1) radius *= aspectRatio;
-      return radius;
+      // The drawing surface spans the whole dark zone, but the cursor should
+      // keep the same on-screen size even when that zone gets taller.
+      const surfaceHeight = Math.max(1, canvas!.clientHeight);
+      const referenceHeight = Math.min(surfaceHeight, window.innerHeight);
+      const referenceWidth = Math.min(canvas!.clientWidth, window.innerWidth);
+      const referenceAspect = referenceWidth / Math.max(1, referenceHeight);
+      const heightScale = referenceHeight / surfaceHeight;
+      return radius * Math.max(1, referenceAspect) * heightScale * heightScale;
     }
 
     function updatePointerDownData(pointer: Pointer, id: number, posX: number, posY: number) {
