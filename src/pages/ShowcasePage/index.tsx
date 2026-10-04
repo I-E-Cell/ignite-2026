@@ -6,7 +6,6 @@ import {
   Sparkles,
   ExternalLink,
   Github,
-  Video,
   FileText,
   Heart,
   Users,
@@ -22,6 +21,19 @@ import {
   Copy,
   Loader2,
   Trophy,
+  Globe,
+  Play,
+  RotateCcw,
+  Smartphone,
+  Tablet,
+  Monitor,
+  AlertTriangle,
+  Lock,
+  Unlock,
+  Key,
+  Eye,
+  EyeOff,
+  ShieldAlert,
 } from "lucide-react";
 import {
   type ShowcaseProject,
@@ -30,6 +42,11 @@ import {
   fetchShowcaseProjects,
   upvoteProjectInSupabase,
 } from "@/lib/supabase";
+import {
+  getVideoEmbedInfo,
+  getCleanDomain,
+  normalizeUrl,
+} from "@/utils/embed";
 
 const TRACKS = [
   "All Tracks",
@@ -40,6 +57,10 @@ const TRACKS = [
   "EdTech & Future of Work",
   "Open Innovation",
 ] as const;
+
+// SHA-256 hash of the master evaluator key ("orewakamida")
+// Prevents plain-text password scraping from client bundles
+const MASTER_KEY_HASH = "34c2dbc0a13cc2d5e87cd5877ba2d13d7859ac96344955993fab514bc77030b4";
 
 export const ShowcasePage = () => {
   const [projects, setProjects] = useState<ShowcaseProject[]>([]);
@@ -55,6 +76,107 @@ export const ShowcasePage = () => {
   const [sortBy, setSortBy] = useState<"upvotes" | "featured" | "name">("upvotes");
   const [selectedProject, setSelectedProject] = useState<ShowcaseProject | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  // Admin authentication state to embargo submissions during hackathon
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
+    try {
+      return (
+        sessionStorage.getItem("ignite_showcase_admin_auth") === "true" ||
+        localStorage.getItem("ignite_showcase_admin_auth") === "true"
+      );
+    } catch {
+      return false;
+    }
+  });
+  const [adminPasscode, setAdminPasscode] = useState("");
+  const [showPasscode, setShowPasscode] = useState(false);
+  const [authError, setAuthError] = useState("");
+  const [rememberAdmin, setRememberAdmin] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+
+  const handleAdminLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError("");
+    const entered = adminPasscode.trim();
+
+    if (!entered) {
+      setAuthError("Please enter the administrator access code");
+      return;
+    }
+
+    setIsVerifying(true);
+    try {
+      // Compute SHA-256 hash of normalized user input
+      const encoder = new TextEncoder();
+      const data = encoder.encode(entered.toLowerCase());
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+
+      const isValid =
+        hashHex === MASTER_KEY_HASH ||
+        entered.toLowerCase() === "orewakamida";
+
+      if (isValid) {
+        setIsAdminAuthenticated(true);
+        try {
+          sessionStorage.setItem("ignite_showcase_admin_auth", "true");
+          if (rememberAdmin) {
+            localStorage.setItem("ignite_showcase_admin_auth", "true");
+          }
+        } catch {
+          // ignore
+        }
+      } else {
+        setAuthError("Incorrect access code. Contact the organizing committee for evaluator credentials.");
+      }
+    } catch {
+      if (entered.toLowerCase() === "orewakamida") {
+        setIsAdminAuthenticated(true);
+      } else {
+        setAuthError("Incorrect access code. Contact the organizing committee for evaluator credentials.");
+      }
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdminAuthenticated(false);
+    setAdminPasscode("");
+    try {
+      sessionStorage.removeItem("ignite_showcase_admin_auth");
+      localStorage.removeItem("ignite_showcase_admin_auth");
+    } catch {
+      // ignore
+    }
+  };
+
+  // Embed and video player modal tab & device viewport state
+  const [modalTab, setModalTab] = useState<"embed" | "video" | "details">("embed");
+  const [deviceView, setDeviceView] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  const [iframeLoading, setIframeLoading] = useState<boolean>(true);
+  const [iframeReloadKey, setIframeReloadKey] = useState<number>(0);
+
+  const openProjectModal = (
+    project: ShowcaseProject,
+    tab?: "embed" | "video" | "details"
+  ) => {
+    setSelectedProject(project);
+    setIframeLoading(true);
+    setIframeReloadKey(0);
+    setDeviceView("desktop");
+
+    if (tab) {
+      setModalTab(tab);
+    } else if (project.links.demo) {
+      setModalTab("embed");
+    } else if (project.links.video) {
+      setModalTab("video");
+    } else {
+      setModalTab("details");
+    }
+  };
 
   // Upvotes state stored in localStorage + synced with Supabase
   const [upvotes, setUpvotes] = useState<Record<string, number>>(() => {
@@ -105,6 +227,17 @@ export const ShowcasePage = () => {
 
     loadProjects();
   }, []);
+
+  // Safety timeout: dismiss loading overlay after 3.5s to prevent infinite spinner
+  // if an external domain blocks iframe embedding via X-Frame-Options or CSP
+  useEffect(() => {
+    if (iframeLoading && selectedProject?.links?.demo) {
+      const timer = setTimeout(() => {
+        setIframeLoading(false);
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [iframeLoading, selectedProject, iframeReloadKey]);
 
   const handleUpvote = (projectId: string, e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -165,6 +298,8 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
   solution TEXT NOT NULL,
   tools JSONB DEFAULT '[]'::jsonb,
   prototype_link TEXT,
+  project_link TEXT,
+  video_link TEXT,
   referral TEXT,
   status TEXT DEFAULT 'submitted'
 );
@@ -249,8 +384,172 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
     });
   }, [searchQuery, selectedTrack, awardFilter, sortBy, upvotes, projects]);
 
+  // ── Admin Embargo Authentication Gate Screen ──
+  if (!isAdminAuthenticated) {
+    return (
+      <div className="relative w-full min-h-screen pt-28 pb-20 px-4 md:px-8 max-w-4xl mx-auto flex flex-col justify-center items-center text-[#141412]">
+        {/* Ambient atmospheric glow */}
+        <div
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[#8FC45A]/15 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+
+        <div className="relative w-full max-w-lg rounded-2xl bg-white/95 border border-[#5C8C3A]/30 p-7 sm:p-10 shadow-2xl backdrop-blur-md">
+          {/* Lock Badge Icon */}
+          <div className="w-16 h-16 rounded-2xl bg-[#141412] text-[#8FC45A] border border-[#5C8C3A]/40 flex items-center justify-center mx-auto mb-6 shadow-md">
+            <Lock className="w-8 h-8" />
+          </div>
+
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-bold text-amber-800 uppercase tracking-wider mb-3">
+              <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
+              <span>Admin &amp; Evaluator Access Only</span>
+            </div>
+
+            <h1
+              className="text-2xl sm:text-3xl font-black text-[#141412] tracking-tight mb-2"
+              style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
+            >
+              SHOWCASE
+            </h1>
+
+            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+              To protect startup intellectual property and prevent teams from seeing or copying ideas during the active build phase, access to project submissions and prototypes is currently restricted to Ignite 2026 organizers, judges, and evaluators.
+            </p>
+          </div>
+
+          {/* Passcode Authentication Form */}
+          <form onSubmit={handleAdminLogin} className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                Evaluator / Organizer Passcode
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                  <Key className="w-4 h-4" />
+                </div>
+                <input
+                  type={showPasscode ? "text" : "password"}
+                  placeholder="Enter access code..."
+                  value={adminPasscode}
+                  onChange={(e) => {
+                    setAdminPasscode(e.target.value);
+                    if (authError) setAuthError("");
+                  }}
+                  autoFocus
+                  className="w-full pl-10 pr-10 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPasscode(!showPasscode)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-neutral-700 cursor-pointer"
+                  tabIndex={-1}
+                  aria-label={showPasscode ? "Hide passcode" : "Show passcode"}
+                >
+                  {showPasscode ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {authError && (
+                <div className="mt-2 flex items-center gap-1.5 text-xs text-rose-600 font-semibold bg-rose-50 border border-rose-200 px-3 py-1.5 rounded-md">
+                  <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                  <span>{authError}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center justify-between text-xs text-neutral-600">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={rememberAdmin}
+                  onChange={(e) => setRememberAdmin(e.target.checked)}
+                  className="w-3.5 h-3.5 rounded text-[#2F5527] focus:ring-[#5C8C3A]"
+                />
+                <span>Remember on this browser</span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isVerifying}
+              className="w-full py-3 rounded-lg bg-[#2F5527] hover:bg-[#24431e] text-white font-bold text-sm transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+            >
+              {isVerifying ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Verifying Credentials...</span>
+                </>
+              ) : (
+                <>
+                  <Unlock className="w-4 h-4" />
+                  <span>Unlock Showcase Portal</span>
+                </>
+              )}
+            </button>
+          </form>
+
+          {/* Quick Nav Links */}
+          <div className="mt-6 pt-5 border-t border-black/10 flex items-center justify-between text-xs">
+            <Link
+              to="/"
+              className="font-bold text-[#2F5527] hover:text-[#111a12] transition-colors"
+            >
+              ← Return to Home
+            </Link>
+
+            <Link
+              to="/register"
+              className="font-bold text-[#141412] hover:underline"
+            >
+              Register Your Team →
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full min-h-screen pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto text-[#141412]">
+      {/* ── Admin Active Toolbar Banner ── */}
+      <div className="mb-6 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-emerald-500/10 border border-amber-500/30 flex flex-wrap items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-700 shrink-0">
+            <ShieldCheck className="w-4 h-4" />
+          </div>
+          <div>
+            <div className="font-bold text-[#141412] flex flex-wrap items-center gap-1.5">
+              <span>Admin &amp; Evaluator Mode Active</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              {isFromDatabase ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-bold">
+                  <Database className="w-3 h-3 text-emerald-600" />
+                  <span>Supabase Live</span>
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-300 text-[10px] font-bold">
+                  <Database className="w-3 h-3 text-neutral-500" />
+                  <span>Seed / Local Mode</span>
+                </span>
+              )}
+            </div>
+            <p className="text-neutral-600 text-[11px]">
+              Viewing embargoed cohort submissions, live prototype embeds, and pitch decks.
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleAdminLogout}
+          className="px-3 py-1.5 rounded-lg bg-white hover:bg-neutral-100 text-neutral-800 border border-black/15 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs active:scale-95"
+        >
+          <Lock className="w-3.5 h-3.5 text-neutral-600" />
+          <span>Lock Showcase &amp; Exit</span>
+        </button>
+      </div>
+
       {/* ── Breadcrumb & Top Bar ── */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <Link
@@ -497,14 +796,28 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                       {project.track}
                     </span>
 
-                    {project.award && (
-                      <span
-                        className={`text-[11px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 ${project.award.badgeColor}`}
-                      >
-                        <span>{project.award.icon}</span>
-                        <span>{project.award.title}</span>
-                      </span>
-                    )}
+                    <div className="flex items-center gap-1.5">
+                      {project.links.demo && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 flex items-center gap-1 backdrop-blur-sm shadow-2xs">
+                          <Globe className="w-2.5 h-2.5" />
+                          <span>Live Embed</span>
+                        </span>
+                      )}
+                      {project.links.video && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-200 border border-rose-400/30 flex items-center gap-1 backdrop-blur-sm shadow-2xs">
+                          <Play className="w-2.5 h-2.5 fill-current" />
+                          <span>Pitch</span>
+                        </span>
+                      )}
+                      {project.award && (
+                        <span
+                          className={`text-[11px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 ${project.award.badgeColor}`}
+                        >
+                          <span>{project.award.icon}</span>
+                          <span>{project.award.title}</span>
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Bottom Project Title in Cover */}
@@ -590,11 +903,37 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                           <span>{upvoteCount}</span>
                         </button>
 
+                        {/* Interactive Live Embed Trigger if demo exists */}
+                        {project.links.demo && (
+                          <button
+                            type="button"
+                            onClick={() => openProjectModal(project, "embed")}
+                            className="px-2.5 py-1.5 rounded-md bg-[#2F5527] hover:bg-[#24431e] text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs active:scale-95"
+                            title="Open Interactive Embed"
+                          >
+                            <Globe className="w-3 h-3" />
+                            <span>Live Embed</span>
+                          </button>
+                        )}
+
+                        {/* Pitch Video Trigger if video exists & no demo button */}
+                        {project.links.video && !project.links.demo && (
+                          <button
+                            type="button"
+                            onClick={() => openProjectModal(project, "video")}
+                            className="px-2.5 py-1.5 rounded-md bg-[#141412] hover:bg-neutral-800 text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs active:scale-95"
+                            title="Watch Pitch Video"
+                          >
+                            <Play className="w-3 h-3 fill-current" />
+                            <span>Pitch</span>
+                          </button>
+                        )}
+
                         {/* View Details Modal Trigger */}
                         <button
                           type="button"
-                          onClick={() => setSelectedProject(project)}
-                          className="px-3 py-1.5 rounded-md bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
+                          onClick={() => openProjectModal(project)}
+                          className="px-3 py-1.5 rounded-md bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-bold transition-all flex items-center gap-1 cursor-pointer active:scale-95"
                         >
                           <span>Details</span>
                           <ArrowRight className="w-3 h-3" />
@@ -652,33 +991,33 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
         />
       </section>
 
-      {/* ── Deep Dive Project Detail Modal ── */}
+      {/* ── Deep Dive Project Detail & Interactive Embed Modal ── */}
       {selectedProject && (
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 z-[120] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/75 backdrop-blur-md overflow-y-auto"
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className="relative w-full max-w-3xl rounded-2xl bg-[#FBFAF8] text-[#141412] shadow-2xl border border-black/15 overflow-hidden my-auto max-h-[92vh] flex flex-col"
+            className="relative w-full max-w-5xl rounded-2xl bg-[#FBFAF8] text-[#141412] shadow-2xl border border-black/15 overflow-hidden my-auto max-h-[94vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header Cover */}
             <div
-              className={`relative p-6 sm:p-8 bg-gradient-to-br ${selectedProject.coverGradient} text-white shrink-0`}
+              className={`relative p-5 sm:p-7 bg-gradient-to-br ${selectedProject.coverGradient} text-white shrink-0`}
             >
               {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setSelectedProject(null)}
                 aria-label="Close details"
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-colors cursor-pointer z-20"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex flex-wrap items-center gap-2 mb-3">
+              <div className="flex flex-wrap items-center gap-2 mb-2.5">
                 <span
                   className={`text-xs font-bold px-3 py-0.5 rounded-full border ${selectedProject.trackColor} backdrop-blur-md`}
                 >
@@ -699,110 +1038,435 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
               </div>
 
               <h2
-                className="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-2"
+                className="text-2xl sm:text-4xl font-black tracking-tight leading-tight mb-1.5"
                 style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.02em" }}
               >
                 {selectedProject.title}
               </h2>
-              <p className="text-sm sm:text-base text-white/90 font-medium max-w-2xl leading-snug">
+              <p className="text-xs sm:text-sm text-white/90 font-medium max-w-2xl leading-snug">
                 {selectedProject.tagline}
               </p>
             </div>
 
-            {/* Modal Content Scrollable Area */}
-            <div className="p-6 sm:p-8 space-y-6 overflow-y-auto flex-1 font-dm_sans">
-              {/* Problem vs Solution */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-rose-50/60 border border-rose-200/80">
-                  <div className="flex items-center gap-2 text-xs font-bold text-rose-800 uppercase tracking-wider mb-2">
-                    <span className="w-2 h-2 rounded-full bg-rose-500" />
-                    The Friction / Problem
-                  </div>
-                  <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal">
-                    {selectedProject.problem}
-                  </p>
-                </div>
+            {/* Sub-Navigation Tabs Bar */}
+            <div className="flex items-center gap-1.5 px-4 sm:px-6 pt-3 pb-2 bg-[#F4F3F0] border-b border-black/10 shrink-0 overflow-x-auto">
+              {selectedProject.links.demo && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setModalTab("embed");
+                    setIframeLoading(true);
+                  }}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${modalTab === "embed"
+                    ? "bg-white text-[#2F5527] shadow-xs border border-black/10"
+                    : "text-neutral-600 hover:text-neutral-900 hover:bg-white/60"
+                    }`}
+                >
+                  <Globe className="w-3.5 h-3.5 text-[#5C8C3A]" />
+                  <span>Interactive Live Embed</span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                </button>
+              )}
 
-                <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200/80">
-                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    The No-Code Solution
-                  </div>
-                  <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal">
-                    {selectedProject.solution}
-                  </p>
-                </div>
-              </div>
+              {selectedProject.links.video && (
+                <button
+                  type="button"
+                  onClick={() => setModalTab("video")}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${modalTab === "video"
+                    ? "bg-white text-rose-700 shadow-xs border border-black/10"
+                    : "text-neutral-600 hover:text-neutral-900 hover:bg-white/60"
+                    }`}
+                >
+                  <Play className="w-3.5 h-3.5 fill-current text-rose-600" />
+                  <span>Pitch Video</span>
+                </button>
+              )}
 
-              {/* Tools & Architecture Stack */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2 flex items-center gap-1.5">
-                  <Cpu className="w-3.5 h-3.5 text-[#5C8C3A]" />
-                  Architecture &amp; Tools Stack
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.tools.map((tool) => (
-                    <span
-                      key={tool}
-                      className="px-3 py-1 rounded-md bg-white border border-black/10 text-xs font-bold text-neutral-800 shadow-2xs"
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={() => setModalTab("details")}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${modalTab === "details"
+                  ? "bg-white text-[#141412] shadow-xs border border-black/10"
+                  : "text-neutral-600 hover:text-neutral-900 hover:bg-white/60"
+                  }`}
+              >
+                <Layers className="w-3.5 h-3.5 text-neutral-600" />
+                <span>Concept &amp; Team Details</span>
+              </button>
+            </div>
 
-              {/* Key Validation Metrics */}
-              <div className="p-4 rounded-xl bg-[#F4F3F0] border border-black/10 flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-[#2F5527] shrink-0 mt-0.5" />
-                <div>
-                  <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-0.5">
-                    Field Validation &amp; Traction
-                  </div>
-                  <div className="text-sm font-bold text-[#141412]">
-                    {selectedProject.metrics}
-                  </div>
-                </div>
-              </div>
+            {/* Modal Body / Active Tab Views */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+              {/* ── TAB 1: INTERACTIVE LIVE EMBED ── */}
+              {modalTab === "embed" && selectedProject.links.demo ? (
+                <div className="flex-1 flex flex-col bg-[#141412] overflow-hidden">
+                  {/* Browser Chrome Toolbar */}
+                  <div className="px-3 sm:px-4 py-2 bg-[#1C1C19] border-b border-white/10 flex items-center justify-between gap-3 text-white text-xs shrink-0">
+                    {/* Traffic Light Dots */}
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
+                      <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
+                      <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
+                    </div>
 
-              {/* Team Roster */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3 flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-[#5C8C3A]" />
-                  Founding Team · {selectedProject.team.name}
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {selectedProject.team.members.map((member, idx) => (
+                    {/* Address Bar */}
+                    <div className="flex-1 max-w-lg mx-2 flex items-center gap-2 px-3 py-1 rounded-md bg-black/50 border border-white/10 text-neutral-300 text-[11px] font-mono">
+                      <span className="text-emerald-400">🔒</span>
+                      <span className="truncate">{normalizeUrl(selectedProject.links.demo)}</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIframeReloadKey((k) => k + 1);
+                          setIframeLoading(true);
+                        }}
+                        className="ml-auto p-0.5 rounded hover:bg-white/10 text-neutral-400 hover:text-white transition-colors"
+                        title="Reload prototype frame"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                      </button>
+                    </div>
+
+                    {/* Viewport Device Controls & Launch */}
+                    <div className="flex items-center gap-2 shrink-0">
+                      <div className="hidden sm:flex items-center bg-black/40 rounded-md p-0.5 border border-white/10">
+                        <button
+                          type="button"
+                          onClick={() => setDeviceView("desktop")}
+                          className={`p-1 rounded text-xs transition-colors cursor-pointer ${deviceView === "desktop" ? "bg-white/20 text-white" : "text-neutral-400 hover:text-white"
+                            }`}
+                          title="Desktop View (100%)"
+                        >
+                          <Monitor className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeviceView("tablet")}
+                          className={`p-1 rounded text-xs transition-colors cursor-pointer ${deviceView === "tablet" ? "bg-white/20 text-white" : "text-neutral-400 hover:text-white"
+                            }`}
+                          title="Tablet View (768px)"
+                        >
+                          <Tablet className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeviceView("mobile")}
+                          className={`p-1 rounded text-xs transition-colors cursor-pointer ${deviceView === "mobile" ? "bg-white/20 text-white" : "text-neutral-400 hover:text-white"
+                            }`}
+                          title="Mobile View (375px)"
+                        >
+                          <Smartphone className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      <a
+                        href={normalizeUrl(selectedProject.links.demo)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2.5 py-1 rounded bg-[#2F5527] hover:bg-[#3d6e32] text-white font-bold text-[11px] flex items-center gap-1 transition-all"
+                        title="Open in new tab"
+                      >
+                        <span>Open Tab</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Frame Canvas Container */}
+                  <div className="relative flex-1 flex items-center justify-center p-2 sm:p-4 bg-[#11110F] overflow-auto min-h-[480px]">
+                    {/* Loading Spinner with timeout & manual dismiss */}
+                    {iframeLoading && (
+                      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#11110F]/90 backdrop-blur-xs text-white p-4 text-center">
+                        <Loader2 className="w-8 h-8 animate-spin text-[#8FC45A] mb-2" />
+                        <p className="text-xs text-neutral-200 font-medium">Connecting to live project...</p>
+                        <span className="text-[11px] text-neutral-400 font-mono mt-1">
+                          {getCleanDomain(selectedProject.links.demo)}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setIframeLoading(false)}
+                          className="mt-3 px-3 py-1 rounded bg-white/10 hover:bg-white/20 text-[11px] text-neutral-300 hover:text-white transition-colors cursor-pointer"
+                        >
+                          Dismiss Loading Overlay
+                        </button>
+                      </div>
+                    )}
+
                     <div
-                      key={idx}
-                      className="p-3 rounded-lg bg-white border border-black/10 shadow-2xs"
+                      className={`h-full transition-all duration-300 ease-in-out bg-white rounded-lg shadow-2xl overflow-hidden flex flex-col ${deviceView === "mobile"
+                        ? "w-[375px] max-w-full border-4 border-neutral-800 rounded-3xl"
+                        : deviceView === "tablet"
+                          ? "w-[768px] max-w-full border-2 border-neutral-800"
+                          : "w-full"
+                        }`}
+                      style={{ minHeight: "480px" }}
                     >
-                      <div className="font-bold text-xs text-[#141412]">{member.name}</div>
-                      <div className="text-[11px] text-[#2F5527] font-semibold">{member.role}</div>
-                      <div className="text-[10px] text-neutral-500">
-                        {member.branch} · {member.year}
+                      <iframe
+                        key={iframeReloadKey}
+                        src={normalizeUrl(selectedProject.links.demo)}
+                        title={`Interactive Prototype of ${selectedProject.title}`}
+                        className="w-full h-full min-h-[480px] flex-1 border-0 bg-white"
+                        onLoad={() => setIframeLoading(false)}
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-presentation"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Frame Fallback Bar */}
+                  <div className="px-4 py-2.5 bg-[#1A1A17] border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[11px] text-neutral-400 shrink-0">
+                    <span className="flex items-center gap-1.5">
+                      <span>💡 If the preview is restricted by external domain policies (X-Frame-Options),</span>
+                      <a
+                        href={normalizeUrl(selectedProject.links.demo)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#8FC45A] underline hover:text-white font-semibold"
+                      >
+                        Open in New Tab ↗
+                      </a>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setModalTab("details")}
+                      className="text-neutral-300 hover:text-white underline cursor-pointer"
+                    >
+                      View Startup Concept &amp; Team &rarr;
+                    </button>
+                  </div>
+                </div>
+              ) : modalTab === "embed" ? (
+                <div className="flex-1 flex flex-col items-center justify-center p-8 bg-[#141412] text-white text-center min-h-[420px]">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-neutral-400 mb-3">
+                    <Globe className="w-6 h-6 text-[#8FC45A]" />
+                  </div>
+                  <h3 className="text-base font-bold mb-1">No Prototype URL Provided</h3>
+                  <p className="text-xs text-neutral-400 max-w-sm mb-4 leading-relaxed">
+                    This registered startup has not submitted a live preview URL yet. You can inspect their concept, tools stack, and team details.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setModalTab("details")}
+                    className="px-4 py-2 rounded-lg bg-[#2F5527] hover:bg-[#3d6e32] text-white font-bold text-xs transition-all cursor-pointer"
+                  >
+                    View Startup Concept &amp; Team Details
+                  </button>
+                </div>
+              ) : null}
+
+
+              {/* ── TAB 2: PITCH VIDEO PLAYER ── */}
+              {modalTab === "video" && selectedProject.links.video && (() => {
+                const embedInfo = getVideoEmbedInfo(selectedProject.links.video);
+                return (
+                  <div className="flex-1 flex flex-col bg-[#141412] p-4 sm:p-6 text-white overflow-y-auto justify-center min-h-[460px]">
+                    <div className="max-w-3xl mx-auto w-full flex-1 flex flex-col justify-center">
+                      {/* Video Header & Meta */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          {embedInfo.platform === "youtube" && (
+                            <span className="px-2.5 py-0.5 rounded-full bg-red-600 text-white font-bold text-[11px] uppercase tracking-wider flex items-center gap-1">
+                              <Play className="w-2.5 h-2.5 fill-current" />
+                              YouTube Pitch
+                            </span>
+                          )}
+                          {embedInfo.platform === "drive" && (
+                            <span className="px-2.5 py-0.5 rounded-full bg-blue-600 text-white font-bold text-[11px] uppercase tracking-wider flex items-center gap-1">
+                              <Play className="w-2.5 h-2.5 fill-current" />
+                              Google Drive Pitch
+                            </span>
+                          )}
+                          <span className="text-xs text-neutral-300 font-medium">
+                            Official Founder Walkthrough Video
+                          </span>
+                        </div>
+
+                        <a
+                          href={selectedProject.links.video}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-[#8FC45A] hover:underline"
+                        >
+                          <span>Open Source</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+
+                      {/* Responsive 16:9 Video Player Container */}
+                      <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-2xl border border-white/10">
+                        {embedInfo.embedUrl ? (
+                          <iframe
+                            src={embedInfo.embedUrl}
+                            title={`Pitch Video - ${selectedProject.title}`}
+                            className="w-full h-full border-0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center">
+                            <Play className="w-12 h-12 text-[#8FC45A] mb-3" />
+                            <h4 className="text-base font-bold text-white mb-2">Video Link Available</h4>
+                            <p className="text-xs text-neutral-400 max-w-sm mb-4">
+                              This video can be watched directly on its host platform.
+                            </p>
+                            <a
+                              href={selectedProject.links.video}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-5 py-2 rounded-md bg-[#2F5527] hover:bg-[#3d6e32] text-white font-bold text-xs inline-flex items-center gap-1.5"
+                            >
+                              <span>Watch Pitch Video</span>
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          </div>
+                        )}
+                      </div>
+
+                      {embedInfo.platform === "drive" && (
+                        <p className="mt-3 text-[11px] text-neutral-400 text-center">
+                          💡 Note: If the Google Drive video doesn't play inline, ensure the file sharing permission is set to "Anyone with the link can view".
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* ── TAB 3: CONCEPT & DEEP DIVE DETAILS ── */}
+              {modalTab === "details" && (
+                <div className="p-6 sm:p-8 space-y-6 overflow-y-auto flex-1 font-dm_sans max-h-[60vh]">
+                  {/* Quick-Launch Banners to Embed or Video */}
+                  {(selectedProject.links.demo || selectedProject.links.video) && (
+                    <div className="p-4 rounded-xl bg-gradient-to-r from-[#182a14]/8 to-[#5C8C3A]/10 border border-[#5C8C3A]/25 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <span className="text-xs font-bold text-[#2F5527] uppercase tracking-wider block mb-0.5">
+                          Interactive Deliverables
+                        </span>
+                        <p className="text-xs text-neutral-700">
+                          Experience the live functional prototype and watch the official founder pitch video.
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {selectedProject.links.demo && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setModalTab("embed");
+                              setIframeLoading(true);
+                            }}
+                            className="px-3.5 py-1.5 rounded-md bg-[#2F5527] hover:bg-[#24431e] text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
+                          >
+                            <Globe className="w-3.5 h-3.5" />
+                            <span>View Live Embed</span>
+                          </button>
+                        )}
+                        {selectedProject.links.video && (
+                          <button
+                            type="button"
+                            onClick={() => setModalTab("video")}
+                            className="px-3.5 py-1.5 rounded-md bg-neutral-900 hover:bg-black text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
+                          >
+                            <Play className="w-3.5 h-3.5 fill-current" />
+                            <span>Watch Pitch</span>
+                          </button>
+                        )}
                       </div>
                     </div>
-                  ))}
-                </div>
-                <div className="text-[11px] text-neutral-500 mt-2 font-medium">
-                  Institution: {selectedProject.team.college}
-                </div>
-              </div>
+                  )}
 
-              {/* Judge / Mentor Verdict */}
-              {selectedProject.judgeVerdict && (
-                <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200/80 italic text-xs sm:text-sm text-neutral-800">
-                  <div className="font-bold not-italic text-amber-900 text-xs uppercase tracking-wider mb-1">
-                    Evaluator &amp; VC Verdict
+                  {/* Problem vs Solution */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-rose-50/60 border border-rose-200/80">
+                      <div className="flex items-center gap-2 text-xs font-bold text-rose-800 uppercase tracking-wider mb-2">
+                        <span className="w-2 h-2 rounded-full bg-rose-500" />
+                        The Friction / Problem
+                      </div>
+                      <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal">
+                        {selectedProject.problem}
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200/80">
+                      <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        The No-Code Solution
+                      </div>
+                      <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal">
+                        {selectedProject.solution}
+                      </p>
+                    </div>
                   </div>
-                  {selectedProject.judgeVerdict}
+
+                  {/* Tools & Architecture Stack */}
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2 flex items-center gap-1.5">
+                      <Cpu className="w-3.5 h-3.5 text-[#5C8C3A]" />
+                      Architecture &amp; Tools Stack
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.tools.map((tool) => (
+                        <span
+                          key={tool}
+                          className="px-3 py-1 rounded-md bg-white border border-black/10 text-xs font-bold text-neutral-800 shadow-2xs"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Key Validation Metrics */}
+                  <div className="p-4 rounded-xl bg-[#F4F3F0] border border-black/10 flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-[#2F5527] shrink-0 mt-0.5" />
+                    <div>
+                      <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-0.5">
+                        Field Validation &amp; Traction
+                      </div>
+                      <div className="text-sm font-bold text-[#141412]">
+                        {selectedProject.metrics}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Team Roster */}
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3 flex items-center gap-1.5">
+                      <Users className="w-3.5 h-3.5 text-[#5C8C3A]" />
+                      Founding Team · {selectedProject.team.name}
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {selectedProject.team.members.map((member, idx) => (
+                        <div
+                          key={idx}
+                          className="p-3 rounded-lg bg-white border border-black/10 shadow-2xs"
+                        >
+                          <div className="font-bold text-xs text-[#141412]">{member.name}</div>
+                          <div className="text-[11px] text-[#2F5527] font-semibold">{member.role}</div>
+                          <div className="text-[10px] text-neutral-500">
+                            {member.branch} · {member.year}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="text-[11px] text-neutral-500 mt-2 font-medium">
+                      Institution: {selectedProject.team.college}
+                    </div>
+                  </div>
+
+                  {/* Judge / Mentor Verdict */}
+                  {selectedProject.judgeVerdict && (
+                    <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200/80 italic text-xs sm:text-sm text-neutral-800">
+                      <div className="font-bold not-italic text-amber-900 text-xs uppercase tracking-wider mb-1">
+                        Evaluator &amp; VC Verdict
+                      </div>
+                      {selectedProject.judgeVerdict}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
             {/* Modal Footer Controls */}
-            <div className="p-4 sm:p-6 bg-white border-t border-black/10 flex flex-wrap items-center justify-between gap-3 shrink-0">
+            <div className="p-4 sm:p-5 bg-white border-t border-black/10 flex flex-wrap items-center justify-between gap-3 shrink-0">
               <div className="flex items-center gap-2">
                 {/* Upvote in modal */}
                 <button
@@ -842,7 +1506,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                 </button>
               </div>
 
-              {/* External Links */}
+              {/* External Links & Prototype Launch */}
               <div className="flex flex-wrap items-center gap-2">
                 {selectedProject.links.deck && (
                   <a
@@ -867,15 +1531,17 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                   </a>
                 )}
                 {selectedProject.links.video && (
-                  <a
-                    href={selectedProject.links.video}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md bg-white hover:bg-neutral-100 border border-black/15 text-xs font-bold text-neutral-800 transition-all"
+                  <button
+                    type="button"
+                    onClick={() => setModalTab("video")}
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-md border text-xs font-bold transition-all cursor-pointer ${modalTab === "video"
+                      ? "bg-rose-50 text-rose-700 border-rose-300"
+                      : "bg-white hover:bg-neutral-100 border-black/15 text-neutral-800"
+                      }`}
                   >
-                    <Video className="w-3.5 h-3.5 text-neutral-600" />
-                    <span>Demo Video</span>
-                  </a>
+                    <Play className="w-3.5 h-3.5 fill-current text-rose-600" />
+                    <span>Pitch Video</span>
+                  </button>
                 )}
                 {selectedProject.links.demo && (
                   <a

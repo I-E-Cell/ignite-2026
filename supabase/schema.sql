@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
   solution TEXT NOT NULL,
   tools JSONB DEFAULT '[]'::jsonb,               -- Array of strings
   prototype_link TEXT,
+  project_link TEXT,                             -- Live prototype/project link for Showcase embed
+  video_link TEXT,                               -- Pitch video (YouTube / Google Drive)
   referral TEXT,
   status TEXT DEFAULT 'submitted'                -- 'submitted', 'shortlisted', 'incubated'
 );

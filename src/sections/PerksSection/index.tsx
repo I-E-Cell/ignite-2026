@@ -191,7 +191,7 @@ export const PerksSection = () => {
             <DraggableCardBody
               key={card.id}
               style={{
-                rotate: card.initialRotation,
+                rotate: `${card.initialRotation}deg`,
                 zIndex: card.zIndex,
               }}
               className={cn(

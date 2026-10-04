@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import {
   GraduationCap,
   HeartPulse,
@@ -160,8 +160,6 @@ export const DomainCarousel = () => {
           if (offset > count / 2) offset -= count;
 
           const isCenter = offset === 0;
-          const isImmediate = Math.abs(offset) === 1;
-          const isOuter = Math.abs(offset) === 2;
           const isVisible = Math.abs(offset) <= 2;
 
           // Motion coordinates & scale tailored for 5 visible cards

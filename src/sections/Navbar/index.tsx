@@ -26,7 +26,7 @@ export const Navbar = () => {
     { href: "/#eligibility", label: "Who Can Join" },
     { href: "/#gallery", label: "Gallery" },
     { href: "/#faq", label: "FAQ" },
-    { href: "/showcase", label: "Project Showcase" },
+    { href: "/showcase", label: "Project Showcase (Admin)" },
     { href: "/register", label: "Register for Ignite" },
   ];
 
@@ -34,7 +34,7 @@ export const Navbar = () => {
     <>
       <nav className="nav-root">
         <div className="nav-glass-container">
-          <div className="relative isolate overflow-hidden select-none pointer-events-auto"
+          <div className="relative isolate overflow-hidden select-none pointer-events-auto w-full"
             style={{
               borderRadius: "4px",
               background: "rgba(255,255,255,0.42)",
@@ -140,26 +140,32 @@ export const Navbar = () => {
       <style>{`
         .nav-root {
           position: fixed;
-          top: clamp(0.75rem, 2.2vh, 1.5rem);
+          top: clamp(0.75rem, 2vh, 1.25rem);
           left: 0;
+          right: 0;
           width: 100%;
           z-index: 100;
           display: flex;
           justify-content: center;
           pointer-events: none;
+          padding-inline: clamp(0.85rem, 2.5vw, 2.25rem);
+          box-sizing: border-box;
         }
 
         .nav-glass-container {
           pointer-events: auto;
-          width: max-content;
-          max-width: calc(100vw - 1.5rem);
+          width: 100%;
+          max-width: 100%;
         }
 
         .nav-glass-pill-layout {
           display: flex;
           align-items: center;
-          gap: 0.25rem;
-          padding: 0.35rem;
+          justify-content: space-between;
+          width: 100%;
+          gap: 0.5rem;
+          padding: 0.35rem 0.75rem;
+          box-sizing: border-box;
         }
 
         .nav-toggle {
@@ -206,11 +212,12 @@ export const Navbar = () => {
 
         @media (max-width: 860px) {
           .nav-root {
-            top: clamp(0.6rem, 1.8vh, 0.95rem);
+            top: clamp(0.5rem, 1.5vh, 0.85rem);
+            padding-inline: clamp(0.5rem, 2vw, 0.85rem);
           }
           .nav-glass-pill-layout {
-            padding: 0.32rem 0.4rem 0.32rem 0.45rem;
-            gap: 0.25rem;
+            padding: 0.35rem 0.6rem;
+            justify-content: space-between;
           }
           .nav-toggle {
             display: grid;

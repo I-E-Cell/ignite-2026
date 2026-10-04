@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { Lock } from "lucide-react";
 
 export const DesktopNavLinks = () => {
   const location = useLocation();
@@ -36,7 +37,7 @@ export const DesktopNavLinks = () => {
         FAQ
       </a>
 
-      {/* Showcase Page Navigation */}
+      {/* Showcase Page Navigation (Admin Protected) */}
       <Link
         to="/showcase"
         className={`text-[13px] font-bold leading-[20px] outline-none no-underline text-nowrap px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${location.pathname === "/showcase"
@@ -46,6 +47,14 @@ export const DesktopNavLinks = () => {
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         <span>Showcase</span>
+        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-1 ${
+          location.pathname === "/showcase"
+            ? "bg-white/20 text-white"
+            : "bg-amber-500/15 text-amber-900 border border-amber-500/30"
+        }`}>
+          <Lock className="w-2.5 h-2.5" />
+          <span>Admin</span>
+        </span>
       </Link>
 
       {/* Register CTA Button */}

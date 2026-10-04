@@ -6,7 +6,6 @@ import {
   UserCheck,
   Lightbulb,
   Rocket,
-  CheckCircle2,
   AlertCircle,
   ArrowRight,
   ArrowLeft,
@@ -14,17 +13,22 @@ import {
   Check,
   Shield,
   HelpCircle,
-  Database,
   Loader2,
+  Calendar,
   Bot,
   CreditCard,
   Leaf,
   HeartPulse,
   GraduationCap,
   Zap,
+  Globe,
+  Video,
+  Cpu,
+  X,
 } from "lucide-react";
 import { triggerConfetti } from "@/utils/confetti";
 import { submitRegistration } from "@/lib/supabase";
+import { detectVideoPlatform } from "@/utils/embed";
 
 interface TeamMemberData {
   name: string;
@@ -60,6 +64,8 @@ interface RegistrationFormData {
   problem: string;
   solution: string;
   tools: string[];
+  projectLink: string;
+  videoLink: string;
   prototypeLink: string;
   referral: string;
   agreedToTerms: boolean;
@@ -104,22 +110,13 @@ const AVAILABLE_TRACKS = [
   },
 ];
 
-const AVAILABLE_TOOLS = [
-  "FlutterFlow",
-  "Bubble",
-  "Webflow",
-  "Retool",
-  "Supabase",
-  "Airtable",
-  "Make / Integromat",
-  "n8n",
-  "OpenAI API",
-  "Softr",
-  "Framer",
-  "Xano",
-  "Firebase",
-  "Stripe",
-];
+export const BRANCHES = [
+  "Computer Engineering",
+  "Information Technology",
+  "Electronics and Telecommunication",
+  "Automation and Robotics",
+  "Mechanical Engineering",
+] as const;
 
 const INITIAL_FORM: RegistrationFormData = {
   teamName: "",
@@ -127,10 +124,10 @@ const INITIAL_FORM: RegistrationFormData = {
   leadName: "",
   leadEmail: "",
   leadPhone: "",
-  leadCollege: "",
+  leadCollege: "Army Institute of Technology, Pune",
   leadYear: "1st Year",
-  leadBranch: "",
-  leadRole: "Hacker / No-Code Architect",
+  leadBranch: "Computer Engineering",
+  leadRole: "Founder / Lead",
   leadSocial: "",
   teamSize: 1,
   members: [],
@@ -139,6 +136,8 @@ const INITIAL_FORM: RegistrationFormData = {
   problem: "",
   solution: "",
   tools: [],
+  projectLink: "",
+  videoLink: "",
   prototypeLink: "",
   referral: "",
   agreedToTerms: false,
@@ -162,6 +161,7 @@ export const RegistrationPage = () => {
   const [savedToDatabase, setSavedToDatabase] = useState<boolean>(false);
   const [applicationId, setApplicationId] = useState<string>("");
   const [copiedId, setCopiedId] = useState<boolean>(false);
+  const [toolInput, setToolInput] = useState<string>("");
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -201,8 +201,9 @@ export const RegistrationPage = () => {
       }
       if (!formData.leadPhone.trim()) {
         errs.leadPhone = "Phone / WhatsApp number is required";
+      } else if (formData.leadPhone.length !== 10) {
+        errs.leadPhone = "Please enter a valid 10-digit mobile number";
       }
-      if (!formData.leadCollege.trim()) errs.leadCollege = "College name is required";
     }
 
     if (currentStep === 3) {
@@ -220,6 +221,20 @@ export const RegistrationPage = () => {
     }
 
     if (currentStep === 4) {
+      // Auto-commit any pending tool input if participant typed without pressing Enter
+      let currentTools = [...formData.tools];
+      if (toolInput.trim()) {
+        const splitTools = toolInput
+          .split(/[,+\n]/)
+          .map((t) => t.trim())
+          .filter((t) => t.length > 0);
+        const currentSet = new Set(currentTools);
+        splitTools.forEach((t) => currentSet.add(t));
+        currentTools = Array.from(currentSet);
+        setFormData((prev) => ({ ...prev, tools: currentTools }));
+        setToolInput("");
+      }
+
       if (!formData.projectTitle.trim()) {
         errs.projectTitle = "Project / Startup title is required";
       }
@@ -234,8 +249,8 @@ export const RegistrationPage = () => {
       if (!formData.solution.trim() || formData.solution.length < 20) {
         errs.solution = "Please describe the proposed solution in at least 20 characters";
       }
-      if (formData.tools.length === 0) {
-        errs.tools = "Select at least 1 proposed no-code tool";
+      if (currentTools.length === 0) {
+        errs.tools = "Please enter at least 1 tool or technology in your stack";
       }
       if (!formData.agreedToTerms) {
         errs.agreedToTerms = "You must agree to the Code of Conduct & IP terms";
@@ -261,6 +276,18 @@ export const RegistrationPage = () => {
     e.preventDefault();
     if (!validateStep(4)) return;
 
+    // Ensure any freshly typed tool text is included
+    let finalTools = [...formData.tools];
+    if (toolInput.trim()) {
+      const splitTools = toolInput
+        .split(/[,+\n]/)
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0);
+      const currentSet = new Set(finalTools);
+      splitTools.forEach((t) => currentSet.add(t));
+      finalTools = Array.from(currentSet);
+    }
+
     setIsSubmitting(true);
     try {
       const result = await submitRegistration({
@@ -280,8 +307,10 @@ export const RegistrationPage = () => {
         pitch: formData.pitch,
         problem: formData.problem,
         solution: formData.solution,
-        tools: formData.tools,
-        prototypeLink: formData.prototypeLink,
+        tools: finalTools,
+        projectLink: formData.projectLink,
+        videoLink: formData.videoLink,
+        prototypeLink: formData.projectLink || formData.prototypeLink,
         referral: formData.referral,
       });
 
@@ -326,12 +355,36 @@ export const RegistrationPage = () => {
     });
   };
 
-  const toggleTool = (tool: string) => {
-    const exists = formData.tools.includes(tool);
-    setFormData({
-      ...formData,
-      tools: exists ? formData.tools.filter((t) => t !== tool) : [...formData.tools, tool],
-    });
+  const addToolsFromInput = (raw: string) => {
+    if (!raw.trim()) return;
+    const splitTools = raw
+      .split(/[,+\n]/)
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0);
+
+    if (splitTools.length === 0) return;
+
+    const current = new Set(formData.tools);
+    splitTools.forEach((t) => current.add(t));
+    setFormData((prev) => ({
+      ...prev,
+      tools: Array.from(current),
+    }));
+    setToolInput("");
+    if (errors.tools) {
+      setErrors((prev) => {
+        const updated = { ...prev };
+        delete updated.tools;
+        return updated;
+      });
+    }
+  };
+
+  const removeTool = (toolToRemove: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      tools: prev.tools.filter((t) => t !== toolToRemove),
+    }));
   };
 
   const copyAppId = () => {
@@ -344,110 +397,209 @@ export const RegistrationPage = () => {
 
   // ── Success State Screen ──
   if (isSubmitted) {
-    return (
-      <div className="relative w-full min-h-screen pt-24 pb-20 px-4 md:px-8 max-w-4xl mx-auto text-[#141412]">
-        <div className="rounded-2xl bg-white/95 border border-[#5C8C3A]/30 p-8 md:p-12 shadow-xl backdrop-blur-md text-center">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center mx-auto mb-6 text-emerald-700 animate-bounce">
-            <CheckCircle2 className="w-9 h-9" />
-          </div>
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+      "Ignite 2026: 20-Week Accelerator Kickoff"
+    )}&dates=20260415T133000Z/20260415T153000Z&details=${encodeURIComponent(
+      `Ignite 2026 No-Code Startup Accelerator Kickoff.\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
+    )}&location=${encodeURIComponent("Army Institute of Technology, Pune / Virtual Stage")}`;
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider mb-3">
-            Registration Confirmed
+    return (
+      <div className="relative w-full min-h-screen pt-24 pb-20 px-4 md:px-8 max-w-4xl mx-auto flex flex-col justify-center text-[#141412]">
+        {/* Ambient atmospheric glows */}
+        <div
+          className="absolute top-1/4 -left-12 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-[#8FC45A]/15 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute bottom-1/4 -right-12 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-[#BEF264]/12 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+
+        {/* Card Container */}
+        <div className="relative rounded-3xl bg-white/95 border border-[#5C8C3A]/30 p-6 sm:p-10 md:p-12 shadow-2xl backdrop-blur-xl text-center overflow-hidden">
+          {/* Cyber-neon top glow line */}
+          <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#2F5527] via-[#8FC45A] to-[#BEF264]" />
+
+          {/* Celebratory Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider mb-4 shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
+            <span>Cohort 2026 Confirmed</span>
           </div>
 
           <h1
-            className="text-3xl md:text-5xl font-black text-[#141412] tracking-tight leading-tight mb-3"
-            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.025em" }}
+            className="text-3xl sm:text-4xl md:text-5xl font-black text-[#141412] tracking-tight leading-[1.12] mb-3"
+            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
           >
-            Welcome to Ignite 2026!
+            You're in the Arena, {formData.teamName || "Founder"}!
           </h1>
-          <p className="text-sm md:text-base text-neutral-600 max-w-xl mx-auto mb-4 font-medium">
-            Your team registration for the 20-Week No-Code Startup Accelerator has been recorded.
-            A confirmation receipt has been dispatched to <span className="font-bold text-black">{formData.leadEmail}</span>.
+
+          <p className="text-sm sm:text-base text-neutral-600 max-w-xl mx-auto mb-8 font-normal leading-relaxed">
+            Your startup registration for the 20-Week No-Code Accelerator has been officially sealed into the cohort registry.
+            A confirmation receipt has been dispatched to{" "}
+            <span className="font-bold text-[#141412] bg-[#8FC45A]/20 px-1.5 py-0.5 rounded">
+              {formData.leadEmail}
+            </span>.
           </p>
 
-          {/* Database Synchronization Status */}
-          <div className="flex justify-center mb-6">
-            {savedToDatabase ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-xs font-semibold text-emerald-800 shadow-2xs">
-                <Database className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Saved directly to Supabase (`public.ignite_registrations`)</span>
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-300 text-xs font-semibold text-amber-800 shadow-2xs">
-                <Database className="w-3.5 h-3.5 text-amber-600" />
-                <span>Saved locally (Configure Supabase credentials in .env to sync live)</span>
-              </span>
-            )}
-          </div>
+          {/* ── Founder Boarding Pass (Ticket Card) ── */}
+          <div className="max-w-xl mx-auto rounded-2xl bg-gradient-to-b from-[#FAF9F5] to-[#F3F1EC] border border-black/10 shadow-md overflow-hidden text-left mb-8">
+            {/* Ticket Header Bar */}
+            <div className="px-5 py-3.5 bg-[#141412] text-white flex items-center justify-between border-b border-black/20">
+              <div className="flex items-center gap-2">
+                <Rocket className="w-4 h-4 text-[#8FC45A]" />
+                <span
+                  className="text-xs font-black tracking-wider uppercase text-neutral-200"
+                  style={{ fontFamily: "var(--font-headingNow), sans-serif" }}
+                >
+                  REGISTERED FOR IGNITE 2026
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-[11px] font-bold text-[#BEF264]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#BEF264] animate-pulse" />
+                <span>Application Sealed</span>
+              </div>
+            </div>
 
-          {/* Application Receipt Card */}
-          <div className="max-w-md mx-auto p-5 rounded-xl bg-[#F4F3F0] border border-black/10 text-left mb-8 space-y-3">
-            <div className="flex items-center justify-between pb-3 border-b border-black/10">
-              <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">
-                Application ID
+            {/* Ticket Registry ID Row */}
+            <div className="px-5 py-3 bg-[#EAE8E1]/80 border-b border-dashed border-black/15 flex items-center justify-between">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500">
+                Official Registry ID
               </span>
               <div className="flex items-center gap-2">
-                <span className="font-geist_mono font-black text-base text-[#2F5527]">
+                <span className="font-geist_mono font-black text-sm sm:text-base text-[#2F5527] tracking-wider">
                   {applicationId}
                 </span>
                 <button
                   type="button"
                   onClick={copyAppId}
-                  className="p-1 rounded hover:bg-neutral-200 text-neutral-600 cursor-pointer"
+                  className="p-1 rounded hover:bg-black/10 text-neutral-600 cursor-pointer transition-colors"
                   title="Copy Application ID"
                 >
-                  {copiedId ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                  {copiedId ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            {/* Ticket Details Grid */}
+            <div className="p-5 grid grid-cols-2 gap-4 text-xs">
               <div>
-                <span className="text-neutral-500 block">Team Name</span>
-                <span className="font-bold text-neutral-900">{formData.teamName}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block mb-0.5">
+                  Venture / Team
+                </span>
+                <span className="font-black text-sm text-[#141412] block">
+                  {formData.teamName}
+                </span>
               </div>
+
               <div>
-                <span className="text-neutral-500 block">Domain Track</span>
-                <span className="font-bold text-[#2F5527]">{formData.track}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block mb-0.5">
+                  Domain Track
+                </span>
+                <span className="inline-flex items-center gap-1 font-bold text-xs text-[#2F5527] bg-[#5C8C3A]/15 px-2.5 py-1 rounded-md">
+                  {formData.track}
+                </span>
               </div>
+
               <div>
-                <span className="text-neutral-500 block">Lead Founder</span>
-                <span className="font-bold text-neutral-900">{formData.leadName}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block mb-0.5">
+                  Lead Founder
+                </span>
+                <span className="font-bold text-neutral-800 block text-xs sm:text-sm">
+                  {formData.leadName}
+                </span>
               </div>
+
               <div>
-                <span className="text-neutral-500 block">Team Size</span>
-                <span className="font-bold text-neutral-900">{formData.teamSize} Builders</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 block mb-0.5">
+                  Squad Size
+                </span>
+                <span className="font-bold text-neutral-800 block text-xs sm:text-sm">
+                  {formData.teamSize} Builder{formData.teamSize > 1 ? "s" : ""}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Action Links */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/showcase"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-sm font-bold transition-all shadow-md active:scale-95"
-            >
-              <span>Browse Submitted Projects</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <a
-              href="https://discord.gg/SMYB7tJQf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#5865F2] hover:bg-[#4752c4] text-white text-sm font-bold transition-all shadow-md active:scale-95"
-            >
-              <span>Join Official Discord</span>
-            </a>
+          {/* ── What Happens Next (Roadmap) ── */}
+          <div className="max-w-xl mx-auto mb-8 text-left">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
+              <span>Next Milestones on Your Venture Journey</span>
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/10 shadow-2xs">
+                <div className="text-[10px] font-mono font-black text-[#5C8C3A] mb-1">
+                  PHASE 01
+                </div>
+                <div className="font-bold text-xs text-[#141412] mb-1">
+                  Review &amp; Screening
+                </div>
+                <div className="text-[11px] text-neutral-600 leading-snug">
+                  Evaluation team reviews your problem statement &amp; tooling stack.
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/10 shadow-2xs">
+                <div className="text-[10px] font-mono font-black text-[#5C8C3A] mb-1">
+                  PHASE 02
+                </div>
+                <div className="font-bold text-xs text-[#141412] mb-1">
+                  Mentor Session
+                </div>
+                <div className="text-[11px] text-neutral-600 leading-snug">
+                  Get suggestions and workarounds with domain-expert founders, angels, and VC scout network.
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/10 shadow-2xs">
+                <div className="text-[10px] font-mono font-black text-[#2F5527] mb-1">
+                  PHASE 03
+                </div>
+                <div className="font-bold text-xs text-[#141412] mb-1">
+                  Showcase Day
+                </div>
+                <div className="text-[11px] text-neutral-600 leading-snug">
+                  Present your Startup to judges and investors for funding and mentorship opportunities.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Action Links ── */}
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white hover:bg-neutral-100 text-neutral-800 text-sm font-bold border border-black/15 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95 cursor-pointer"
             >
-              <span>Back to Home</span>
+              <span>Return to Ignite Home</span>
+              <ArrowRight className="w-4 h-4 text-[#8FC45A]" />
             </Link>
+
+            <a
+              href={gcalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-white hover:bg-neutral-100 text-neutral-800 text-xs sm:text-sm font-bold border border-black/15 transition-all shadow-2xs active:scale-95 cursor-pointer"
+            >
+              <Calendar className="w-4 h-4 text-[#5C8C3A]" />
+              <span>Add Kickoff to Calendar</span>
+            </a>
+          </div>
+
+          {/* ── Encrypted Registry Trust Seal ── */}
+          <div className="inline-flex items-center gap-1.5 text-xs text-neutral-500 font-medium">
+            <Shield className="w-3.5 h-3.5 text-[#5C8C3A]" />
+            <span>
+              {savedToDatabase
+                ? "Stored securely in the Ignite 2026 Cloud Registry"
+                : "Stored securely in the Ignite 2026 encrypted registry"}
+            </span>
           </div>
         </div>
       </div>
+
+
     );
   }
 
@@ -698,29 +850,43 @@ export const RegistrationPage = () => {
                   </label>
                   <input
                     type="tel"
-                    placeholder="+91 98765 43210"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={10}
+                    placeholder="10-digit mobile number (e.g. 9876543210)"
                     value={formData.leadPhone}
-                    onChange={(e) => setFormData({ ...formData, leadPhone: e.target.value })}
+                    onKeyDown={(e) => {
+                      // Allow control keys (backspace, delete, tab, arrows, enter) and shortcuts (Cmd/Ctrl + C/V/A/X)
+                      if (
+                        ["Backspace", "Tab", "Delete", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Enter"].includes(e.key) ||
+                        e.ctrlKey ||
+                        e.metaKey
+                      ) {
+                        return;
+                      }
+                      // Block non-digit characters
+                      if (!/^\d$/.test(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                    onChange={(e) => {
+                      // Strip all non-digit characters and limit to 10 digits
+                      const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 10);
+                      setFormData({ ...formData, leadPhone: digitsOnly });
+                      if (errors.leadPhone) {
+                        setErrors((prev) => {
+                          const next = { ...prev };
+                          delete next.leadPhone;
+                          return next;
+                        });
+                      }
+                    }}
                     className={`w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${errors.leadPhone ? "border-rose-400 bg-rose-50/30" : "border-black/15"
                       }`}
                   />
                   {errors.leadPhone && (
                     <p className="mt-1 text-xs text-rose-500">{errors.leadPhone}</p>
                   )}
-                </div>
-
-                {/* College / Institution */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
-                    College / Institution <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Army Institute of Technology, Pune"
-                    value={formData.leadCollege}
-                    onChange={(e) => setFormData({ ...formData, leadCollege: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
-                  />
                 </div>
 
                 {/* Year of Study */}
@@ -745,28 +911,16 @@ export const RegistrationPage = () => {
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
                     Branch / Department
                   </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Computer Engineering, IT, ENTC, Mech"
+                  <select
                     value={formData.leadBranch}
                     onChange={(e) => setFormData({ ...formData, leadBranch: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
-                  />
-                </div>
-
-                {/* Founder Role */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
-                    Primary Role in Venture
-                  </label>
-                  <select
-                    value={formData.leadRole}
-                    onChange={(e) => setFormData({ ...formData, leadRole: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
                   >
-                    <option value="Hacker / No-Code Architect">Hacker / No-Code Builder (Tools &amp; Logic)</option>
-                    <option value="Hipster / UI & Product UX">Hipster / Product Designer (UI/UX)</option>
-                    <option value="Hustler / Strategy & Pitch">Hustler / Growth &amp; Pitch Strategist</option>
+                    {BRANCHES.map((branch) => (
+                      <option key={branch} value={branch}>
+                        {branch}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -906,34 +1060,42 @@ export const RegistrationPage = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                           <label className="block text-[11px] font-bold uppercase text-neutral-600 mb-1">
-                            College / Institution
+                            Branch
                           </label>
-                          <input
-                            type="text"
-                            value={member.college}
-                            onChange={(e) => {
-                              const updated = [...formData.members];
-                              updated[index].college = e.target.value;
-                              setFormData({ ...formData, members: updated });
-                            }}
-                            className="w-full px-3 py-2 rounded-md bg-white border border-black/15 text-xs text-[#141412] focus:outline-none focus:ring-1 focus:ring-[#5C8C3A]"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-bold uppercase text-neutral-600 mb-1">
-                            Branch &amp; Year
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="e.g. Comp '27"
-                            value={`${member.branch} · ${member.year}`}
+                          <select
+                            value={member.branch || BRANCHES[0]}
                             onChange={(e) => {
                               const updated = [...formData.members];
                               updated[index].branch = e.target.value;
                               setFormData({ ...formData, members: updated });
                             }}
                             className="w-full px-3 py-2 rounded-md bg-white border border-black/15 text-xs text-[#141412] focus:outline-none focus:ring-1 focus:ring-[#5C8C3A]"
-                          />
+                          >
+                            {BRANCHES.map((b) => (
+                              <option key={b} value={b}>
+                                {b}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold uppercase text-neutral-600 mb-1">
+                            Year of Study
+                          </label>
+                          <select
+                            value={member.year || "1st Year"}
+                            onChange={(e) => {
+                              const updated = [...formData.members];
+                              updated[index].year = e.target.value;
+                              setFormData({ ...formData, members: updated });
+                            }}
+                            className="w-full px-3 py-2 rounded-md bg-white border border-black/15 text-xs text-[#141412] focus:outline-none focus:ring-1 focus:ring-[#5C8C3A]"
+                          >
+                            <option value="1st Year">1st Year (Freshman)</option>
+                            <option value="2nd Year">2nd Year (Sophomore)</option>
+                            <option value="3rd Year">3rd Year (Junior)</option>
+                            <option value="4th Year">4th Year (Senior)</option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -1030,47 +1192,194 @@ export const RegistrationPage = () => {
                 {errors.solution && <p className="mt-1 text-xs text-rose-500">{errors.solution}</p>}
               </div>
 
-              {/* Tools Multi-Select Pills */}
+              {/* Tech Stack & Tools Custom Free-Form Input */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-2">
-                  Anticipated No-Code Tools / Low-Code Stack <span className="text-rose-500">*</span>
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {AVAILABLE_TOOLS.map((tool) => {
-                    const isSelected = formData.tools.includes(tool);
-                    return (
-                      <button
-                        key={tool}
-                        type="button"
-                        onClick={() => toggleTool(tool)}
-                        className={`text-xs font-semibold px-3 py-1.5 rounded-md border transition-all cursor-pointer ${isSelected
-                          ? "bg-[#2F5527] text-white border-[#2F5527] shadow-2xs"
-                          : "bg-[#FBFAF8] text-neutral-700 border-black/10 hover:border-black/25 hover:bg-white"
-                          }`}
-                      >
-                        <span className="inline-flex items-center gap-1">
-                          {isSelected ? <Check className="w-3 h-3" /> : "+"}
-                          <span>{tool}</span>
-                        </span>
-                      </button>
-                    );
-                  })}
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
+                    Tech Stack &amp; Tools Used <span className="text-rose-500">*</span>
+                  </label>
+                  <span className="text-[11px] text-neutral-500 font-medium">
+                    Type and press Enter or separate with commas
+                  </span>
                 </div>
+
+                <div className="relative">
+                  <div className="flex items-center gap-2">
+                    <div className="relative flex-1">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                        <Cpu className="w-4 h-4" />
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="e.g. FlutterFlow, Supabase, OpenAI API, Bubble, React, Python..."
+                        value={toolInput}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (val.includes(",")) {
+                            addToolsFromInput(val);
+                          } else {
+                            setToolInput(val);
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            addToolsFromInput(toolInput);
+                          } else if (e.key === "Backspace" && !toolInput && formData.tools.length > 0) {
+                            removeTool(formData.tools[formData.tools.length - 1]);
+                          }
+                        }}
+                        onBlur={() => {
+                          if (toolInput.trim()) {
+                            addToolsFromInput(toolInput);
+                          }
+                        }}
+                        className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${errors.tools ? "border-rose-400 bg-rose-50/30" : "border-black/15"
+                          }`}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => addToolsFromInput(toolInput)}
+                      className="px-4 py-2.5 rounded-lg bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-bold transition-all shrink-0 cursor-pointer shadow-xs active:scale-95"
+                    >
+                      + Add
+                    </button>
+                  </div>
+                </div>
+
+                {/* Render Added Tech Stack Tags */}
+                {formData.tools.length > 0 ? (
+                  <div className="mt-3 flex flex-wrap gap-2 items-center">
+                    {formData.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#2F5527] text-white text-xs font-bold shadow-2xs group transition-all"
+                      >
+                        <span>{tool}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeTool(tool)}
+                          className="w-4 h-4 rounded-full hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-colors cursor-pointer"
+                          title={`Remove ${tool}`}
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, tools: [] })}
+                      className="text-[11px] text-neutral-400 hover:text-rose-600 font-semibold px-2 py-0.5 transition-colors cursor-pointer"
+                    >
+                      Clear all
+                    </button>
+                  </div>
+                ) : (
+                  <p className="mt-2 text-[11px] text-neutral-500 leading-normal">
+                    💡 Enter whatever no-code tools, low-code platforms, frameworks, databases, or AI APIs your team plans to build with.
+                  </p>
+                )}
                 {errors.tools && <p className="mt-1.5 text-xs text-rose-500">{errors.tools}</p>}
               </div>
 
-              {/* Optional Prototype / Figma link */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
-                  Figma / Early Wireframe Link (Optional)
-                </label>
-                <input
-                  type="url"
-                  placeholder="https://figma.com/file/..."
-                  value={formData.prototypeLink}
-                  onChange={(e) => setFormData({ ...formData, prototypeLink: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
-                />
+              {/* Project Link & Pitch Video Section */}
+              <div className="p-5 rounded-xl bg-[#F8F7F4] border border-black/10 space-y-5">
+                <div className="flex items-center gap-2 pb-3 border-b border-black/8">
+                  <Sparkles className="w-4 h-4 text-[#5C8C3A]" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-neutral-800">
+                    Showcase &amp; Pitch Deliverables
+                  </span>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2F5527]/10 text-[#2F5527] ml-auto">
+                    Visible in Showcase
+                  </span>
+                </div>
+
+                {/* 1. Project Link / Prototype */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
+                      Live Project / Prototype Link
+                    </label>
+                    <span className="text-[11px] font-medium text-neutral-500">
+                      Framer, Webflow, Bubble, Vercel, or Figma demo
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                      <Globe className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="url"
+                      placeholder="https://my-startup.framer.app or https://myproject.bubbleapps.io"
+                      value={formData.projectLink}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          projectLink: e.target.value,
+                          prototypeLink: e.target.value,
+                        })
+                      }
+                      className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
+                    />
+                  </div>
+                  <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
+                    💡 An interactive embed frame of this project will be showcased on the official Ignite 2026 Showcase page so evaluators and attendees can test it live.
+                  </p>
+                </div>
+
+                {/* 2. Pitch / Demo Video Link */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
+                      Pitch / Walkthrough Video Link
+                    </label>
+                    <span className="text-[11px] font-medium text-neutral-500">
+                      YouTube or Google Drive
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                      <Video className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="url"
+                      placeholder="https://youtu.be/... or https://drive.google.com/file/d/..."
+                      value={formData.videoLink}
+                      onChange={(e) => setFormData({ ...formData, videoLink: e.target.value })}
+                      className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
+                    />
+                  </div>
+
+                  {/* Real-time Video Platform Status Badge */}
+                  {formData.videoLink && (
+                    <div className="mt-2 flex items-center gap-2">
+                      {detectVideoPlatform(formData.videoLink) === "youtube" && (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-red-700 bg-red-50 border border-red-200 px-2.5 py-1 rounded-md">
+                          <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+                          YouTube Video Detected · Ready for Inline Player Embed
+                        </span>
+                      )}
+                      {detectVideoPlatform(formData.videoLink) === "drive" && (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-md">
+                          <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+                          Google Drive Link Detected · (Ensure permission is set to "Anyone with the link can view")
+                        </span>
+                      )}
+                      {detectVideoPlatform(formData.videoLink) === "other" && (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-md">
+                          <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                          Tip: For embedded playback on the Showcase, provide a YouTube or Google Drive link.
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  {!formData.videoLink && (
+                    <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
+                      Share a 2-minute elevator pitch or product demonstration. This video player will be embedded directly in your project showcase card.
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Terms and IP Agreement Checkbox */}
