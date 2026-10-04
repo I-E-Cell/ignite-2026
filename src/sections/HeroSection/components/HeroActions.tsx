@@ -90,7 +90,7 @@ export const HeroActions = () => {
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           color: #141412;
-          border: 2px solid #141412;
+          border: none;
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
 
