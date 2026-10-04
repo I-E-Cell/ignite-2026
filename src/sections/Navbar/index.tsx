@@ -118,7 +118,7 @@ export const Navbar = () => {
 
       <style>{`
         .nav-root {
-          position: fixed;
+          position: absolute;
           top: clamp(0.75rem, 2vh, 1.25rem);
           left: 0;
           right: 0;
