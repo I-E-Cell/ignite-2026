@@ -111,7 +111,8 @@ export const LogoLoop: React.FC<LogoLoopProps> = ({
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xl"
+              className="inline-block outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xl no-underline text-inherit"
+              title={`Visit ${item.name} (${item.url})`}
             >
               {Content}
             </a>

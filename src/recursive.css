@@ -538,14 +538,16 @@
             transform: translateY(-4.4px) rotate(-45deg);
           }
 
-          /* Transparent navbar on mobile */
+          /* Ultra-translucent crystal frosted glass on mobile phone navbar pill */
           .nav-glass-container > div,
           .nav-glass-container :global(.relative.isolate) {
-            background: transparent !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-            box-shadow: none !important;
-            border: none !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(28px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+            box-shadow:
+              0 8px 32px rgba(0, 0, 0, 0.06),
+              inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.22) !important;
           }
         }
       
