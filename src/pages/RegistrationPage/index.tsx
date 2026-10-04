@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { triggerConfetti } from "@/utils/confetti";
 import { submitRegistration } from "@/lib/supabase";
-import { detectVideoPlatform } from "@/utils/embed";
+import { detectVideoPlatform, isSafeEmbedUrl } from "@/utils/embed";
 
 interface TeamMemberData {
   name: string;
@@ -162,6 +162,8 @@ export const RegistrationPage = () => {
   const [applicationId, setApplicationId] = useState<string>("");
   const [copiedId, setCopiedId] = useState<boolean>(false);
   const [toolInput, setToolInput] = useState<string>("");
+  const [botTrap, setBotTrap] = useState<string>("");
+  const [rateLimitError, setRateLimitError] = useState<string>("");
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -203,6 +205,9 @@ export const RegistrationPage = () => {
         errs.leadPhone = "Phone / WhatsApp number is required";
       } else if (formData.leadPhone.length !== 10) {
         errs.leadPhone = "Please enter a valid 10-digit mobile number";
+      }
+      if (formData.leadSocial?.trim() && !isSafeEmbedUrl(formData.leadSocial)) {
+        errs.leadSocial = "Please enter a valid profile URL (http or https)";
       }
     }
 
@@ -252,6 +257,12 @@ export const RegistrationPage = () => {
       if (currentTools.length === 0) {
         errs.tools = "Please enter at least 1 tool or technology in your stack";
       }
+      if (formData.projectLink?.trim() && !isSafeEmbedUrl(formData.projectLink)) {
+        errs.projectLink = "Please enter a valid prototype URL (http or https)";
+      }
+      if (formData.videoLink?.trim() && !isSafeEmbedUrl(formData.videoLink)) {
+        errs.videoLink = "Please enter a valid video URL (http or https)";
+      }
       if (!formData.agreedToTerms) {
         errs.agreedToTerms = "You must agree to the Code of Conduct & IP terms";
       }
@@ -274,7 +285,33 @@ export const RegistrationPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setRateLimitError("");
     if (!validateStep(4)) return;
+
+    // 1. Bot Honeypot: silently drop automated bots that fill hidden fields
+    if (botTrap.trim()) {
+      setIsSubmitting(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        setApplicationId(`IGN-2026-${Math.floor(1000 + Math.random() * 9000)}`);
+      }, 700);
+      return;
+    }
+
+    // 2. Client-side Rate-limiting & Cooldown (15 seconds between submissions)
+    try {
+      const lastSub = sessionStorage.getItem("ignite_last_sub_timestamp");
+      if (lastSub) {
+        const timeDiff = Date.now() - parseInt(lastSub, 10);
+        if (timeDiff < 15000) {
+          setRateLimitError("Please wait 15 seconds before submitting another application.");
+          return;
+        }
+      }
+    } catch {
+      // ignore
+    }
 
     // Ensure any freshly typed tool text is included
     let finalTools = [...formData.tools];
@@ -290,6 +327,13 @@ export const RegistrationPage = () => {
 
     setIsSubmitting(true);
     try {
+      // Store submission timestamp for rate limiting
+      try {
+        sessionStorage.setItem("ignite_last_sub_timestamp", Date.now().toString());
+      } catch {
+        // ignore
+      }
+
       const result = await submitRegistration({
         teamName: formData.teamName,
         track: formData.track,
@@ -707,6 +751,20 @@ export const RegistrationPage = () => {
 
         {/* Form Body Container */}
         <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-8 font-dm_sans">
+          {/* ═════════ Hidden Honeypot Anti-Bot Trap ═════════ */}
+          <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, overflow: "hidden" }}>
+            <label htmlFor="company_fax_hp">Do not fill this field</label>
+            <input
+              type="text"
+              id="company_fax_hp"
+              name="company_fax_hp"
+              value={botTrap}
+              onChange={(e) => setBotTrap(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           {/* ═════════ STEP 1: Team & Track Selection ═════════ */}
           {step === 1 && (
             <div className="space-y-6">
@@ -936,6 +994,9 @@ export const RegistrationPage = () => {
                     onChange={(e) => setFormData({ ...formData, leadSocial: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
                   />
+                  {errors.leadSocial && (
+                    <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.leadSocial}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -1323,6 +1384,9 @@ export const RegistrationPage = () => {
                       className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
                     />
                   </div>
+                  {errors.projectLink && (
+                    <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.projectLink}</p>
+                  )}
                   <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
                     💡 An interactive embed frame of this project will be showcased on the official Ignite 2026 Showcase page so evaluators and attendees can test it live.
                   </p>
@@ -1350,6 +1414,9 @@ export const RegistrationPage = () => {
                       className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
                     />
                   </div>
+                  {errors.videoLink && (
+                    <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.videoLink}</p>
+                  )}
 
                   {/* Real-time Video Platform Status Badge */}
                   {formData.videoLink && (
@@ -1402,6 +1469,14 @@ export const RegistrationPage = () => {
                   <p className="mt-2 text-xs text-rose-500">{errors.agreedToTerms}</p>
                 )}
               </div>
+            </div>
+          )}
+
+          {/* Rate Limit Alert */}
+          {rateLimitError && (
+            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+              <span>{rateLimitError}</span>
             </div>
           )}
 

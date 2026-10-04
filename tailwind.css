@@ -1,7 +1,7 @@
 @font-face {
   /* @FONTWARNING[{"type":"restricted","family":"bebasNeue","weight":"400","style":"normal","allowsCrossOrigin":true}] */
   font-family: 'bebasNeue';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/BebasNeue_Regular-s.p.12892w_vpp2qa.ttf')
+  src: url('/fonts/BebasNeue-Regular.ttf')
     format('truetype');
   font-weight: 400;
   font-style: normal;
@@ -10,65 +10,24 @@
 @font-face {
   /* @FONTWARNING[{"type":"restricted","family":"headingNow","weight":"500","style":"normal","allowsCrossOrigin":true}] */
   font-family: 'headingNow';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/HeadingNowTrial_45Medium.p.1zjwigtmc3cih.ttf')
+  src: url('/fonts/HeadingNow-Medium.ttf')
     format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  /* @FONTWARNING[{"type":"restricted","family":"display","weight":"700","style":"normal","allowsCrossOrigin":true}] */
-  font-family: 'display';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/MADEOkineSansPERSONALUSE_Bold-s.p.2awjf0g9gs2-r.otf')
-    format('opentype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'Geist Mono';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/797e433ab948586e-s.p.1v5bejj26fx9h.woff2')
+  src: url('/fonts/GeistMono-Variable.woff2')
     format('woff2');
   font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'DM Sans';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
-    format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
-    format('woff2');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
-    format('woff2');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'DM Sans';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/5c285b27cdda1fe8-s.p.01sanbtneewqp.woff2')
-    format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
   /* @FONTWARNING[{"type":"restricted","family":"hiruko","weight":"900","style":"normal","allowsCrossOrigin":true}] */
   font-family: 'hiruko';
-  src: url('https://www.recursiveacm.in/_next/static/immutable/media/HirukoBlackAlternate-s.p.30-3_2xqoy8r0.ttf')
+  src: url('/fonts/Hiruko-BlackAlternate.ttf')
     format('truetype');
   font-weight: 900;
   font-style: normal;

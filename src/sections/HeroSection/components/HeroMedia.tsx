@@ -108,7 +108,7 @@ export const HeroMedia = () => {
     <div ref={containerRef} className="hero-video-wrap">
       {/* High-res poster preloaded for instant initial frame */}
       <img
-        src="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
+        src="/images/hero/hero_poster_v3.jpg"
         alt="The Chair on the Hill"
         aria-hidden="true"
         draggable="false"
@@ -119,8 +119,8 @@ export const HeroMedia = () => {
       {/* Seamless cross-fading loop video */}
       <video
         ref={videoRef}
-        src="https://www.recursiveacm.in/bg/hero_loop_pp.mp4"
-        poster="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
+        src="/videos/hero_loop.mp4"
+        poster="/images/hero/hero_poster_v3.jpg"
         autoPlay
         loop
         muted

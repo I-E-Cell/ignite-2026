@@ -367,7 +367,7 @@ export const IntroOverlay: React.FC = () => {
           <div ref={mediaRef} className="intro-media">
             <div ref={focusRef} className="intro-focus">
               <img
-                src="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
+                src="/images/hero/hero_poster_v3.jpg"
                 alt=""
                 aria-hidden="true"
                 draggable={false}
@@ -376,8 +376,8 @@ export const IntroOverlay: React.FC = () => {
               />
               <video
                 ref={videoRef}
-                src="https://www.recursiveacm.in/bg/hero_loop_pp.mp4"
-                poster="https://www.recursiveacm.in/images/hero/hero_poster_v3.jpg"
+                src="/videos/hero_loop.mp4"
+                poster="/images/hero/hero_poster_v3.jpg"
                 autoPlay
                 loop
                 muted
@@ -398,7 +398,7 @@ export const IntroOverlay: React.FC = () => {
             <div ref={artifactMarkRef} className="intro-artifact-mark">
               <div className="intro-artifact-aura" aria-hidden="true" />
               <img
-                src="https://www.recursiveacm.in/images/ui/artifact.png"
+                src="/images/ui/artifact.png"
                 alt=""
                 className="intro-artifact-img"
                 draggable={false}

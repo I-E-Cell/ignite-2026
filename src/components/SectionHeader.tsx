@@ -31,7 +31,7 @@ export type SectionHeaderProps = {
 
 export const SectionHeader = (props: SectionHeaderProps) => {
   const artifactUrl =
-    "https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/artifact.png";
+    "/images/ui/artifact-mark.png";
 
   const renderWords = (
     words: string[] | undefined,

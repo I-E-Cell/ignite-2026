@@ -58,7 +58,7 @@ const TRACKS = [
   "Open Innovation",
 ] as const;
 
-// SHA-256 hash of the master evaluator key ("orewakamida")
+// SHA-256 hash of the master evaluator key
 // Prevents plain-text password scraping from client bundles
 const MASTER_KEY_HASH = "34c2dbc0a13cc2d5e87cd5877ba2d13d7859ac96344955993fab514bc77030b4";
 
@@ -113,9 +113,7 @@ export const ShowcasePage = () => {
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 
-      const isValid =
-        hashHex === MASTER_KEY_HASH ||
-        entered.toLowerCase() === "orewakamida";
+      const isValid = hashHex === MASTER_KEY_HASH;
 
       if (isValid) {
         setIsAdminAuthenticated(true);
@@ -131,11 +129,7 @@ export const ShowcasePage = () => {
         setAuthError("Incorrect access code. Contact the organizing committee for evaluator credentials.");
       }
     } catch {
-      if (entered.toLowerCase() === "orewakamida") {
-        setIsAdminAuthenticated(true);
-      } else {
-        setAuthError("Incorrect access code. Contact the organizing committee for evaluator credentials.");
-      }
+      setAuthError("Authentication check failed. Please try again.");
     } finally {
       setIsVerifying(false);
     }
@@ -304,9 +298,25 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
   status TEXT DEFAULT 'submitted'
 );
 
+-- Safe column migrations for pre-existing tables
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS prototype_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS project_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS video_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS referral TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'submitted';
+
 ALTER TABLE public.ignite_registrations ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public registration insert" ON public.ignite_registrations FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public read own registration" ON public.ignite_registrations FOR SELECT USING (true);
+
+-- Sanitized view for public showcase (PII protection)
+CREATE OR REPLACE VIEW public.showcase_registrations_public
+WITH (security_invoker = false) AS
+SELECT
+  id, created_at, team_name, track, lead_name, lead_college,
+  lead_year, lead_branch, lead_role, team_size, project_title,
+  pitch, problem, solution, tools, prototype_link, project_link, video_link, status
+FROM public.ignite_registrations WHERE status = 'submitted';
+GRANT SELECT ON public.showcase_registrations_public TO anon, authenticated;
 
 CREATE TABLE IF NOT EXISTS public.showcase_projects (
   id TEXT PRIMARY KEY,
@@ -330,9 +340,24 @@ CREATE TABLE IF NOT EXISTS public.showcase_projects (
   featured BOOLEAN DEFAULT false
 );
 
+-- Safe column migrations for pre-existing tables
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS upvotes INT DEFAULT 0;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS judge_verdict TEXT;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS cover_gradient TEXT DEFAULT 'from-[#2F5527] to-[#8FC45A]';
+
 ALTER TABLE public.showcase_projects ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read showcase" ON public.showcase_projects FOR SELECT USING (true);
-CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDATE USING (true) WITH CHECK (true);
+
+CREATE OR REPLACE FUNCTION public.increment_project_upvotes(project_id TEXT, delta INT DEFAULT 1)
+RETURNS INT AS $$
+DECLARE new_count INT;
+BEGIN
+  IF delta NOT IN (-1, 1) THEN RAISE EXCEPTION 'Invalid delta'; END IF;
+  UPDATE public.showcase_projects SET upvotes = GREATEST(0, upvotes + delta) WHERE id = project_id RETURNING upvotes INTO new_count;
+  RETURN new_count;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 `;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(sql);
@@ -1206,7 +1231,7 @@ CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDAT
                         title={`Interactive Prototype of ${selectedProject.title}`}
                         className="w-full h-full min-h-[480px] flex-1 border-0 bg-white"
                         onLoad={() => setIframeLoading(false)}
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-presentation"
+                        sandbox="allow-scripts allow-forms allow-popups allow-modals allow-presentation"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       />
                     </div>
@@ -1681,13 +1706,31 @@ VITE_SUPABASE_ANON_KEY=your-anon-key`}
   solution TEXT NOT NULL,
   tools JSONB DEFAULT '[]'::jsonb,
   prototype_link TEXT,
+  project_link TEXT,
+  video_link TEXT,
   referral TEXT,
   status TEXT DEFAULT 'submitted'
 );
 
+-- Safe column migrations for pre-existing tables
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS prototype_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS project_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS video_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS referral TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'submitted';
+
 ALTER TABLE public.ignite_registrations ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public registration insert" ON public.ignite_registrations FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public read own registration" ON public.ignite_registrations FOR SELECT USING (true);
+
+-- Sanitized view for public showcase (PII protection)
+CREATE OR REPLACE VIEW public.showcase_registrations_public
+WITH (security_invoker = false) AS
+SELECT
+  id, created_at, team_name, track, lead_name, lead_college,
+  lead_year, lead_branch, lead_role, team_size, project_title,
+  pitch, problem, solution, tools, prototype_link, project_link, video_link, status
+FROM public.ignite_registrations WHERE status = 'submitted';
+GRANT SELECT ON public.showcase_registrations_public TO anon, authenticated;
 
 CREATE TABLE IF NOT EXISTS public.showcase_projects (
   id TEXT PRIMARY KEY,
@@ -1711,9 +1754,24 @@ CREATE TABLE IF NOT EXISTS public.showcase_projects (
   featured BOOLEAN DEFAULT false
 );
 
+-- Safe column migrations for pre-existing tables
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS upvotes INT DEFAULT 0;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS judge_verdict TEXT;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS cover_gradient TEXT DEFAULT 'from-[#2F5527] to-[#8FC45A]';
+
 ALTER TABLE public.showcase_projects ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read showcase" ON public.showcase_projects FOR SELECT USING (true);
-CREATE POLICY "Allow public upvote update" ON public.showcase_projects FOR UPDATE USING (true) WITH CHECK (true);`}
+
+CREATE OR REPLACE FUNCTION public.increment_project_upvotes(project_id TEXT, delta INT DEFAULT 1)
+RETURNS INT AS $$
+DECLARE new_count INT;
+BEGIN
+  IF delta NOT IN (-1, 1) THEN RAISE EXCEPTION 'Invalid delta'; END IF;
+  UPDATE public.showcase_projects SET upvotes = GREATEST(0, upvotes + delta) WHERE id = project_id RETURNING upvotes INTO new_count;
+  RETURN new_count;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;`}
                 </pre>
               </div>
             </div>

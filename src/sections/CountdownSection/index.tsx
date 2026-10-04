@@ -37,7 +37,7 @@ export const CountdownSection = () => {
         {/* Ornament */}
         <div className="cd-ornament-wrap flex justify-center mb-[clamp(1.2rem,2.4vh,1.8rem)]">
           <img
-            src="https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/artifact.png"
+            src="/images/ui/artifact-mark.png"
             alt=""
             aria-hidden="true"
             draggable="false"
@@ -132,7 +132,7 @@ export const CountdownSection = () => {
       {/* Valley Background */}
       <div className="cd-valley absolute bottom-0 left-0 right-0 w-full pointer-events-none select-none z-0" aria-hidden="true">
         <img
-          src="https://www.recursiveacm.in/images/bg/valley.webp"
+          src="/images/bg/valley.webp"
           alt=""
           width="2752"
           height="1536"

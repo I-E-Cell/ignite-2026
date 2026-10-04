@@ -24,7 +24,7 @@ interface Peep {
 }
 
 export const CrowdCanvas: React.FC<CrowdCanvasProps> = ({
-  src = "https://www.recursiveacm.in/images/peeps/all-peeps.png",
+  src = "/images/peeps/all-peeps.png",
   rows = 15,
   cols = 7,
 }) => {
