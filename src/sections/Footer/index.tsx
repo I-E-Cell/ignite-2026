@@ -87,7 +87,7 @@ export const Footer = () => {
         .footer-wordmark-wrap {
           position: absolute;
           inset-inline: 0;
-          bottom: clamp(-2.8rem, -4.8vh, -1.5rem);
+          bottom: clamp(3.2rem, 7.5vh, 5.8rem);
           height: min(clamp(280px, 56vh, 640px), 92%);
           z-index: 10;
           display: flex;
@@ -105,7 +105,7 @@ export const Footer = () => {
             margin-top: clamp(2rem, 4vh, 3.5rem);
           }
           .footer-wordmark-wrap {
-            bottom: clamp(-1.8rem, -3.2vh, -0.9rem);
+            bottom: clamp(2.4rem, 5.5vh, 4.2rem);
             height: 94%;
             padding-inline: 1vw;
           }
@@ -118,7 +118,7 @@ export const Footer = () => {
             margin-top: clamp(1rem, 2vh, 2rem);
           }
           .footer-wordmark-wrap {
-            bottom: 0;
+            bottom: clamp(1.8rem, 4vh, 2.8rem);
             height: 96%;
             padding-inline: 0;
           }
