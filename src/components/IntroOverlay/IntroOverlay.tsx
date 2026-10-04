@@ -3,21 +3,17 @@ import gsap from "gsap";
 import { LiquidMetalButton } from "./LiquidMetalButton";
 
 const lines = [
-  { words: ["Welcome", "to", "the", "starting", "line."] },
   { words: ["It's", "not", "a", "weekend", "hackathon."] },
   { words: ["It's", "a", "startup,", "built", "over", "20", "weeks."] },
   { words: ["No", "code", "required.", "Just", "pure", "conviction."], accent: "conviction" },
-  { words: ["Are", "you", "ready", "to", "build?"] },
   { words: ["Let's", "IGNITE."] },
 ];
 
 const timings: [number, number][] = [
-  [4.1, 5.05],
-  [5.25, 6.2],
-  [6.4, 7.5],
-  [7.75, 9.45],
-  [9.7, 10.75],
-  [10.95, 11.95],
+  [4.15, 5.75],
+  [6.0, 7.7],
+  [8.0, 9.95],
+  [10.25, 11.8],
 ];
 
 export const IntroOverlay: React.FC = () => {
@@ -305,7 +301,7 @@ export const IntroOverlay: React.FC = () => {
             tl.to(
               words,
               { opacity: 0, y: -12, scale: 0.98, duration: 0.58, ease: "power2.inOut", stagger: 0.024 },
-              11.9
+              endT
             );
           }
         }

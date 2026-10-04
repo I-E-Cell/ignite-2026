@@ -1,5 +1,6 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { type ShowcaseProject } from "@/data/showcaseProjects";
+import { type ShowcaseProject, SHOWCASE_PROJECTS } from "@/data/showcaseProjects";
+import { normalizeUrl } from "@/utils/embed";
 
 // Read Supabase environment variables (supporting both VITE_ and standard prefix)
 const rawUrl =
@@ -51,6 +52,8 @@ export interface RegistrationSubmitPayload {
   problem: string;
   solution: string;
   tools: string[];
+  projectLink?: string;
+  videoLink?: string;
   prototypeLink?: string;
   referral?: string;
 }
@@ -66,6 +69,9 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
 }> {
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
   const applicationId = `IGN-2026-${randomSuffix}`;
+
+  const projectUrl = payload.projectLink?.trim() || payload.prototypeLink?.trim() || "";
+  const videoUrl = payload.videoLink?.trim() || "";
 
   const record = {
     id: applicationId,
@@ -87,14 +93,28 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
     problem: payload.problem.trim(),
     solution: payload.solution.trim(),
     tools: payload.tools,
-    prototype_link: payload.prototypeLink?.trim() || "",
+    prototype_link: projectUrl,
     referral: payload.referral?.trim() || "",
     status: "submitted",
   };
 
   if (supabase) {
     try {
-      const { error } = await supabase.from("ignite_registrations").insert([record]);
+      // First attempt: include optional project_link and video_link if schema supports them
+      const fullRecord: Record<string, any> = {
+        ...record,
+        ...(projectUrl ? { project_link: projectUrl } : {}),
+        ...(videoUrl ? { video_link: videoUrl } : {}),
+      };
+
+      let { error } = await supabase.from("ignite_registrations").insert([fullRecord]);
+
+      // If missing column error (e.g. PGRST204), fallback to standard schema with prototype_link
+      if (error && (error.code === "PGRST204" || error.message?.includes("column"))) {
+        const retryRes = await supabase.from("ignite_registrations").insert([record]);
+        error = retryRes.error;
+      }
+
       if (error) {
         console.warn("Supabase insert error:", error);
         saveRegistrationToLocalStorage(record);
@@ -200,6 +220,9 @@ function mapRegistrationToShowcase(reg: any): ShowcaseProject {
   }
 
   const builderCount = Math.max(1, reg.team_size || membersList.length || 1);
+  const rawDemo = (reg.project_link || reg.prototype_link)?.trim();
+  const demoUrl = rawDemo ? normalizeUrl(rawDemo) : undefined;
+  const videoUrl = reg.video_link?.trim() ? normalizeUrl(reg.video_link.trim()) : undefined;
 
   return {
     id: reg.id,
@@ -222,7 +245,13 @@ function mapRegistrationToShowcase(reg: any): ShowcaseProject {
     },
     metrics: `${builderCount} Active Builder${builderCount > 1 ? "s" : ""} · Live Submission`,
     links: {
-      demo: reg.prototype_link || undefined,
+      demo: demoUrl,
+      video: videoUrl,
+    },
+    award: {
+      title: "Live Applicant",
+      badgeColor: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
+      icon: "Sparkles",
     },
     coverGradient: getTrackGradient(reg.track),
     initialUpvotes: 0,
@@ -232,8 +261,8 @@ function mapRegistrationToShowcase(reg: any): ShowcaseProject {
 }
 
 /**
- * Fetches real project submissions and team registrations directly from Supabase.
- * Unified so any team registered in `ignite_registrations` is counted and displayed.
+ * Fetches real project submissions and team registrations directly from Supabase,
+ * merged with any locally submitted registrations and seed projects.
  */
 export async function fetchShowcaseProjects(): Promise<{
   projects: ShowcaseProject[];
@@ -242,11 +271,39 @@ export async function fetchShowcaseProjects(): Promise<{
   fromDatabase: boolean;
   error?: string;
 }> {
+  // 1. Gather local registrations from localStorage
+  const localProjects: ShowcaseProject[] = [];
+  try {
+    const rawLocal = localStorage.getItem("ignite_local_registrations");
+    if (rawLocal) {
+      const parsed = JSON.parse(rawLocal);
+      if (Array.isArray(parsed)) {
+        parsed.forEach((reg) => {
+          localProjects.push(mapRegistrationToShowcase(reg));
+        });
+      }
+    }
+  } catch {
+    // ignore local storage parse errors
+  }
+
   if (!supabase) {
+    const combined = [...localProjects];
+    const existingIds = new Set(combined.map((p) => p.id));
+    SHOWCASE_PROJECTS.forEach((seed) => {
+      if (!existingIds.has(seed.id)) {
+        combined.push(seed);
+      }
+    });
+
+    const builderCount = combined.reduce((acc, p) => {
+      return acc + Math.max(1, p.team?.members?.length || 1);
+    }, 0);
+
     return {
-      projects: [],
-      totalBuilders: 0,
-      totalStartups: 0,
+      projects: combined,
+      totalBuilders: builderCount,
+      totalStartups: combined.length,
       fromDatabase: false,
     };
   }
@@ -261,7 +318,7 @@ export async function fetchShowcaseProjects(): Promise<{
     let combinedProjects: ShowcaseProject[] = [];
     let builderCount = 0;
 
-    // 1. Process showcase_projects table rows
+    // 1. Process showcase_projects table rows, or populate with curated seed projects
     if (scResult.data && scResult.data.length > 0) {
       const mappedSC: ShowcaseProject[] = scResult.data.map((item: any) => {
         const teamMembersCount = item.team?.members?.length
@@ -291,25 +348,46 @@ export async function fetchShowcaseProjects(): Promise<{
         };
       });
       combinedProjects.push(...mappedSC);
+    } else {
+      // Seed with curated showcase projects
+      SHOWCASE_PROJECTS.forEach((seed) => {
+        combinedProjects.push(seed);
+        builderCount += Math.max(1, seed.team?.members?.length || 1);
+      });
     }
 
-    // 2. Process ignite_registrations table rows
-    if (regResult.data && regResult.data.length > 0) {
-      const existingIds = new Set(combinedProjects.map((p) => p.id));
+    // 2. Process real registrations from database
+    const IGNORED_TEST_IDS = new Set(["IGN-TEST-0001", "IGN-2026-8557", "IGN-2026-4103"]);
+    const existingIds = new Set(combinedProjects.map((p) => p.id));
 
+    if (regResult.data && regResult.data.length > 0) {
       regResult.data.forEach((reg: any) => {
+        if (IGNORED_TEST_IDS.has(reg.id)) return;
+        if (!reg.project_title || reg.project_title.trim().length < 3) return;
+
         const teamSize = Math.max(
           1,
           reg.team_size || (reg.members && Array.isArray(reg.members) ? reg.members.length + 1 : 1)
         );
         builderCount += teamSize;
 
-        // Add to project showcase if not already present
+        // Add to project showcase if not already present (prepend to showcase live applications first)
         if (!existingIds.has(reg.id)) {
-          combinedProjects.push(mapRegistrationToShowcase(reg));
+          combinedProjects.unshift(mapRegistrationToShowcase(reg));
+          existingIds.add(reg.id);
         }
       });
     }
+
+    // 3. Merge in local registrations if not yet in database
+    localProjects.forEach((local) => {
+      if (IGNORED_TEST_IDS.has(local.id)) return;
+      if (!existingIds.has(local.id)) {
+        combinedProjects.unshift(local);
+        builderCount += Math.max(1, local.team?.members?.length || 1);
+        existingIds.add(local.id);
+      }
+    });
 
     return {
       projects: combinedProjects,
@@ -319,10 +397,17 @@ export async function fetchShowcaseProjects(): Promise<{
     };
   } catch (err: any) {
     console.warn("Exception fetching showcase data:", err);
+    // Fallback to local and seed projects
+    const fallback = [...localProjects];
+    const fbIds = new Set(fallback.map((p) => p.id));
+    SHOWCASE_PROJECTS.forEach((seed) => {
+      if (!fbIds.has(seed.id)) fallback.push(seed);
+    });
+
     return {
-      projects: [],
-      totalBuilders: 0,
-      totalStartups: 0,
+      projects: fallback,
+      totalBuilders: fallback.reduce((acc, p) => acc + Math.max(1, p.team?.members?.length || 1), 0),
+      totalStartups: fallback.length,
       fromDatabase: false,
       error: err?.message,
     };
@@ -357,5 +442,17 @@ export async function upvoteProjectInSupabase(
     return { success: true, newCount: newUpvotes };
   } catch {
     return { success: false };
+  }
+}
+
+/**
+ * Clears any locally cached or legacy registrations from localStorage
+ */
+export function clearLocalRegistrations(): void {
+  try {
+    localStorage.removeItem("ignite_local_registrations");
+    localStorage.removeItem("ignite_registration_draft");
+  } catch {
+    // ignore
   }
 }

@@ -8,6 +8,7 @@ import {
   animate,
   useVelocity,
   useAnimationControls,
+  type PanInfo,
 } from "motion/react";
 
 export const DraggableCardBody = ({
@@ -113,7 +114,7 @@ export const DraggableCardBody = ({
       onDragStart={() => {
         document.body.style.cursor = "grabbing";
       }}
-      onDragEnd={(_event, info) => {
+      onDragEnd={(_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         document.body.style.cursor = "default";
 
         controls.start({
