@@ -17,7 +17,7 @@ export const HeroScrollCue = () => {
         <p className="hero-cue-line">
           bro put a plastic chair on a hill
           <br />
-          and built a 20-week startup
+          and called it a hackathon
         </p>
 
         <span className="hero-cue-hint">

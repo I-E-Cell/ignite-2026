@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplashCursor } from "@/components/SplashCursor";
 import "./sxp.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -32,6 +33,9 @@ export const SponsorsSection = () => {
       gsap.set([intro, outro], { opacity: 0 });
       if (preview) gsap.set(preview, { opacity: 0 });
       gsap.set(body, { opacity: 1, y: 0 });
+      if (night) night.style.opacity = "0";
+      if (plate) plate.style.opacity = "0";
+      if (keyline) keyline.style.opacity = "0";
       return;
     }
 
@@ -88,7 +92,12 @@ export const SponsorsSection = () => {
         // Night background fades as window opens to reveal daylight sky
         const nightOpacity = Math.max(0, Math.min(1, (1 - p) * 1.8)).toFixed(3);
         if (night) night.style.opacity = nightOpacity;
-        if (plate) plate.style.opacity = nightOpacity;
+
+        // Sky plate stays solid while window opens, then fades out once window is fully
+        // open (prog 0.72 -> 0.95) to seamlessly reveal the page fixed backdrop before unpinning
+        const plateFade = clamp((prog - 0.72) / 0.23);
+        const plateOpacity = (1 - plateFade).toFixed(3);
+        if (plate) plate.style.opacity = plateOpacity;
 
         // Intro text dissolves smoothly (prog 0 -> 0.22)
         const introP = p1Out(clamp(prog / 0.22));
@@ -143,9 +152,19 @@ export const SponsorsSection = () => {
   }, []);
 
   return (
-    <section id="sponsors" className="sxp" aria-label="Sponsors">
+    <section id="sponsors" className="sxp -mt-px" aria-label="Sponsors">
       <div ref={stageRef} className="sxp-stage">
-        <div className="sxp-night" aria-hidden="true" />
+        {/* Night background with Fluid Splash Cursor strictly behind the sponsor window */}
+        <div className="sxp-night" aria-hidden="true">
+          <SplashCursor
+            DENSITY_DISSIPATION={2.8}
+            VELOCITY_DISSIPATION={1.8}
+            SPLAT_RADIUS={0.25}
+            SPLAT_FORCE={5500}
+            AUTO_SPLAT
+            AUTO_SPLAT_INTERVAL={1100}
+          />
+        </div>
 
         {/* Intro Labels */}
         <div ref={introRef} className="sxp-label sxp-intro">

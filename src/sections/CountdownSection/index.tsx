@@ -139,9 +139,13 @@ export const CountdownSection = () => {
           className="cd-valley-img w-full h-auto object-cover object-bottom"
           loading="eager"
         />
-        {/* Atmospheric fade into black transition */}
+        {/* Atmospheric fade into black transition with organic radial contour */}
         <div
-          className="absolute inset-x-0 bottom-0 h-44 md:h-64 bg-gradient-to-b from-transparent via-[#010301]/75 to-[#000000] pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-52 md:h-72 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 130% 90% at 50% 110%, #000000 45%, rgba(0,0,0,0.85) 65%, transparent 100%), linear-gradient(to bottom, transparent 0%, rgba(1,3,1,0.6) 45%, #000000 100%)",
+          }}
           aria-hidden="true"
         />
       </div>
