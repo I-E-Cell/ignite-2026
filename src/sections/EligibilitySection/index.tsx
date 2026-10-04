@@ -1,36 +1,86 @@
+import { useState } from "react";
 import { UserCheck, Users2, Shuffle, Lock } from "lucide-react";
+import { motion } from "motion/react";
 
 export const EligibilitySection = () => {
+  // Order = left to right in the fan
   const criteria = [
     {
       icon: UserCheck,
       badge: "Academic Year",
+      display: "FE/SE/TE",
       title: "FE / SE / TE — Any Year",
       description: "First-year (FE), second-year (SE), and third-year (TE) students from any undergraduate program are eligible to participate.",
       highlightText: "Open to all undergraduate years",
+      gradient: "linear-gradient(160deg, #A3B87A 0%, #758A4A 50%, #3F4D2A 100%)",
     },
     {
       icon: Users2,
       badge: "Team Formation",
+      display: "1–4",
       title: "Solo or Teams of 2–4",
       description: "Apply as an individual visionary or assemble a multidisciplinary crew of up to four students to execute faster.",
       highlightText: "1 to 4 members per squad",
+      gradient: "linear-gradient(160deg, #3F7A3A 0%, #2F5527 50%, #14301A 100%)",
     },
     {
       icon: Shuffle,
       badge: "Cross-Disciplinary",
+      display: "Mixed",
       title: "Mixed Branches Welcome",
       description: "You don't need a team of only developers. Mix computer science, design, business, mechanical, or electrical backgrounds.",
       highlightText: "Diversity strengthens startups",
+      gradient: "linear-gradient(160deg, #A3B87A 0%, #758A4A 50%, #3F4D2A 100%)",
     },
     {
       icon: Lock,
       badge: "Focus Rule",
+      display: "1",
       title: "One Team Per Student",
       description: "Each participant can only be registered with one team to ensure full devotion, integrity, and focus to your venture.",
       highlightText: "100% commitment to 1 idea",
+      gradient: "linear-gradient(160deg, #3F7A3A 0%, #2F5527 50%, #14301A 100%)",
     },
   ];
+
+  const FRONT = 1; // "Solo or Teams of 2-4" sits on top of the collapsed stack
+  const mid = (criteria.length - 1) / 2;
+
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState<number | null>(null);
+
+  const CardBody = ({ item }: { item: (typeof criteria)[number] }) => {
+    const Icon = item.icon;
+    return (
+      <div className="relative h-full w-full min-w-0 flex flex-col justify-between text-left text-white break-words">
+        <div>
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <div className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+              <Icon className="w-[18px] h-[18px]" />
+            </div>
+            <span className="text-[9px] font-semibold font-geist_mono uppercase tracking-wider px-2 py-1 rounded-full bg-white/20 whitespace-nowrap">
+              {item.badge}
+            </span>
+          </div>
+          <div className="font-headingNow font-bold tracking-[-0.03em] leading-none text-[1.9rem] whitespace-nowrap max-w-full overflow-hidden">
+            {item.display}
+          </div>
+        </div>
+        <div>
+          <h3 className="text-[17px] leading-tight font-bold font-headingNow tracking-tight mb-1.5">
+            {item.title}
+          </h3>
+          <p className="text-[11.5px] font-dm_sans text-white/85 leading-snug">
+            {item.description}
+          </p>
+          <div className="pt-2 mt-2.5 border-t border-white/25 flex items-center gap-1.5 text-[10px] font-semibold font-geist_mono text-white/90">
+            <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
+            <span>{item.highlightText}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section
@@ -75,41 +125,89 @@ export const EligibilitySection = () => {
           </p>
         </div>
 
-        {/* 4 Bento Criteria Cards */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {criteria.map((item, idx) => {
-            const Icon = item.icon;
+        {/* Desktop: collapsed stack that fans out (hover the stage or scroll into view) */}
+        <motion.div
+          className="hidden lg:block relative w-full h-[560px]"
+          onViewportEnter={() => setOpen(true)}
+          viewport={{ once: true, amount: 0.6 }}
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => {
+            setHovered(null);
+            setOpen(false);
+          }}
+        >
+          {criteria.map((item, i) => {
+            const rel = i - mid;
+            const isHover = open && hovered === i;
+            const dir = hovered !== null && i < hovered ? -1 : 1;
+            let x = 0;
+            let y = 0;
+            let rotate = 0;
+            let scale = 1;
+            if (open) {
+              x = rel * 100;
+              y = Math.abs(rel) * 12;
+              rotate = rel * 15;
+              if (hovered !== null) {
+                if (isHover) {
+                  x = rel * 70;
+                  y = -34;
+                  rotate = 0;
+                  scale = 1.08;
+                } else {
+                  x += dir * 70;
+                  rotate += dir * 7;
+                }
+              }
+            }
             return (
-              <div
-                key={idx}
-                className="p-7 sm:p-8 rounded-2xl bg-white/80 border border-stone-200/90 shadow-xs backdrop-blur-sm hover:border-[#5C8C3A]/50 hover:shadow-md transition-all flex flex-col justify-between group"
+              <motion.div
+                key={item.title}
+                onMouseEnter={() => setHovered(i)}
+                animate={{ x, y, rotate, scale }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  width: 270,
+                  height: 390,
+                  marginLeft: -135,
+                  marginTop: -195,
+                  borderRadius: 24,
+                  padding: 22,
+                  transformOrigin: "50% 100%",
+                  background: item.gradient,
+                  boxShadow: isHover
+                    ? "0 30px 60px rgba(17,26,18,0.4)"
+                    : "0 20px 40px rgba(17,26,18,0.3)",
+                  zIndex: isHover ? 50 : i === FRONT ? 10 : 10 - Math.abs(i - FRONT),
+                  cursor: "pointer",
+                  overflow: "hidden",
+                  willChange: "transform",
+                }}
               >
-                <div>
-                  <div className="flex items-center justify-between gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#5C8C3A]/10 text-[#2F5527] flex items-center justify-center group-hover:bg-[#5C8C3A] group-hover:text-white transition-colors duration-300">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-xs font-semibold font-geist_mono uppercase tracking-wider px-3 py-1 rounded-full bg-stone-100 border border-stone-200 text-stone-600">
-                      {item.badge}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl sm:text-2xl font-bold font-headingNow text-[#111a12] tracking-tight mb-2.5">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm sm:text-base font-dm_sans text-stone-600 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 mt-6 border-t border-stone-200/70 flex items-center gap-2 text-xs font-semibold font-geist_mono text-[#2F5527]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5C8C3A]" />
-                  <span>{item.highlightText}</span>
-                </div>
-              </div>
+                <CardBody item={item} />
+              </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* Tablet / mobile: stacked cards rising one after another */}
+        <div className="lg:hidden w-full grid grid-cols-1 md:grid-cols-2 gap-5">
+          {criteria.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 40, rotate: i % 2 ? 2 : -2 }}
+              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: (i % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className={`rounded-[24px] p-6 min-h-[320px] shadow-[0_14px_30px_rgba(17,26,18,0.2)]`}
+              style={{ background: item.gradient }}
+            >
+              <CardBody item={item} />
+            </motion.div>
+          ))}
         </div>
 
         {/* Eligibility Bottom Banner */}
