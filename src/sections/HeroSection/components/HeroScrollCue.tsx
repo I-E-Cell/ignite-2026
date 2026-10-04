@@ -2,7 +2,7 @@ export const HeroScrollCue = () => {
   return (
     <div className="hero-cue">
       <img
-        src="https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/icon-4.svg"
+        src="/images/ui/scroll-cue.svg"
         alt=""
         aria-hidden="true"
         draggable="false"

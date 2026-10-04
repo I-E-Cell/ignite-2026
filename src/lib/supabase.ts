@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { type ShowcaseProject, SHOWCASE_PROJECTS } from "@/data/showcaseProjects";
-import { normalizeUrl } from "@/utils/embed";
+import { normalizeUrl, isSafeEmbedUrl } from "@/utils/embed";
 
 // Read Supabase environment variables (supporting both VITE_ and standard prefix)
 const rawUrl =
@@ -70,8 +70,14 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
   const applicationId = `IGN-2026-${randomSuffix}`;
 
-  const projectUrl = payload.projectLink?.trim() || payload.prototypeLink?.trim() || "";
-  const videoUrl = payload.videoLink?.trim() || "";
+  const rawProject = payload.projectLink?.trim() || payload.prototypeLink?.trim() || "";
+  const rawVideo = payload.videoLink?.trim() || "";
+  const rawSocial = payload.leadSocial?.trim() || "";
+
+  // Validate and sanitize URLs to prevent malicious schemes (e.g. javascript:, data:)
+  const projectUrl = rawProject && isSafeEmbedUrl(rawProject) ? normalizeUrl(rawProject) : "";
+  const videoUrl = rawVideo && isSafeEmbedUrl(rawVideo) ? normalizeUrl(rawVideo) : "";
+  const socialUrl = rawSocial && isSafeEmbedUrl(rawSocial) ? normalizeUrl(rawSocial) : "";
 
   const record = {
     id: applicationId,
@@ -85,7 +91,7 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
     lead_year: payload.leadYear,
     lead_branch: payload.leadBranch.trim(),
     lead_role: payload.leadRole,
-    lead_social: payload.leadSocial?.trim() || "",
+    lead_social: socialUrl,
     team_size: payload.teamSize,
     members: payload.members,
     project_title: payload.projectTitle.trim(),
@@ -309,10 +315,13 @@ export async function fetchShowcaseProjects(): Promise<{
   }
 
   try {
-    // Query both tables concurrently
+    // Query showcase_projects and the sanitized public view (zero PII exposure)
     const [scResult, regResult] = await Promise.all([
       supabase.from("showcase_projects").select("*").order("upvotes", { ascending: false }),
-      supabase.from("ignite_registrations").select("*").order("created_at", { ascending: false }),
+      supabase
+        .from("showcase_registrations_public")
+        .select("*")
+        .order("created_at", { ascending: false }),
     ]);
 
     let combinedProjects: ShowcaseProject[] = [];
@@ -423,23 +432,27 @@ export async function upvoteProjectInSupabase(
 ): Promise<{ success: boolean; newCount?: number }> {
   if (!supabase) return { success: false };
 
+  // Strictly enforce atomic +1 or -1 delta
+  const safeDelta = delta === -1 ? -1 : 1;
+
   try {
-    const { data: current, error: fetchErr } = await supabase
-      .from("showcase_projects")
-      .select("upvotes")
-      .eq("id", projectId)
-      .single();
+    const { data: newCount, error: rpcErr } = await supabase.rpc(
+      "increment_project_upvotes",
+      {
+        project_id: projectId,
+        delta: safeDelta,
+      }
+    );
 
-    if (fetchErr || !current) return { success: false };
+    if (rpcErr) {
+      console.warn("Secure upvote RPC error:", rpcErr);
+      return { success: false };
+    }
 
-    const newUpvotes = Math.max(0, (current.upvotes || 0) + delta);
-    const { error: updateErr } = await supabase
-      .from("showcase_projects")
-      .update({ upvotes: newUpvotes })
-      .eq("id", projectId);
-
-    if (updateErr) return { success: false };
-    return { success: true, newCount: newUpvotes };
+    return {
+      success: true,
+      newCount: typeof newCount === "number" ? newCount : undefined,
+    };
   } catch {
     return { success: false };
   }

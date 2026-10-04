@@ -12,12 +12,31 @@ export interface VideoEmbedResult {
 }
 
 /**
+ * Checks whether a given URL is safe to use in an iframe or anchor tag.
+ * Blocks dangerous schemes like javascript:, data:, vbscript:, file:.
+ */
+export function isSafeEmbedUrl(url?: string): boolean {
+  if (!url) return false;
+  const trimmed = url.trim().toLowerCase();
+  if (
+    trimmed.startsWith("javascript:") ||
+    trimmed.startsWith("data:") ||
+    trimmed.startsWith("vbscript:") ||
+    trimmed.startsWith("file:")
+  ) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * Normalizes input URL by adding https:// protocol if missing.
+ * Rejects dangerous or malicious URL schemes.
  */
 export function normalizeUrl(rawUrl?: string): string {
   if (!rawUrl) return "";
   const trimmed = rawUrl.trim();
-  if (!trimmed) return "";
+  if (!trimmed || !isSafeEmbedUrl(trimmed)) return "";
   if (/^https?:\/\//i.test(trimmed)) {
     return trimmed;
   }

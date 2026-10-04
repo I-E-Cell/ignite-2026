@@ -27,7 +27,7 @@ const benefitCards: BenefitCardData[] = [
     description:
       "Milestone-based equity-free seed grant to convert your prototype into a production venture.",
     image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
+      "/images/perks/1486406146926-c627a92ad1ab.jpg",
     initialRotation: -7,
     mobileClass: "left-[calc(50%-125px)] top-[14%]",
     desktopClass: "md:left-[5%] md:top-[8%] lg:left-[8%]",
@@ -40,7 +40,7 @@ const benefitCards: BenefitCardData[] = [
     description:
       "Weekly direct office hours with venture capitalists, funded alumni operators, and seasoned mentors.",
     image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop",
+      "/images/perks/1522071820081-009f0129c71c.jpg",
     initialRotation: 6,
     mobileClass: "left-[calc(50%-125px)] top-[17%]",
     desktopClass: "md:left-auto md:right-[5%] md:top-[6%] lg:right-[8%]",
@@ -53,7 +53,7 @@ const benefitCards: BenefitCardData[] = [
     description:
       "Curated delegation visits to premier startup incubators, tech parks, and regional VC offices.",
     image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+      "/images/perks/1497366216548-37526070297c.jpg",
     initialRotation: -4,
     mobileClass: "left-[calc(50%-125px)] top-[20%]",
     desktopClass: "md:left-[2%] md:top-[38%] lg:left-[4%]",
@@ -66,7 +66,7 @@ const benefitCards: BenefitCardData[] = [
     description:
       "End-to-end guidance on company incorporation (Pvt Ltd), DPIIT recognition, trademarking, and IP.",
     image:
-      "https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=800&auto=format&fit=crop",
+      "/images/perks/1450133064473-71024230f91b.jpg",
     initialRotation: 5,
     mobileClass: "left-[calc(50%-125px)] top-[23%]",
     desktopClass: "md:left-auto md:right-[2%] md:top-[36%] lg:right-[4%]",
@@ -79,7 +79,7 @@ const benefitCards: BenefitCardData[] = [
     description:
       "Pitch live on stage in front of active angel syndicates, venture capitalists, corporate partners, and press.",
     image:
-      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=800&auto=format&fit=crop",
+      "/images/perks/1475721027785-f74eccf877e2.jpg",
     initialRotation: -8,
     mobileClass: "left-[calc(50%-125px)] top-[26%]",
     desktopClass: "md:left-[7%] md:top-auto md:bottom-[7%] lg:left-[11%]",
@@ -92,7 +92,7 @@ const benefitCards: BenefitCardData[] = [
     description:
       "Hands-on venture management, dedicated maker lab access, cloud credits, and no-code tool stacks.",
     image:
-      "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=800&auto=format&fit=crop",
+      "/images/perks/1527689368864-3a821dbccc34.jpg",
     initialRotation: 7,
     mobileClass: "left-[calc(50%-125px)] top-[29%]",
     desktopClass: "md:left-auto md:right-[7%] md:top-auto md:bottom-[6%] lg:right-[11%]",
@@ -118,7 +118,7 @@ export const PerksSection = () => {
         {/* Botanical Motif */}
         <div className="flex justify-center mb-3 md:mb-4">
           <img
-            src="https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/artifact.png"
+            src="/images/ui/artifact-mark.png"
             alt=""
             aria-hidden="true"
             draggable="false"

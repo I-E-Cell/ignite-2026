@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 type GalleryCategory = "all" | "pitches" | "mentors" | "top10" | "demoday" | "alumni";
 interface GalleryItem { id: string; category: GalleryCategory; title: string; subtitle: string; image: string; badge: string }
 
-const BASE = "https://www.recursiveacm.in/images/ui/";
+const BASE = "/images/ui/";
 const ITEMS: GalleryItem[] = [
   { id: "g1", category: "pitches", title: "Round 1 Pitches", subtitle: "Student founders pitching initial problem validation before the screening panel.", image: BASE + "doodle_ideas_impact.png", badge: "Round 1" },
   { id: "g2", category: "mentors", title: "Mentor & VC Sessions", subtitle: "1-on-1 strategy sessions deconstructing customer acquisition and no-code workflows.", image: BASE + "polaroid_victoria.png", badge: "Mentorship" },

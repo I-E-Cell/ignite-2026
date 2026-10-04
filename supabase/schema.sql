@@ -31,6 +31,13 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
   status TEXT DEFAULT 'submitted'                -- 'submitted', 'shortlisted', 'incubated'
 );
 
+-- Safe column migrations for pre-existing tables (ensures newly added columns exist)
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS prototype_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS project_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS video_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS referral TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'submitted';
+
 -- Enable Row Level Security (RLS)
 ALTER TABLE public.ignite_registrations ENABLE ROW LEVEL SECURITY;
 
@@ -49,16 +56,19 @@ BEGIN
       WITH CHECK (true);
   END IF;
 
-  -- 1b. Allow public reads
+  -- 1b. Revoke direct public reads on raw table (PII Protection for lead_phone, lead_email, referral)
+  DROP POLICY IF EXISTS "Allow public read own registration" ON public.ignite_registrations;
+
+  -- 1c. Allow service_role full management for admin operations
   IF NOT EXISTS (
     SELECT 1 FROM pg_policies 
     WHERE tablename = 'ignite_registrations' 
-    AND policyname = 'Allow public read own registration'
+    AND policyname = 'Allow service_role full access on registrations'
   ) THEN
-    CREATE POLICY "Allow public read own registration"
+    CREATE POLICY "Allow service_role full access on registrations"
       ON public.ignite_registrations
-      FOR SELECT
-      USING (true);
+      FOR ALL
+      USING (auth.role() = 'service_role');
   END IF;
 END $$;
 
@@ -86,6 +96,12 @@ CREATE TABLE IF NOT EXISTS public.showcase_projects (
   featured BOOLEAN DEFAULT false
 );
 
+-- Safe column migrations for pre-existing tables
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS upvotes INT DEFAULT 0;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS judge_verdict TEXT;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false;
+ALTER TABLE public.showcase_projects ADD COLUMN IF NOT EXISTS cover_gradient TEXT DEFAULT 'from-[#2F5527] to-[#8FC45A]';
+
 -- Enable RLS for showcase_projects
 ALTER TABLE public.showcase_projects ENABLE ROW LEVEL SECURITY;
 
@@ -104,18 +120,8 @@ BEGIN
       USING (true);
   END IF;
 
-  -- 2b. Allow public upvote updates
-  IF NOT EXISTS (
-    SELECT 1 FROM pg_policies 
-    WHERE tablename = 'showcase_projects' 
-    AND policyname = 'Allow public upvote update'
-  ) THEN
-    CREATE POLICY "Allow public upvote update"
-      ON public.showcase_projects
-      FOR UPDATE
-      USING (true)
-      WITH CHECK (true);
-  END IF;
+  -- 2b. Revoke direct public row updates; upvotes are handled strictly via atomic RPC
+  DROP POLICY IF EXISTS "Allow public upvote update" ON public.showcase_projects;
 
   -- 2c. Allow service role full management
   IF NOT EXISTS (
@@ -131,12 +137,48 @@ BEGIN
 END $$;
 
 
--- 3. ATOMIC UPVOTE FUNCTION (OR REPLACE is inherently idempotent)
+-- 3. SANITIZED PUBLIC VIEW FOR SHOWCASE (PII PROTECTION)
+-- Explicitly strips lead_phone, lead_email, member contacts, and referral data
+CREATE OR REPLACE VIEW public.showcase_registrations_public
+WITH (security_invoker = false) AS
+SELECT
+  id,
+  created_at,
+  team_name,
+  track,
+  lead_name,
+  lead_college,
+  lead_year,
+  lead_branch,
+  lead_role,
+  team_size,
+  project_title,
+  pitch,
+  problem,
+  solution,
+  tools,
+  prototype_link,
+  project_link,
+  video_link,
+  status
+FROM public.ignite_registrations
+WHERE status = 'submitted';
+
+-- Grant read permission on the sanitized view to public anon role
+GRANT SELECT ON public.showcase_registrations_public TO anon, authenticated;
+
+
+-- 4. SECURE ATOMIC UPVOTE FUNCTION (WITH STRICT DELTA BOUNDS)
 CREATE OR REPLACE FUNCTION public.increment_project_upvotes(project_id TEXT, delta INT DEFAULT 1)
 RETURNS INT AS $$
 DECLARE
   new_count INT;
 BEGIN
+  -- Security guard: prevent arbitrary upvote inflation/manipulation
+  IF delta NOT IN (-1, 1) THEN
+    RAISE EXCEPTION 'Invalid delta amount. Upvotes may only be incremented or decremented by 1.';
+  END IF;
+
   UPDATE public.showcase_projects
   SET upvotes = GREATEST(0, upvotes + delta)
   WHERE id = project_id

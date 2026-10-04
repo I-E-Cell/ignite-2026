@@ -193,7 +193,7 @@ export const SponsorsSection = () => {
               <div className="sxp-artifacts-wing sxp-wing-left" aria-hidden="true">
                 <div className="sxp-artifact-item sxp-art-doodle-left">
                   <img
-                    src="https://www.recursiveacm.in/images/ui/doodle_ideas_impact.png"
+                    src="/images/ui/doodle_ideas_impact.png"
                     alt=""
                     className="sxp-art-img sxp-doodle-ideas-img"
                     width={159}
@@ -202,7 +202,7 @@ export const SponsorsSection = () => {
                 </div>
                 <div className="sxp-polaroid-group sxp-polaroid-group-left">
                   <img
-                    src="https://www.recursiveacm.in/images/ui/polaroid_victoria.png"
+                    src="/images/ui/polaroid_victoria.png"
                     alt=""
                     className="sxp-art-img sxp-polaroid-victoria-img"
                     width={240}
@@ -215,7 +215,7 @@ export const SponsorsSection = () => {
               <div className="sxp-inner">
                 <div className="sxp-ornament-wrap">
                   <img
-                    src="https://c.animaapp.com/LNkMILMOwPiVywCgFtLcSg/assets/artifact.png"
+                    src="/images/ui/artifact-mark.png"
                     alt=""
                     aria-hidden="true"
                     draggable="false"
@@ -233,7 +233,7 @@ export const SponsorsSection = () => {
                     <span className="sxp-tier-badge">PLATFORM PARTNER</span>
                     <div className="sxp-devfolio-card-wrap">
                       <img
-                        src="https://www.recursiveacm.in/images/ui/devfolio_rays.png"
+                        src="/images/ui/devfolio_rays.png"
                         alt=""
                         className="sxp-rays sxp-rays-left"
                         aria-hidden="true"
@@ -249,7 +249,7 @@ export const SponsorsSection = () => {
                       >
                         <div className="sxp-devfolio-content">
                           <img
-                            src="https://www.recursiveacm.in/images/sponsors/devfolio.png"
+                            src="/images/sponsors/devfolio.png"
                             alt="Devfolio"
                             className="sxp-devfolio-logo"
                             width={175}
@@ -277,7 +277,7 @@ export const SponsorsSection = () => {
                         aria-label="OSEN"
                       >
                         <img
-                          src="https://www.recursiveacm.in/images/sponsors/OSEN.png"
+                          src="/images/sponsors/OSEN.png"
                           alt="OSEN"
                           className="sxp-partner-logo sxp-osen-logo"
                           width={200}
@@ -300,7 +300,7 @@ export const SponsorsSection = () => {
                         aria-label=".xyz"
                       >
                         <img
-                          src="https://www.recursiveacm.in/images/sponsors/xyz-logo-color.png"
+                          src="/images/sponsors/xyz-logo-color.png"
                           alt=".xyz"
                           className="sxp-partner-logo sxp-xyz-logo"
                           width={301}
@@ -308,7 +308,7 @@ export const SponsorsSection = () => {
                         />
                       </a>
                       <img
-                        src="https://www.recursiveacm.in/images/ui/devfolio_rays.png"
+                        src="/images/ui/devfolio_rays.png"
                         alt=""
                         className="sxp-rays sxp-rays-right"
                         aria-hidden="true"
@@ -333,7 +333,7 @@ export const SponsorsSection = () => {
                         aria-label="React Kolkata"
                       >
                         <img
-                          src="https://www.recursiveacm.in/images/sponsors/react-kolkata-logo-dark.png"
+                          src="/images/sponsors/react-kolkata-logo-dark.png"
                           alt="React Kolkata"
                           className="sxp-partner-logo sxp-react-kolkata-logo"
                           width={216}
@@ -348,7 +348,7 @@ export const SponsorsSection = () => {
                       >
                         <div className="sxp-innofusion-content">
                           <img
-                            src="https://www.recursiveacm.in/images/sponsors/INNOFUSION%203.0%20logo.png"
+                            src="/images/sponsors/innofusion-3.png"
                             alt="Innofusion"
                             className="sxp-innofusion-logo"
                             width={40}
@@ -375,7 +375,7 @@ export const SponsorsSection = () => {
               <div className="sxp-artifacts-wing sxp-wing-right" aria-hidden="true">
                 <div className="sxp-polaroid-group sxp-polaroid-group-right">
                   <img
-                    src="https://www.recursiveacm.in/images/ui/polaroid_howrah.png"
+                    src="/images/ui/polaroid_howrah.png"
                     alt=""
                     className="sxp-art-img sxp-polaroid-howrah-img"
                     width={250}
@@ -384,7 +384,7 @@ export const SponsorsSection = () => {
                 </div>
                 <div className="sxp-artifact-item sxp-art-doodle-right">
                   <img
-                    src="https://www.recursiveacm.in/images/ui/doodle_building_tomorrow.png"
+                    src="/images/ui/doodle_building_tomorrow.png"
                     alt=""
                     className="sxp-art-img sxp-doodle-tomorrow-img"
                     width={165}

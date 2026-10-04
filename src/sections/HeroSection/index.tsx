@@ -89,7 +89,7 @@ export const HeroSection = () => {
       {/* Log Divider */}
       <div className="hero-log-divider" aria-hidden="true">
         <img
-          src="https://www.recursiveacm.in/images/hero/log.png"
+          src="/images/hero/log.png"
           alt=""
           className="hero-log-img"
           loading="eager"
