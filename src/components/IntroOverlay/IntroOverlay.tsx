@@ -507,7 +507,7 @@ export const IntroOverlay: React.FC = () => {
           align-items: center;
           justify-content: center;
           background:
-            radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 62%),
+            radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 0.95) 62%),
             linear-gradient(180deg, #0A160A 0%, #010301 65%);
           pointer-events: none;
           overflow: hidden;
