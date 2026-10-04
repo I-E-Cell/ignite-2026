@@ -34,24 +34,48 @@ export const Navbar = () => {
     <>
       <nav className="nav-root">
         <div className="nav-glass-container">
-          <div className="relative isolate select-none pointer-events-auto w-full">
-            <div className="nav-glass-pill-layout">
-              <NavbarBrand />
-              <DesktopNavLinks />
+          <div
+            className="relative isolate overflow-hidden select-none pointer-events-auto w-full"
+            style={{
+              borderRadius: "4px",
+              background: "rgba(255,255,255,0.42)",
+              backdropFilter: "blur(34px) saturate(190%)",
+              WebkitBackdropFilter: "blur(34px) saturate(190%)",
+              boxShadow:
+                "0 14px 44px rgba(14, 30, 16, 0.24), inset 0 1px 1px rgba(255,255,255,0.7), inset 0 -1px 2px rgba(47,85,39,0.08)",
+              borderTop: "1px solid rgba(255,255,255,0.7)",
+              borderBottom: "1px solid rgba(47,85,39,0.06)",
+            }}
+          >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 z-10"
+              style={{
+                borderRadius: "inherit",
+                background:
+                  "linear-gradient(145deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.06) 32%, rgba(255,255,255,0) 60%, rgba(143,196,90,0.12) 100%)",
+                mixBlendMode: "screen",
+              }}
+            />
+            <div className="relative z-20">
+              <div className="nav-glass-pill-layout">
+                <NavbarBrand />
+                <DesktopNavLinks />
 
-              {/* 2-Bar Hamburger Toggle (mobile) */}
-              <button
-                type="button"
-                className="nav-toggle"
-                aria-label="Toggle menu"
-                aria-expanded={menuOpen}
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
-                <span className={`nav-toggle-icon ${menuOpen ? "is-open" : ""}`} aria-hidden="true">
-                  <span className="nav-toggle-bar nav-toggle-bar-1" />
-                  <span className="nav-toggle-bar nav-toggle-bar-2" />
-                </span>
-              </button>
+                {/* 2-Bar Hamburger Toggle (mobile) */}
+                <button
+                  type="button"
+                  className="nav-toggle"
+                  aria-label="Toggle menu"
+                  aria-expanded={menuOpen}
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
+                  <span className={`nav-toggle-icon ${menuOpen ? "is-open" : ""}`} aria-hidden="true">
+                    <span className="nav-toggle-bar nav-toggle-bar-1" />
+                    <span className="nav-toggle-bar nav-toggle-bar-2" />
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -118,7 +142,7 @@ export const Navbar = () => {
 
       <style>{`
         .nav-root {
-          position: absolute;
+          position:fixed;
           top: clamp(0.75rem, 2vh, 1.25rem);
           left: 0;
           right: 0;
