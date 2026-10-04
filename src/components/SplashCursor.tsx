@@ -65,12 +65,12 @@ function pointerPrototype(): Pointer {
 
 export default function SplashCursor({
   SIM_RESOLUTION = 128,
-  DYE_RESOLUTION = 1440,
+  DYE_RESOLUTION = 768,
   CAPTURE_RESOLUTION = 512,
   DENSITY_DISSIPATION = 3.5,
   VELOCITY_DISSIPATION = 2,
   PRESSURE = 0.1,
-  PRESSURE_ITERATIONS = 20,
+  PRESSURE_ITERATIONS = 12,
   CURL = 3,
   SPLAT_RADIUS = 0.2,
   SPLAT_FORCE = 6000,
@@ -100,7 +100,7 @@ export default function SplashCursor({
       DENSITY_DISSIPATION: DENSITY_DISSIPATION!,
       VELOCITY_DISSIPATION: VELOCITY_DISSIPATION!,
       PRESSURE: PRESSURE!,
-      PRESSURE_ITERATIONS: PRESSURE_ITERATIONS!,
+      PRESSURE_ITERATIONS: Math.min(PRESSURE_ITERATIONS!, 12),
       CURL: CURL!,
       SPLAT_RADIUS: SPLAT_RADIUS!,
       SPLAT_FORCE: SPLAT_FORCE!,
@@ -857,8 +857,11 @@ export default function SplashCursor({
       const h = gl.drawingBufferHeight;
       const aspectRatio = w / h;
       let aspect = aspectRatio < 1 ? 1 / aspectRatio : aspectRatio;
-      const min = Math.round(resolution);
-      const max = Math.round(resolution * aspect);
+      // Full-page canvas aspect ratios must not create enormous fluid textures.
+      // Preserve the aspect ratio, but cap the longest texture edge.
+      const limit = resolution === config.SIM_RESOLUTION ? 512 : 1024;
+      const max = Math.min(limit, Math.round(resolution * aspect));
+      const min = Math.max(1, Math.round(max / aspect));
       if (w > h) {
         return { width: max, height: min };
       }
@@ -866,7 +869,10 @@ export default function SplashCursor({
     }
 
     function scaleByPixelRatio(input: number) {
-      const pixelRatio = window.devicePixelRatio || 1;
+      // Keep the full-page drawing buffer bounded as well as the fluid textures.
+      // The same scale is used for pointer coordinates, preserving their mapping.
+      const longest = Math.max(canvas!.clientWidth || window.innerWidth, canvas!.clientHeight || window.innerHeight);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 4096 / Math.max(1, longest));
       return Math.floor(input * pixelRatio);
     }
 
@@ -877,11 +883,26 @@ export default function SplashCursor({
     let colorUpdateTimer = 0.0;
     let isRunning = true;
     let animId = 0;
+    let canvasVisible = true;
+    let resizePending = true;
+    const canvasResizeObserver = new ResizeObserver(() => { resizePending = true; });
+    canvasResizeObserver.observe(canvas);
+    const canvasObserver = new IntersectionObserver(([entry]) => {
+      canvasVisible = entry.isIntersecting;
+      if (canvasVisible) startLoopIfNeeded();
+    });
+    canvasObserver.observe(canvas);
+    const resumeVisible = () => { if (!document.hidden && canvasVisible) startLoopIfNeeded(); };
+    document.addEventListener('visibilitychange', resumeVisible);
 
     function updateFrame() {
-      if (!isRunning) return;
+      animId = 0;
+      if (!isRunning || document.hidden || !canvasVisible) return;
       const dt = calcDeltaTime();
-      if (resizeCanvas()) initFramebuffers();
+      if (resizePending) {
+        resizePending = false;
+        if (resizeCanvas()) initFramebuffers();
+      }
       updateColors(dt);
       applyInputs();
       step(dt);
@@ -1252,13 +1273,12 @@ export default function SplashCursor({
       clickSplat(pointer);
     };
 
-    let hasStarted = false;
-    const startLoopIfNeeded = () => {
-      if (!hasStarted) {
-        hasStarted = true;
-        updateFrame();
+    function startLoopIfNeeded() {
+      if (isRunning && canvasVisible && !document.hidden && !animId) {
+        lastUpdateTime = Date.now();
+        animId = requestAnimationFrame(updateFrame);
       }
-    };
+    }
 
     const onMouseMove = (e: MouseEvent) => {
       const coords = getCanvasCoordinates(e.clientX, e.clientY);
@@ -1316,19 +1336,9 @@ export default function SplashCursor({
     // users and while the canvas is offscreen.
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let autoTimer = 0;
-    let canvasVisible = true;
-    let canvasObserver: IntersectionObserver | null = null;
+
     if (AUTO_SPLAT && !reduceMotion) {
       startLoopIfNeeded();
-      if (typeof IntersectionObserver !== 'undefined' && canvas) {
-        canvasObserver = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) canvasVisible = entry.isIntersecting;
-          },
-          { threshold: 0 }
-        );
-        canvasObserver.observe(canvas);
-      }
       autoTimer = window.setInterval(() => {
         if (document.hidden || !canvasVisible || !isRunning) return;
         const color = generateColor();
@@ -1343,7 +1353,9 @@ export default function SplashCursor({
     return () => {
       isRunning = false;
       if (autoTimer) window.clearInterval(autoTimer);
-      if (canvasObserver) canvasObserver.disconnect();
+      canvasObserver.disconnect();
+      canvasResizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', resumeVisible);
       cancelAnimationFrame(animId);
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
