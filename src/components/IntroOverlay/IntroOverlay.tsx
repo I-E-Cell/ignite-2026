@@ -21,6 +21,12 @@ export const IntroOverlay: React.FC = () => {
     if (typeof window === "undefined") return "done";
     // Check if previously completed in this session
     try {
+      const search = window.location.search;
+      if (search.includes("intro=replay") || search.includes("intro=test") || search.includes("intro=1")) {
+        sessionStorage.removeItem("recursive:intro:v1");
+        delete document.documentElement.dataset.intro;
+        return "playing";
+      }
       if (sessionStorage.getItem("recursive:intro:v1") === "1") {
         document.documentElement.dataset.intro = "done";
         return "done";
@@ -184,78 +190,76 @@ export const IntroOverlay: React.FC = () => {
 
       if (veil && artifact && welcome) {
         tl.set(veil, { autoAlpha: 1 }, 0);
-        tl.set(welcome, { opacity: 0, pointerEvents: "none" }, 0);
+        tl.set(artifact, { opacity: 0, scale: 0.9, y: 14 }, 0);
+        tl.set(welcome, { opacity: 1, pointerEvents: "auto" }, 0);
 
+        const kicker = welcome.querySelector(".intro-welcome-kicker");
         const welcomeWords = Array.from(welcome.querySelectorAll(".intro-welcome-word-i"));
-        const welcomeSub = welcome.querySelector(".intro-welcome-sub");
+        const welcomeSub = welcome.querySelector(".intro-welcome-sub-wrap");
 
+        if (kicker) tl.set(kicker, { opacity: 0, y: 8 }, 0);
         if (welcomeWords.length > 0) {
           tl.set(welcomeWords, { opacity: 0, y: 18, filter: "blur(8px)" }, 0);
         }
         if (welcomeSub) {
-          tl.set(welcomeSub, { opacity: 0, y: 10, letterSpacing: "0.12em" }, 0);
+          tl.set(welcomeSub, { opacity: 0, y: 10 }, 0);
         }
 
-        const logoSvg = artifact.querySelector(".intro-ecell-logo");
+        // 1. E-Cell logo badge smoothly emerges
+        tl.to(
+          artifact,
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          0.12
+        );
 
-        const logoOffset = isDesktop ? -300 : -150;
-        gsap.set(artifact, { y: logoOffset, opacity: 1, force3D: true });
-
-        if (logoSvg) {
-          gsap.set(logoSvg, {
-            opacity: 0,
-            scale: 0.88,
-            y: 12,
-            transformOrigin: "center center",
-            force3D: true,
-          });
-
-          tl.to(
-            logoSvg,
-            {
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              duration: 0.55,
-              ease: "power3.out",
-            },
-            0.1
-          );
+        // 2. Kicker reveals
+        if (kicker) {
+          tl.to(kicker, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.3);
         }
 
-        // Lift logo as welcome text enters
-        tl.to(artifact, { y: logoOffset - 18, duration: 0.45, ease: "sine.inOut" }, 0.6);
-        tl.set(welcome, { opacity: 1, pointerEvents: "auto" }, 0.65);
-
+        // 3. Staggered words "Hi There, Founders!"
         if (welcomeWords.length > 0) {
           tl.to(
             welcomeWords,
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "power3.out", stagger: 0.05 },
-            0.68
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out", stagger: 0.06 },
+            0.45
           );
         }
 
+        // 4. Subtitle tag settles in
         if (welcomeSub) {
           tl.to(
             welcomeSub,
-            { opacity: 1, y: 0, letterSpacing: isDesktop ? "0.34em" : "0.26em", duration: 0.4, ease: "power2.out" },
-            0.85
+            { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+            0.7
           );
         }
 
-        // Veil exit
+        // 5. Subtle upward breath
+        tl.to([artifact, welcome], { y: -8, duration: 0.9, ease: "sine.inOut" }, 1.7);
+
+        // 6. Smooth cinematic dissolve out
         if (welcomeWords.length > 0) {
           tl.to(
             welcomeWords,
-            { opacity: 0, y: -10, filter: "blur(4px)", duration: 0.25, ease: "power2.in", stagger: 0.02 },
-            2.6
+            { opacity: 0, y: -12, filter: "blur(5px)", duration: 0.28, ease: "power2.in", stagger: 0.02 },
+            2.52
           );
         }
-        if (welcomeSub) {
-          tl.to(welcomeSub, { opacity: 0, y: -6, duration: 0.2, ease: "power2.in" }, 2.62);
+        if (kicker) {
+          tl.to(kicker, { opacity: 0, y: -8, duration: 0.2, ease: "power2.in" }, 2.54);
         }
-        tl.to(artifact, { opacity: 0, y: "-=8", filter: "blur(6px)", duration: 0.3, ease: "power2.in" }, 2.65);
-        tl.to(veil, { autoAlpha: 0, duration: 0.45, ease: "power2.inOut" }, 2.75);
+        if (welcomeSub) {
+          tl.to(welcomeSub, { opacity: 0, y: -6, duration: 0.22, ease: "power2.in" }, 2.56);
+        }
+        tl.to(artifact, { opacity: 0, scale: 0.96, y: -12, filter: "blur(6px)", duration: 0.3, ease: "power2.in" }, 2.58);
+        tl.to(veil, { autoAlpha: 0, duration: 0.45, ease: "power2.inOut" }, 2.72);
       }
 
       // ── Step 2: Camera Pull & Progress Bar ──
@@ -382,7 +386,9 @@ export const IntroOverlay: React.FC = () => {
         {/* Initial Artifact Loader & Welcome Veil */}
         <div ref={loaderVeilRef} className="intro-loader-veil">
           <div className="intro-loader-content">
+            {/* E-Cell Brand Mark (Clean, Unboxed) */}
             <div ref={artifactMarkRef} className="intro-artifact-mark" aria-label="E-Cell AIT Pune">
+              <div className="intro-brand-aura" aria-hidden="true" />
               <svg
                 viewBox="0 0 92 48"
                 fill="none"
@@ -406,6 +412,7 @@ export const IntroOverlay: React.FC = () => {
                   d="M53.4668 3.58789C60.6918 1.32369 71.7632 -1.72536 82.2344 7.41992C85.3552 10.3239 89.0797 15.5075 90.1602 21.5732C91.2248 27.5512 89.7523 34.5272 82.2344 41.2461C81.0641 42.292 78.9185 43.2891 75.8506 44.0879C72.8185 44.8774 69.0169 45.4407 64.6621 45.7061C55.954 46.2366 45.1353 45.5719 34.0332 43.2324L34.0078 43.2266L33.9814 43.2227L33.4688 43.1328C30.8308 42.6466 27.0917 41.6036 23.8809 39.958C20.4104 38.1793 17.9658 35.9128 17.6162 33.2412C17.6307 32.6077 17.8708 31.7374 18.4209 30.6338C18.98 29.5122 19.8138 28.2361 20.8916 26.8506C23.0464 24.0806 26.1056 20.9663 29.6738 17.9033C36.829 11.7614 45.8612 5.97132 53.4668 3.58789Z"
                   stroke="currentColor"
                   strokeWidth="2.44066"
+                  fill="none"
                 />
                 <path
                   d="M10.8438 32.2422H14.2248V33.1504H13.0173V34.0585H14.2248V35.1938H10.8438V34.0585H13.0173V33.1504L10.8438 33.1837V32.2422Z"
@@ -431,7 +438,7 @@ export const IntroOverlay: React.FC = () => {
                 />
                 <path
                   d="M14.4345 24.9277C13.396 24.9277 12.4738 24.7205 11.668 24.3063C10.8622 23.8863 10.2294 23.2961 9.76974 22.5357C9.31007 21.7696 9.08024 20.8644 9.08024 19.8202C9.08024 18.7874 9.28737 17.8794 9.70164 17.0963C10.1216 16.3132 10.7146 15.7031 11.4807 15.2661C12.2525 14.8235 13.169 14.6022 14.2302 14.6022C14.8034 14.6022 15.3567 14.7043 15.8901 14.9086C16.4292 15.1129 16.9116 15.4023 17.3372 15.7769C17.7685 16.1514 18.109 16.5969 18.3587 17.1133C18.6141 17.6297 18.7417 18.2001 18.7417 18.8243C18.7417 19.108 18.6822 19.3123 18.563 19.4372C18.4438 19.5564 18.2792 19.6358 18.0693 19.6755C17.8593 19.7153 17.6181 19.7493 17.3457 19.7777L10.8934 19.9564C10.8934 20.6999 11.0523 21.3269 11.3701 21.8377C11.6879 22.3427 12.1191 22.7258 12.6639 22.9868C13.2087 23.2422 13.8216 23.3699 14.5026 23.3699C14.985 23.3699 15.3936 23.3075 15.7284 23.1826C16.0632 23.0578 16.3583 22.896 16.6137 22.6974C16.8747 22.4931 17.1301 22.2746 17.3798 22.042C17.5557 21.8944 17.743 21.8206 17.9416 21.8206C18.1743 21.8206 18.3672 21.8916 18.5204 22.0335C18.6793 22.1697 18.7588 22.3541 18.7588 22.5868C18.7588 22.95 18.6084 23.2763 18.3076 23.5657C18.0125 23.8551 17.638 24.102 17.184 24.3063C16.73 24.5049 16.2561 24.6581 15.7624 24.7659C15.2687 24.8737 14.8261 24.9277 14.4345 24.9277ZM10.8593 18.7562L15.9752 18.6455C16.1341 18.6342 16.2788 18.603 16.4094 18.5519C16.5399 18.5008 16.6051 18.41 16.6051 18.2795C16.6051 17.7347 16.4888 17.3006 16.2561 16.9771C16.0291 16.648 15.7341 16.4125 15.3709 16.2706C15.0077 16.1231 14.6274 16.0493 14.2302 16.0493C13.2257 16.0493 12.4313 16.2961 11.8468 16.7899C11.2622 17.2779 10.9331 17.9333 10.8593 18.7562Z"
-                  fill="#ffffffff"
+                  fill="#8FC45A"
                 />
                 <text
                   x="58"
@@ -439,7 +446,7 @@ export const IntroOverlay: React.FC = () => {
                   textAnchor="middle"
                   fill="currentColor"
                   style={{
-                    fontFamily: "var(--font-headingNow), 'Inter', system-ui, -apple-system, sans-serif",
+                    fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif",
                     fontWeight: 900,
                     fontSize: "14px",
                     letterSpacing: "0.06em",
@@ -453,7 +460,7 @@ export const IntroOverlay: React.FC = () => {
                   textAnchor="middle"
                   fill="currentColor"
                   style={{
-                    fontFamily: "var(--font-headingNow), 'Inter', system-ui, -apple-system, sans-serif",
+                    fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif",
                     fontWeight: 800,
                     fontSize: "6.8px",
                     letterSpacing: "0.14em",
@@ -463,19 +470,31 @@ export const IntroOverlay: React.FC = () => {
                 </text>
               </svg>
             </div>
+
+            {/* Welcome Lockup */}
             <div ref={welcomeBlockRef} className="intro-welcome-block">
+              <div className="intro-welcome-kicker">
+                <span className="intro-kicker-dot" />
+                <span>INNOVATION &amp; ENTREPRENEURSHIP CELL PRESENTS</span>
+              </div>
+
               <h1 className="intro-welcome-title" aria-label="Hi There, Founders!">
                 <span className="intro-welcome-word">
-                  <span className="intro-welcome-word-i">Hi</span>
+                  <span className="intro-welcome-word-i text-[#FBFAF8]">Hi</span>
                 </span>
                 <span className="intro-welcome-word">
-                  <span className="intro-welcome-word-i">There,</span>
+                  <span className="intro-welcome-word-i text-[#FBFAF8]">There,</span>
                 </span>
                 <span className="intro-welcome-word">
-                  <span className="intro-welcome-word-i">Founders!</span>
+                  <span className="intro-welcome-word-i intro-founders-highlight">Founders!</span>
                 </span>
               </h1>
-              <span className="intro-welcome-sub">IGNITE 2026 · NO-CODE STARTUP</span>
+
+              <div className="intro-welcome-sub-wrap">
+                <span className="intro-welcome-sub">
+                  IGNITE 2026 <span className="intro-sub-bullet">·</span> NO-CODE STARTUP COHORT
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -577,8 +596,8 @@ export const IntroOverlay: React.FC = () => {
           align-items: center;
           justify-content: center;
           background:
-            radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 0.95) 62%),
-            linear-gradient(180deg, #0A160A 0%, #010301 65%);
+            radial-gradient(ellipse 75% 60% at 50% 42%, rgba(92, 140, 58, 0.22) 0%, rgba(47, 85, 39, 0.12) 36%, rgba(8, 18, 9, 0.88) 72%, #030703 100%),
+            linear-gradient(180deg, #09150B 0%, #030704 60%, #010301 100%);
           pointer-events: none;
           overflow: hidden;
           will-change: opacity;
@@ -592,36 +611,44 @@ export const IntroOverlay: React.FC = () => {
           justify-content: center;
           text-align: center;
           width: 100%;
-          max-width: 680px;
+          max-width: 760px;
           padding: 0 1.5rem;
         }
 
         .intro-artifact-mark {
           position: relative;
-          width: clamp(140px, 18vw, 220px);
-          aspect-ratio: 92 / 48;
           display: flex;
           align-items: center;
           justify-content: center;
           pointer-events: none;
           user-select: none;
           will-change: transform, opacity, filter;
-          color: #0b140c;
+          margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
+        }
+
+        .intro-brand-aura {
+          position: absolute;
+          width: clamp(200px, 28vw, 320px);
+          height: clamp(110px, 16vw, 170px);
+          border-radius: 50%;
+          background: radial-gradient(ellipse at center, rgba(143, 196, 90, 0.2) 0%, rgba(47, 85, 39, 0.08) 48%, transparent 72%);
+          filter: blur(24px);
+          pointer-events: none;
+          transform: translateZ(0);
         }
 
         .intro-ecell-logo {
-          width: 100%;
-          height: auto;
+          position: relative;
+          z-index: 2;
+          height: clamp(38px, 6vh, 48px);
+          width: auto;
           display: block;
-          filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.1));
-          color: #0b140c;
+          color: #FBFAF8;
+          filter: drop-shadow(0 2px 14px rgba(143, 196, 90, 0.4));
         }
 
         .intro-welcome-block {
-          position: absolute;
-          top: calc(100% + 14px);
-          left: 0;
-          right: 0;
+          position: relative;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -630,17 +657,38 @@ export const IntroOverlay: React.FC = () => {
           will-change: transform, opacity;
         }
 
+        .intro-welcome-kicker {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          font-family: var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
+          font-size: clamp(0.66rem, 1.25vw, 0.78rem);
+          font-weight: 600;
+          letter-spacing: clamp(0.18em, 0.4vw, 0.26em);
+          text-transform: uppercase;
+          color: #A8A69B;
+          margin-bottom: 0.75rem;
+        }
+
+        .intro-kicker-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: #8FC45A;
+          box-shadow: 0 0 8px #8FC45A;
+          flex-shrink: 0;
+        }
+
         .intro-welcome-title {
           margin: 0;
-          font-family: var(--font-display), var(--font-heading), var(--font-dm-sans), sans-serif;
-          font-size: clamp(2rem, 5.4vw, 3.6rem);
-          font-weight: 800;
-          line-height: 1.1;
-          letter-spacing: clamp(0.01em, 0.4vw, 0.03em);
+          font-family: var(--font-headingNow), 'Plus Jakarta Sans', var(--font-display), sans-serif;
+          font-size: clamp(2.35rem, 6.2vw, 4.2rem);
+          font-weight: 850;
+          line-height: 1.08;
+          letter-spacing: -0.03em;
           text-transform: none;
-          color: #ffffff;
-          text-shadow: 0 4px 28px rgba(0, 0, 0, 0.7);
-          filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.5));
+          color: #FBFAF8;
+          text-shadow: 0 4px 28px rgba(0, 0, 0, 0.8);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -650,9 +698,8 @@ export const IntroOverlay: React.FC = () => {
 
         @media (max-width: 480px) {
           .intro-welcome-title {
-            font-size: clamp(1.75rem, 6.8vw, 2.3rem);
-            line-height: 1.15;
-            padding: 0 0.5rem;
+            font-size: clamp(1.85rem, 7.6vw, 2.5rem);
+            line-height: 1.12;
             gap: 0.22em;
           }
         }
@@ -666,17 +713,39 @@ export const IntroOverlay: React.FC = () => {
           will-change: transform, opacity, filter;
         }
 
-        .intro-welcome-sub {
-          font-family: var(--font-mono, monospace), monospace;
-          font-size: clamp(0.72rem, 1.4vw, 0.86rem);
-          font-weight: 600;
-          letter-spacing: clamp(0.24em, 0.6vw, 0.34em);
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.72);
-          text-shadow: 0 0 16px rgba(120, 185, 75, 0.4);
-          margin-top: 10px;
+        .intro-founders-highlight {
+          background: linear-gradient(135deg, #CEF585 0%, #8FC45A 45%, #5C8C3A 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0 0 24px rgba(143, 196, 90, 0.45));
           display: inline-block;
-          will-change: transform, opacity, letter-spacing;
+        }
+
+        .intro-welcome-sub-wrap {
+          margin-top: clamp(0.85rem, 2vh, 1.25rem);
+          display: flex;
+          justify-content: center;
+        }
+
+        .intro-welcome-sub {
+          font-family: var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
+          font-size: clamp(0.7rem, 1.3vw, 0.82rem);
+          font-weight: 600;
+          letter-spacing: clamp(0.18em, 0.4vw, 0.26em);
+          text-transform: uppercase;
+          color: rgba(251, 250, 248, 0.8);
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.09);
+          border-radius: 4px;
+          padding: 0.35rem 0.85rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .intro-sub-bullet {
+          color: #8FC45A;
         }
 
         .intro-media-clip {
