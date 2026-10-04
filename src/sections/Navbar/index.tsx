@@ -4,6 +4,7 @@ import { DesktopNavLinks } from "@/sections/Navbar/components/DesktopNavLinks";
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isDarkNavbar, setIsDarkNavbar] = useState(false);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -20,6 +21,69 @@ export const Navbar = () => {
     };
   }, [menuOpen]);
 
+  // Detect when navbar is scrolled over black / dark sections
+  useEffect(() => {
+    let rafId: number;
+
+    const checkDarkTheme = () => {
+      // Navbar vertical probe point in viewport pixels
+      const navY = 55;
+
+      // 1. Check main dark zone (Perks + Tools)
+      const darkZone = document.getElementById("dark-zone");
+      if (darkZone) {
+        const rect = darkZone.getBoundingClientRect();
+        if (rect.top <= navY && rect.bottom >= navY) {
+          setIsDarkNavbar(true);
+          return;
+        }
+      }
+
+      // 2. Check sponsors night stage
+      const sxpStage = document.querySelector(".sxp-stage") as HTMLElement | null;
+      if (sxpStage) {
+        const rect = sxpStage.getBoundingClientRect();
+        if (rect.top <= navY && rect.bottom >= navY) {
+          const p = parseFloat(sxpStage.style.getPropertyValue("--sxp-p") || "0");
+          if (p < 0.65) {
+            setIsDarkNavbar(true);
+            return;
+          }
+        }
+      }
+
+      // 3. Fallback: check any element explicitly tagged with [data-navbar-theme="dark"]
+      const darkElements = document.querySelectorAll('[data-navbar-theme="dark"]');
+      for (let i = 0; i < darkElements.length; i++) {
+        const rect = darkElements[i].getBoundingClientRect();
+        if (rect.top <= navY && rect.bottom >= navY) {
+          setIsDarkNavbar(true);
+          return;
+        }
+      }
+
+      setIsDarkNavbar(false);
+    };
+
+    const onScrollOrUpdate = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(checkDarkTheme);
+    };
+
+    window.addEventListener("scroll", onScrollOrUpdate, { passive: true });
+    window.addEventListener("resize", onScrollOrUpdate, { passive: true });
+    const interval = setInterval(checkDarkTheme, 200);
+
+    checkDarkTheme();
+
+    return () => {
+      window.removeEventListener("scroll", onScrollOrUpdate);
+      window.removeEventListener("resize", onScrollOrUpdate);
+      cancelAnimationFrame(rafId);
+      clearInterval(interval);
+    };
+  }, []);
+
   const navLinks = [
     { href: "/#timeline", label: "Timeline" },
     { href: "/#perks", label: "What You Get" },
@@ -34,16 +98,27 @@ export const Navbar = () => {
       <nav className="nav-root">
         <div className="nav-glass-container">
           <div
-            className="relative isolate overflow-hidden select-none pointer-events-auto w-full"
+            className={`relative isolate overflow-hidden select-none pointer-events-auto w-full nav-pill-glass ${
+              isDarkNavbar ? "is-dark" : ""
+            }`}
             style={{
               borderRadius: "4px",
-              background: "rgba(255,255,255,0.42)",
+              background: isDarkNavbar
+                ? "rgba(14, 18, 14, 0.78)"
+                : "rgba(255, 255, 255, 0.42)",
               backdropFilter: "blur(34px) saturate(190%)",
               WebkitBackdropFilter: "blur(34px) saturate(190%)",
-              boxShadow:
-                "0 14px 44px rgba(14, 30, 16, 0.24), inset 0 1px 1px rgba(255,255,255,0.7), inset 0 -1px 2px rgba(47,85,39,0.08)",
-              borderTop: "1px solid rgba(255,255,255,0.7)",
-              borderBottom: "1px solid rgba(47,85,39,0.06)",
+              boxShadow: isDarkNavbar
+                ? "0 14px 44px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15), inset 0 -1px 2px rgba(143, 196, 90, 0.08)"
+                : "0 14px 44px rgba(14, 30, 16, 0.24), inset 0 1px 1px rgba(255, 255, 255, 0.7), inset 0 -1px 2px rgba(47, 85, 39, 0.08)",
+              borderTop: isDarkNavbar
+                ? "1px solid rgba(255, 255, 255, 0.14)"
+                : "1px solid rgba(255, 255, 255, 0.7)",
+              borderBottom: isDarkNavbar
+                ? "1px solid rgba(143, 196, 90, 0.12)"
+                : "1px solid rgba(47, 85, 39, 0.06)",
+              transition:
+                "background-color 350ms cubic-bezier(0.23, 1, 0.32, 1), border-color 350ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 350ms cubic-bezier(0.23, 1, 0.32, 1)",
             }}
           >
             <span
@@ -51,20 +126,22 @@ export const Navbar = () => {
               className="pointer-events-none absolute inset-0 z-10"
               style={{
                 borderRadius: "inherit",
-                background:
-                  "linear-gradient(145deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.06) 32%, rgba(255,255,255,0) 60%, rgba(143,196,90,0.12) 100%)",
+                background: isDarkNavbar
+                  ? "linear-gradient(145deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 32%, rgba(0,0,0,0) 60%, rgba(143,196,90,0.08) 100%)"
+                  : "linear-gradient(145deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.06) 32%, rgba(255,255,255,0) 60%, rgba(143,196,90,0.12) 100%)",
                 mixBlendMode: "screen",
+                transition: "background 350ms cubic-bezier(0.23, 1, 0.32, 1)",
               }}
             />
             <div className="relative z-20">
               <div className="nav-glass-pill-layout">
-                <NavbarBrand />
-                <DesktopNavLinks />
+                <NavbarBrand isDark={isDarkNavbar} />
+                <DesktopNavLinks isDark={isDarkNavbar} />
 
                 {/* 2-Bar Hamburger Toggle (mobile) */}
                 <button
                   type="button"
-                  className="nav-toggle"
+                  className={`nav-toggle ${isDarkNavbar ? "is-dark" : ""}`}
                   aria-label="Toggle menu"
                   aria-expanded={menuOpen}
                   onClick={() => setMenuOpen(!menuOpen)}
@@ -176,14 +253,19 @@ export const Navbar = () => {
           width: 2.3rem;
           height: 2.3rem;
           border-radius: 50%;
-          border: none;
+          border: 1px solid transparent;
           background: rgba(255, 255, 255, 0.6);
           color: var(--color-accent-deep);
           cursor: pointer;
           box-shadow:
             0 2px 8px rgba(22, 45, 26, 0.08),
             inset 0 1px 3px rgba(255, 255, 255, 0.95);
-          transition: transform 160ms var(--ease-out);
+          transition: transform 160ms var(--ease-out), background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+        }
+        .nav-toggle.is-dark {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: rgba(255, 255, 255, 0.16);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
         }
         .nav-toggle:active { transform: scale(0.92); }
 
@@ -202,8 +284,11 @@ export const Navbar = () => {
           height: 2.75px;
           background: #121A12;
           border-radius: 2px;
-          transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+          transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease, background-color 300ms ease;
           transform-origin: center;
+        }
+        .nav-toggle.is-dark .nav-toggle-bar {
+          background: #FBFAF8;
         }
         .nav-toggle-icon.is-open .nav-toggle-bar-1 {
           transform: translateY(4.625px) rotate(45deg);

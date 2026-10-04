@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FileText, Mic2, Award, Hammer, Rocket } from "lucide-react";
+import { FileText, Users, Award, Hammer, Rocket } from "lucide-react";
 
 
 const steps = [
@@ -10,30 +10,30 @@ const steps = [
     title: "Idea Submission",
     timeline: "Round 1 · Launch",
     description:
-      "Submit your problem statement, early target audience, and initial hypothesis. No working code required - just clear problem articulation and conviction.",
+      "Submit your problem statement, early target audience, and initial hypothesis. No working code required — just clear problem articulation, domain insight, and conviction.",
     tags: ["Problem Statement", "Target Users", "No Code Needed"],
     highlight: false,
   },
   {
     num: "02",
-    icon: Mic2,
+    icon: Users,
     phase: "Phase 02",
-    title: "Shortlisting & Pitch",
-    timeline: "Screening Week",
+    title: "3 Mentor Rounds",
+    timeline: "Guidance & Evaluation",
     description:
-      "Shortlisted candidates present a concise 3-minute pitch before an expert jury of founders and operators to defend market viability.",
-    tags: ["3-Min Pitch", "Jury Q&A", "Founder Feedback"],
+      "Engage in 3 intensive mentorship rounds with seasoned founders, tech architects, and operators to pressure-test viability, refine problem-solution fit, and sharpen your venture strategy.",
+    tags: ["3 Mentor Rounds", "Founder Feedback", "Model Validation"],
     highlight: false,
   },
   {
     num: "03",
     icon: Award,
     phase: "Phase 03",
-    title: "The Top 10",
+    title: "Shortlisting (Top 10 Selected)",
     timeline: "Cohort Selection",
     description:
-      "The top 10 most promising ventures are chosen to enter the flagship IGNITE Incubation cohort with dedicated mentorship slots.",
-    tags: ["Cohort Announcement", "Mentor Matching", "Seed Access"],
+      "Following the 3 mentor rounds, a rigorous jury shortlists the top 10 most promising ventures to enter the flagship IGNITE Incubation cohort with dedicated resources and seed grant access.",
+    tags: ["Jury Shortlist", "Top 10 Selection", "Cohort Onboarding"],
     highlight: false,
   },
   {
@@ -43,8 +43,8 @@ const steps = [
     title: "The 20 Weeks",
     timeline: "Incubation & Acceleration",
     description:
-      "20 weeks of intensive execution: sprint reviews, no-code MVP development (Airtable/Webflow/Bubble), customer interviews, and ecosystem visits.",
-    tags: ["Weekly Sprints", "MVP Shipping", "VC Check-ins"],
+      "20 weeks of intensive execution: sprint reviews, no-code MVP development (Airtable/Webflow/Bubble), customer interviews, prototype testing, and ecosystem visits.",
+    tags: ["20-Week Incubation", "No-Code MVP", "Weekly Sprints"],
     highlight: true,
   },
   {
@@ -55,7 +55,7 @@ const steps = [
     timeline: "Grand Finale",
     description:
       "Present working traction, active users, and company milestones before institutional venture funds, angels, and industry leaders to win from the ₹1,00,000 grant pool.",
-    tags: ["₹1,00,000 Grant", "Live Demo", "Angel Investment"],
+    tags: ["₹1,00,000 Grant", "Demo Day", "VC & Angel Pitch"],
     highlight: true,
   },
 ];
