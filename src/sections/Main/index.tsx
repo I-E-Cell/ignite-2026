@@ -8,7 +8,6 @@ import { TimelineSection } from "@/sections/TimelineSection";
 import { GallerySection } from "@/sections/GallerySection";
 import { SponsorsSection } from "@/sections/SponsorsSection";
 import { FaqSection } from "@/sections/FaqSection";
-import { VenueSection } from "@/sections/VenueSection";
 import { OrganizersSection } from "@/sections/OrganizersSection";
 
 export const Main = () => {
@@ -46,9 +45,6 @@ export const Main = () => {
 
       {/* 9. FAQ: The 6 Exact Questions on Eligibility, Grant, Team & IP */}
       <FaqSection />
-
-      {/* 10. Venue: AIT Pune — Online Hackathon Info */}
-      <VenueSection />
 
       {/* 11. Organizers & Contact Us: Reach out to I&E Cell Directly */}
       <OrganizersSection />
