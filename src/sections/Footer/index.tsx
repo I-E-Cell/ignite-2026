@@ -1,3 +1,4 @@
+
 import { CrowdCanvas } from "@/sections/Footer/components/CrowdCanvas";
 
 export const Footer = () => {
@@ -10,7 +11,7 @@ export const Footer = () => {
       {/* Luminous radial glow behind the letters */}
       <div className="footer-aurora" aria-hidden="true" />
 
-      {/* Giant RECURSIVE Wordmark */}
+      {/* Giant I&E CELL Wordmark */}
       <div className="footer-wordmark-wrap">
         <span className="sr-only">
           IGNITE — No-Code Startup Hackathon 2026 | I&amp;E Cell, Army Institute of Technology, Pune
@@ -19,10 +20,10 @@ export const Footer = () => {
           className="warp-text relative w-full max-w-[100vw] h-full pointer-events-auto"
           role="heading"
           aria-level={2}
-          aria-label="IGNITE"
+          aria-label="I&E CELL"
         >
           <div
-            className="warp-text-fallback-txt absolute inset-0 flex items-end justify-center font-headingNow font-black text-[min(clamp(7.5rem,34vw,42rem),60vh)] tracking-[-0.035em] leading-[0.82] select-none"
+            className="warp-text-fallback-txt absolute inset-0 flex items-end justify-between px-[1.5vw] whitespace-nowrap font-headingNow font-black text-[min(clamp(4.5rem,21vw,28rem),60vh)] tracking-[-0.035em] leading-[0.82] select-none"
             style={{
               background:
                 "linear-gradient(180deg, #070e08 0%, #0f1c12 36%, #1a301e 72%, #2c4e30 100%)",
@@ -30,7 +31,14 @@ export const Footer = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            IGNITE
+            <span>I</span>
+            <span>&amp;</span>
+            <span>E</span>
+            <span className="w-[3vw]" aria-hidden="true" />
+            <span>C</span>
+            <span>E</span>
+            <span>L</span>
+            <span>L</span>
           </div>
         </div>
       </div>
