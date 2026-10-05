@@ -128,10 +128,10 @@ export const PerksSection = () => {
       </motion.div></ScenePortal>
     </div>
     <style>{`
-      .ignite-perks{position:relative;background:#000;color:#eff4e8;font-family:'Inter',sans-serif;isolation:isolate}
+      .ignite-perks{position:relative;background:transparent;color:#eff4e8;font-family:'Inter',sans-serif;isolation:isolate}
       .ignite-perks *{box-sizing:border-box}
       .ip-scroll{position:relative;height:230svh}
-      .ip-stage{position:relative;pointer-events:auto;height:100svh;min-height:0;overflow:hidden;background:#000}
+      .ip-stage{position:relative;pointer-events:auto;height:100svh;min-height:0;overflow:hidden;background:transparent}
       .ip-heading{will-change:transform,opacity;position:absolute;top:15%;left:50%;width:min(1140px,90%);margin-left:calc(min(1140px,90%) / -2);z-index:2}
       .ip-label{display:block;font:10px 'Geist Mono',monospace;letter-spacing:.19em;line-height:1.6;color:#9dbc81;text-transform:uppercase}
       .ip-heading h2{font-family:var(--font-headingNow),'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4.1vw,54px);font-weight:500;letter-spacing:-.045em;line-height:1.12;margin:18px 0 0}
