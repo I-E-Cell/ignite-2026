@@ -171,7 +171,7 @@ export const ToolsSection: React.FC = () => {
               letterSpacing: "-0.025em",
             }}
           >
-            Build Real Startups Without Backend Code.
+            Build Real Startups with No-Code tools.
           </h2>
 
           <p
