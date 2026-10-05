@@ -8,7 +8,7 @@ import { TimelineSection } from "@/sections/TimelineSection";
 import { GallerySection } from "@/sections/GallerySection";
 import { SponsorsSection } from "@/sections/SponsorsSection";
 import { FaqSection } from "@/sections/FaqSection";
-
+import { DomainCarousel } from "@/sections/PerksSection/DomainCarousel"
 export const Main = () => {
   return (
     <main className="box-border caret-transparent outline-[3px] no-underline">
@@ -43,6 +43,7 @@ export const Main = () => {
           }}
         />
         <PerksSection />
+        <DomainCarousel />
         <ToolsSection />
       </div>
 
