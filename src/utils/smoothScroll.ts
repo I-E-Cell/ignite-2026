@@ -14,6 +14,16 @@ export function initSmoothScroll(): Lenis | null {
     return null;
   }
 
+  // Disable virtual smooth scroll on touch/mobile devices so phones use 100% native momentum scrolling
+  const isTouch =
+    "ontouchstart" in window ||
+    (typeof navigator !== "undefined" && navigator.maxTouchPoints > 0) ||
+    window.innerWidth < 1024;
+
+  if (isTouch) {
+    return null;
+  }
+
   if (!lenisInstance) {
     lenisInstance = new Lenis({
       duration: 1.0,
@@ -22,7 +32,6 @@ export function initSmoothScroll(): Lenis | null {
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.2,
       infinite: false,
     });
 

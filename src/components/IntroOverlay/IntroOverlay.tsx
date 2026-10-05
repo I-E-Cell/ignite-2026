@@ -46,6 +46,12 @@ export const IntroOverlay: React.FC = () => {
       // ignore
     }
 
+    // Skip cinematic intro on mobile devices (< 768px) to prevent scroll lock and let users scroll immediately
+    if (window.innerWidth < 768) {
+      document.documentElement.dataset.intro = "done";
+      return "done";
+    }
+
     // If intro has already played during this active SPA navigation session
     if (hasIntroPlayedInSpa) {
       document.documentElement.dataset.intro = "done";
@@ -355,7 +361,16 @@ export const IntroOverlay: React.FC = () => {
       }
     }, rootRef);
 
+    const safetyTimer = window.setTimeout(() => {
+      if (!hasFinishedRef.current) {
+        finishIntro();
+      }
+    }, 9000);
+
     return () => {
+      window.clearTimeout(safetyTimer);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
       ctx.revert();
     };
   }, [phase, finishIntro]);

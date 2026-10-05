@@ -1,36 +1,55 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0a140c" />
   <title>IGNITE 2026 — No-Code Startup Hackathon | I&E Cell</title>
-  <meta
-    name="description"
-    content="IGNITE 2026 is a 20-week no-code startup hackathon organized by the I&E Cell. It's not a weekend hackathon; it's a startup, built over 20 weeks. Pitch your idea, win from a ₹1,00,000 grant, and get incubated."
-  />
-  <meta name="keywords" content="IGNITE, IGNITE 2026, No-Code Hackathon, Startup Hackathon, I&E Cell, E-Cell, Startup Incubation, 20 Week Startup, Student Founders, EdTech, FinTech, HealthTech" />
-  <link rel="icon" href="/icon.png" sizes="256x256" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" type="image/png" />
+  <meta name="description"
+    content="IGNITE 2026 is a 20-week no-code startup hackathon organized by the I&E Cell. It's not a weekend hackathon; it's a startup, built over 20 weeks. Pitch your idea, win from a ₹1,00,000 grant, and get incubated." />
+  <meta name="keywords"
+    content="IGNITE, IGNITE 2026, No-Code Hackathon, Startup Hackathon, I&E Cell, E-Cell, Startup Incubation, 20 Week Startup, Student Founders, EdTech, FinTech, HealthTech" />
+  <!-- Tab Favicons (Inline instant fallback + SVG + cache-busted files) -->
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAAAAAAAAQCEeRdzAAAFZUlEQVR4nO1WS0xUZxT+5iHzAkHkPamixQSwIApBVAR5uLBIqakLNxatG8GFqWmbqCupiZu2sRuLScXGpPEBjdRYBMUAqcYHI2pCK4wopRYMIlBgBoZ59pwz3Cmj9rWpG/7Jzb3z3/8/5zvf+c75rwqveWjnAMwBmAPQ1fWzT6VSwefz/asNKvrNHj74gueVm8r/8E92tf/F+YtDca7VaKHVasWOY9oBt9sNtVoNg8EADd2dLhe8Xu+rAbzK+d+B+jNiICQkRNY9efIbOjs70dX1AOPj43C73FCpVTAajEhOSUZ+fj4WLlwIp9PptzHLdkADs516PV4x8FdgOFqe7+joQHNzMyYnJ5GYmIi1a9ciLi4OJpMJLoq6v78ft27dwqFDVdiy5V0UFBRgeno62BYb8ng8cul0OnF2/cZ1ZGdnQ6/XC2qmk9fxxXM9PT04d65W9mzcuBHp6WkwGo3yn6nmi9cmJCRgzZocWv8Ix459hWnHNDa9vQkOhyOYAd5wtfkq8vLzyIEBep2BDKhht9vR1taG4uLiALi6ujq0327H5tLNyMnJEXAc7dTU1EvpYkDMOrNz8OABHDlyBLHEUEbGikA6RANsvLCoEJZ2C76/WA+Xbwrf1YehbHMZ1q9fj9DQUIyMjKDmRA2MRO/+A/sxf/58oZMBzJs3T4THg58VFti28hwREYHt27fjzJmzSCFd8D5+LwywIY7g1LenEPGGFiFeFbSmKVQfr8bRo1+iu7sb1dXHKb+xFPVqWc9RazQaER2/5yjZ+ePHjyUd7JCrgMH39f2K+Pg4pKWl4crlK2hvb0dubq6woGV0N2/ehG3CLpHHxC/BA0svTOEGjI7+jtOnT+Pu3Q7s3LkTTU1NcpWWliIqKgo2mw0nT36DyMhIDAw8hYkcX/zhIgoLCyl9k1i6ZAlWZa5CbW0tKnbvBoyQ/52dPyEvL8+fAqaCy2R0dBTn6s7i+eAIos0LJH9ujxt37tzBvn0fktDS0dDQgEWLFiEiPEJENjw8DAcxt2vXB3g+NESKv03lFiVrmBUV2fYLGFBr1PB4PTCbzSJipbK0iliio6JR/v4OfP7FZxS9Hg67C7oQHSorK5CZmYmJiQmhc2xsDDa7TcovKysLScuScPjwYSS9mSQlyMU79GxIekBj4yUqUbtooKbmJLZufU8Aeb2v6ANOlxNFJMSWlhYpm2VLE0Xl69atkzrnfO/du1dKiHMcGxsrOd62bZsINCwsTAJJX5Eu7LCwNxRsoHuI9AfeFx4ejms/XoNzRrxBABRKysrekZcNDZfEgMvlDKA1UImyU17LLfYZ0W7ttiLBnACLxSJCHH4+jAnbBMzUA1xUGUO0xmQ0yVxxURFukN5yKSgGGwRAGaxuvU6PxMWLSXCXsWNHObVcqnUn9XOfFzOdmHKqQW9vLyykkQzSSqgpVDrgQ+tDRMdEkwas0qp7HvXIPDPU0tolys9enS1+XgLgcXuwMmOlPC9fnoqvT5xAVdWnKCkpQWpKCkWvJ3Y0/tomMGlvpdF8qp8RrUZaNPcNo8kobDAAbmK8trW1FRcuXMAnH38k6eTzggUTBIAN8SYenMc9lXukRJuaGlF//rzUdnRMDNV0PBLo4gOG9cD5ZueyT6eS6FjALNj7vfdx79499A/0o7KigtJlJg3MpNWnAPAFg1DuHCkLiMU4ODiIX/r68HRgAFarlYDdoIbkDPR9bkI6Au+h/yw4j8d/JEcuiJQGVF5eLmkIOBe0CoDZ3xgvnMLSs+l9zEzkfEryT+n/fGeHdio3Bx02LM7QML8eWLTMkKItJe8Bf8xAcnJq8CfO/zxe/zfhHIA5AK8bwB9MZJjgprx3pwAAAABJRU5ErkJggg==" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=6" sizes="any" />
+  <link rel="icon" type="image/png" sizes="256x256" href="/icon.png?v=6" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=6" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=6" />
+  <link rel="shortcut icon" href="/favicon.ico?v=6" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png?v=6" />
+
+  <!-- Open Graph / URL Preview Cards -->
   <meta property="og:title" content="IGNITE 2026 — No-Code Startup Hackathon | I&E Cell" />
-  <meta property="og:description" content="It's not a weekend hackathon. It's a startup, built over 20 weeks. Win a ₹1,00,000 grant, founder sessions, and ecosystem visits." />
+  <meta property="og:description"
+    content="It's not a weekend hackathon. It's a startup, built over 20 weeks. Win a ₹1,00,000 grant, founder sessions, and ecosystem visits." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="/images/og-image.png?v=4" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="IGNITE 2026 — E-Cell AIT Pune" />
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="IGNITE 2026 — No-Code Startup Hackathon | I&E Cell" />
+  <meta name="twitter:description"
+    content="It's not a weekend hackathon. It's a startup, built over 20 weeks. Win a ₹1,00,000 grant, founder sessions, and ecosystem visits." />
+  <meta name="twitter:image" content="/images/og-image.png?v=4" />
 
   <!-- Security & Privacy Directives -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta
-    http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://apply.devfolio.co; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss:; frame-src 'self' https: http://localhost:*; object-src 'none'; base-uri 'self';"
-  />
-  
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://apply.devfolio.co; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss:; frame-src 'self' https: http://localhost:*; object-src 'none'; base-uri 'self';" />
+
   <!-- Critical Asset Preloading (all self-hosted) -->
   <link rel="preload" href="/images/hero/hero_poster_v3.jpg" as="image" fetchpriority="high" />
   <link rel="preload" href="/images/bg/cloud.jpg" as="image" fetchpriority="high" />
 
   <!-- Synchronous Intro Phase Check before paint -->
   <script>
-    (function() {
+    (function () {
       try {
         // Clear any old sessionStorage flags that permanently blocked reloads
         sessionStorage.removeItem('recursive:intro:v1');
@@ -41,8 +60,10 @@
         var fv = f ? f[1] : null;
         var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // Skip intro only if explicitly disabled via ?intro=0 or prefers-reduced-motion without override
-        if (fv === '0' || (r && fv !== '1')) {
+        var isMobile = window.innerWidth < 768;
+
+        // Skip intro if on mobile, or disabled via ?intro=0, or prefers-reduced-motion without override
+        if (fv === '0' || (r && fv !== '1') || (isMobile && fv !== '1')) {
           document.documentElement.dataset.intro = 'done';
         } else {
           document.documentElement.dataset.intro = 'playing';
@@ -60,8 +81,10 @@
   <!-- Devfolio SDK -->
   <script defer src="https://apply.devfolio.co/v2/sdk.js"></script>
 </head>
+
 <body>
   <div id="root"></div>
   <script type="module" src="/src/index.tsx"></script>
 </body>
+
 </html>
