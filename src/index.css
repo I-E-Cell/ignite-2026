@@ -108,14 +108,26 @@
   transform: translateY(0) scale(0.98);
 }
 
-html,
-body {
+html {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -124,7 +136,7 @@ body {
 #root {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
+  position: relative;
 }
 
 /* ══════════════════════════════════════════════
