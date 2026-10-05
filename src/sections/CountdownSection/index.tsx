@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FlipClock, type ClockUnit } from "./components/FlipClock";
 
 export const CountdownSection = () => {
-  const targetTime = new Date("2026-11-01T18:29:59Z").getTime();
+  const targetTime = new Date("2026-10-18T18:29:59Z").getTime();
 
   const getUnits = (): ClockUnit[] => {
     const diffSeconds = Math.floor(Math.max(0, targetTime - Date.now()) / 1000);
@@ -96,8 +96,8 @@ export const CountdownSection = () => {
                 <rect x="9.2" y="11.8" width="3.6" height="3.6" rx="1" fill="url(#cdp-cal)" />
               </svg>
 
-              <time className="cd-plaque-date font-medium" dateTime="2026-11-01T23:59:59+05:30">
-                November 1, 2026
+              <time className="cd-plaque-date font-medium" dateTime="2026-10-18T23:59:59+05:30">
+                October 18, 2026
               </time>
             </span>
 
@@ -107,7 +107,7 @@ export const CountdownSection = () => {
 
         {/* Subtitle Details */}
         <p className="cd-plaque-sub mt-2 text-xs md:text-sm font-dm_sans text-[#2d4d29]/80 font-medium">
-          09:00 IST · Army Institute of Technology, Pune · Online Hackathon
+          23:59 IST · Army Institute of Technology, Pune · Online Idea Submission
         </p>
 
         {/* Split-Flap Flip Clock */}

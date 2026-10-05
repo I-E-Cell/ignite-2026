@@ -193,16 +193,18 @@
 }
 
 .sxp-preview-title {
-  font-family: var(--font-bebas), sans-serif;
-  font-size: clamp(3.2rem, 9.2vw, 6rem);
-  font-weight: 700;
+  font-family: var(--font-headingNow), var(--font-bebas), sans-serif;
+  font-size: clamp(1.8rem, min(6.8vw, calc(var(--sxp-win-w) * 0.082)), 4.8rem);
+  font-weight: 800;
   font-style: italic;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #121A12;
   text-align: center;
-  line-height: 0.92;
+  line-height: 0.94;
   margin: 0;
+  max-width: 90%;
+  white-space: nowrap;
   text-shadow: 0 4px 28px rgba(255, 255, 255, 0.85);
 }
 
@@ -543,8 +545,9 @@
   display: block;
 }
 
-/* ── Top Tier: Devfolio, OSEN & XYZ Card Wraps with Radiant Rays ── */
+/* ── Top Tier: Devfolio & Unstop Card Wraps with Radiant Rays ── */
 .sxp-devfolio-card-wrap,
+.sxp-unstop-card-wrap,
 .sxp-osen-card-wrap,
 .sxp-xyz-card-wrap {
   position: relative;
@@ -568,7 +571,7 @@
   transform: scaleX(-1);
 }
 
-/* Positioned on right side of OSEN card, radiating upwards-right */
+/* Positioned on right side of partner card, radiating upwards-right */
 .sxp-rays-right {
   top: -18px;
   right: -12px;
@@ -581,6 +584,26 @@
   border-radius: 0 !important;
   padding: 0 !important;
   text-decoration: none;
+}
+
+.sxp-unstop-card {
+  flex: 0 0 auto !important;
+  width: clamp(215px, 17vw, 260px) !important;
+  height: clamp(56px, 6.2vh, 68px) !important;
+  border-radius: 0 !important;
+  padding: 0 1.25rem !important;
+  text-decoration: none;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sxp-unstop-logo {
+  height: clamp(24px, 2.8vh, 32px);
+  width: auto;
+  max-width: 90%;
+  object-fit: contain;
+  display: block;
 }
 
 .sxp-devfolio-content {
@@ -1025,6 +1048,57 @@
   display: none;
 }
 
+@media (max-width: 1000px) {
+  .sxp-eyebrow {
+    font-size: clamp(0.68rem, 1.4vw, 0.78rem) !important;
+    letter-spacing: 0.18em !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .sxp-heading {
+    font-size: clamp(1.85rem, 4.4vw, 2.45rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: clamp(0.35rem, 0.8vh, 0.6rem) !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .sxp-tier-badge {
+    font-size: clamp(0.62rem, 1.1vw, 0.72rem) !important;
+    letter-spacing: 0.15em !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .sxp-top-tier-row {
+    gap: clamp(14px, 2.2vw, 24px) !important;
+    margin-top: 0.35rem !important;
+  }
+
+  .sxp-devfolio-card,
+  .sxp-unstop-card {
+    width: clamp(210px, 26vw, 255px) !important;
+    height: clamp(56px, 6.8vh, 64px) !important;
+  }
+
+  .sxp-devfolio-logo {
+    height: clamp(20px, 2.6vh, 24px) !important;
+  }
+
+  .sxp-devfolio-tagline {
+    font-size: clamp(0.5rem, 0.7vw, 0.56rem) !important;
+  }
+
+  .sxp-unstop-logo {
+    height: clamp(23px, 3vh, 28px) !important;
+  }
+
+  .sxp-preview-title {
+    font-size: clamp(1.6rem, 5.2vw, 2.9rem) !important;
+    letter-spacing: 0.01em !important;
+    max-width: 86% !important;
+    white-space: nowrap !important;
+  }
+}
+
 @media (max-width: 900px) {
   .sxp-stage {
     --sxp-win-w: min(88vw, 34rem);
@@ -1037,8 +1111,15 @@
 }
 
 @media (max-width: 860px) {
+  .sxp-heading {
+    font-size: clamp(1.75rem, 4.6vw, 2.2rem) !important;
+  }
   .sxp-preview-title {
-    text-shadow: none;
+    font-size: clamp(1.35rem, 4.8vw, 2.35rem) !important;
+    letter-spacing: 0.01em !important;
+    max-width: 86% !important;
+    white-space: nowrap !important;
+    text-shadow: none !important;
   }
 
   .sxp-keyline {
@@ -1257,35 +1338,46 @@
     margin-bottom: 0.05rem !important;
   }
 
+  .sxp-preview-title {
+    font-size: clamp(1.15rem, 5.8vw, 1.85rem) !important;
+    letter-spacing: 0.01em !important;
+    max-width: 86% !important;
+    white-space: nowrap !important;
+    text-shadow: none !important;
+  }
+
   .sxp-eyebrow {
-    font-size: 0.54rem !important;
-    letter-spacing: 0.14em !important;
-    margin-bottom: 0.05rem !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.16em !important;
+    margin-bottom: 0.25rem !important;
     color: #1b381a;
-    font-weight: 600;
+    font-weight: 700 !important;
   }
 
   .sxp-heading {
-    font-size: clamp(1.4rem, 5.2vw, 1.85rem) !important;
-    margin-bottom: 0.05rem !important;
+    font-size: clamp(2rem, 7.2vw, 2.65rem) !important;
+    margin-bottom: 0.55rem !important;
+    font-weight: 800 !important;
   }
 
   .sxp-lede {
-    font-size: 0.72rem !important;
-    line-height: 1.28 !important;
-    max-width: 19rem !important;
-    margin-bottom: 0.15rem !important;
+    font-size: 0.84rem !important;
+    line-height: 1.38 !important;
+    max-width: 22rem !important;
+    margin-bottom: 0.35rem !important;
     color: #263e24;
   }
 
   .sxp-tier-badge {
-    font-size: 0.54rem !important;
-    letter-spacing: 0.12em !important;
-    margin-bottom: 0.04rem !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.14em !important;
+    margin-bottom: 0.45rem !important;
+    font-weight: 700 !important;
+    color: #2d4c29 !important;
   }
 
   .sxp-inner {
-    gap: 0.1rem !important;
+    gap: 0.35rem !important;
     align-items: center !important;
   }
 
@@ -1301,8 +1393,8 @@
   }
 
   .sxp-partner-tier {
-    gap: 0.1rem !important;
-    margin-top: 0.05rem !important;
+    gap: 0.25rem !important;
+    margin-top: 0.25rem !important;
     align-items: center !important;
   }
 
@@ -1311,66 +1403,114 @@
   }
 
   .sxp-community-tier {
-    margin-top: 0.15rem !important;
+    margin-top: 0.35rem !important;
     margin-bottom: 0 !important;
   }
 
-  /* Top tier: Devfolio on top, OSEN + XYZ side-by-side row on mobile */
+  /* Top tier: Devfolio and Unstop stacked cleanly with larger readable logos */
   .sxp-top-tier-row {
     display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    align-items: flex-end !important;
+    flex-direction: column !important;
+    align-items: center !important;
     justify-content: center !important;
-    gap: 6px 8px !important;
-    width: min(94vw, 350px) !important;
-  }
-
-  .sxp-top-tier-row>.sxp-top-card-col:first-child {
-    width: 100% !important;
+    gap: 16px !important;
+    width: min(92vw, 330px) !important;
+    margin-top: 0.4rem !important;
   }
 
   .sxp-top-card-col {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    width: 100% !important;
   }
 
   .sxp-devfolio-card-wrap,
+  .sxp-unstop-card-wrap,
   .sxp-osen-card-wrap,
   .sxp-xyz-card-wrap {
     margin-top: 0 !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
   }
 
-  .sxp-devfolio-rays,
   .sxp-rays {
-    display: none !important;
+    display: block !important;
+    width: 34px !important;
+    height: 34px !important;
+    position: absolute !important;
+  }
+
+  .sxp-rays-left {
+    top: -12px !important;
+    left: -6px !important;
+    transform: scaleX(-1) !important;
+  }
+
+  .sxp-rays-right {
+    top: -12px !important;
+    right: -6px !important;
   }
 
   .sxp-devfolio-card {
     flex: 0 0 auto !important;
-    width: clamp(190px, 55vw, 225px) !important;
-    height: 46px !important;
-    border-radius: 0 !important;
+    width: clamp(240px, 82vw, 300px) !important;
+    height: clamp(60px, 7.8vh, 68px) !important;
+    border-radius: 14px !important;
+    padding: 0 !important;
+    text-decoration: none !important;
   }
 
   .sxp-devfolio-content {
-    padding-inline: 0.5rem !important;
+    padding-inline: 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .sxp-devfolio-logo {
-    height: 16px !important;
+    height: clamp(22px, 3vh, 26px) !important;
     width: auto !important;
   }
 
   .sxp-devfolio-divider {
-    height: 15px !important;
-    margin-inline: 0.32rem !important;
+    height: 24px !important;
+    margin-inline: 0.65rem !important;
+    background: rgba(0, 0, 0, 0.15) !important;
   }
 
   .sxp-devfolio-tagline {
-    font-size: 0.42rem !important;
-    gap: 1px !important;
+    font-size: 0.54rem !important;
+    letter-spacing: 0.16em !important;
+    gap: 2px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+  }
+
+  .sxp-unstop-card {
+    flex: 0 0 auto !important;
+    width: clamp(240px, 82vw, 300px) !important;
+    height: clamp(60px, 7.8vh, 68px) !important;
+    border-radius: 14px !important;
+    padding: 0 1.2rem !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .sxp-unstop-logo {
+    height: clamp(24px, 3.2vh, 28px) !important;
+    max-height: 30px !important;
+    width: auto !important;
+    max-width: 85% !important;
+    object-fit: contain !important;
+    display: block !important;
   }
 
   .sxp-osen-card {
@@ -1550,11 +1690,13 @@
   }
 
   .sxp-unrevealed-note {
-    font-size: 0.64rem !important;
-    margin-top: 0.15rem !important;
+    font-size: 0.82rem !important;
+    margin-top: 0.85rem !important;
     margin-bottom: 0 !important;
     text-align: center !important;
-    padding-inline: 0.6rem !important;
+    padding-inline: 0.8rem !important;
+    color: #244222 !important;
+    font-weight: 500 !important;
   }
 
   .sxp-cta-wrap {

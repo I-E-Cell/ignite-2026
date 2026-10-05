@@ -265,45 +265,23 @@ export const SponsorsSection = () => {
                     </div>
                   </div>
 
-                  {/* OSEN */}
+                  {/* Unstop */}
                   <div className="sxp-top-card-col">
-                    <span className="sxp-tier-badge">SPONSOR</span>
-                    <div className="sxp-osen-card-wrap">
-                      <div
-                        className="sxp-partner-card sxp-float-card-alt sxp-osen-card"
-                        title="OSEN"
-                        role="img"
-                        aria-label="OSEN"
-                      >
-                        <img
-                          src="/images/sponsors/OSEN.png"
-                          alt="OSEN"
-                          className="sxp-partner-logo sxp-osen-logo"
-                          width={200}
-                          height={54}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* .xyz */}
-                  <div className="sxp-top-card-col">
-                    <span className="sxp-tier-badge">DOMAIN SPONSOR</span>
-                    <div className="sxp-xyz-card-wrap">
+                    <span className="sxp-tier-badge">POWERED BY</span>
+                    <div className="sxp-unstop-card-wrap">
                       <a
-                        href="https://gen.xyz"
+                        href="https://unstop.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="sxp-partner-card sxp-float-card sxp-xyz-card"
-                        title=".xyz"
-                        aria-label=".xyz"
+                        className="sxp-partner-card sxp-float-card sxp-unstop-card"
+                        title="Unstop"
                       >
                         <img
-                          src="/images/sponsors/xyz-logo-color.png"
-                          alt=".xyz"
-                          className="sxp-partner-logo sxp-xyz-logo"
-                          width={301}
-                          height={176}
+                          src="/images/sponsors/unstop-logo.svg"
+                          alt="Unstop"
+                          className="sxp-partner-logo sxp-unstop-logo"
+                          width={200}
+                          height={54}
                         />
                       </a>
                       <img
@@ -318,55 +296,8 @@ export const SponsorsSection = () => {
                   </div>
                 </div>
 
-                {/* Community Tier */}
-                <div className="sxp-partner-tier sxp-community-tier">
-                  <span className="sxp-tier-badge">COMMUNITY PARTNERS</span>
-                  <div className="sxp-community-grid">
-                    <div className="sxp-community-col">
-                      <a
-                        href="https://reactkolkata.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="sxp-partner-card sxp-float-card sxp-react-kolkata-card"
-                        title="React Kolkata"
-                        aria-label="React Kolkata"
-                      >
-                        <img
-                          src="/images/sponsors/react-kolkata-logo-dark.png"
-                          alt="React Kolkata"
-                          className="sxp-partner-logo sxp-react-kolkata-logo"
-                          width={216}
-                          height={69}
-                        />
-                      </a>
-                      <div
-                        className="sxp-partner-card sxp-float-card-alt sxp-innofusion-card"
-                        title="Innofusion"
-                        role="img"
-                        aria-label="Innofusion"
-                      >
-                        <div className="sxp-innofusion-content">
-                          <img
-                            src="/images/sponsors/innofusion-3.png"
-                            alt="Innofusion"
-                            className="sxp-innofusion-logo"
-                            width={40}
-                            height={40}
-                          />
-                          <span className="sxp-innofusion-brand">Innofusion</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Media Tier */}
-                <div className="sxp-partner-tier sxp-media-tier">
-                  <span className="sxp-tier-badge">MEDIA PARTNERS</span>
-                </div>
-
                 <span className="sxp-unrevealed-note">
-                  More community partners & sponsors revealing soon.
+                  More sponsors and partners revealing soon.
                 </span>
               </div>
 

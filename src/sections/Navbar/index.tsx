@@ -236,6 +236,12 @@ export const Navbar = () => {
           box-sizing: border-box;
         }
 
+        .nav-desktop-links {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+        }
+
         .nav-toggle {
           display: none;
           place-items: center;
@@ -291,6 +297,9 @@ export const Navbar = () => {
         }
 
         @media (max-width: 860px) {
+          .nav-desktop-links {
+            display: none !important;
+          }
           .nav-root {
             top: clamp(0.5rem, 1.5vh, 0.85rem);
             padding-inline: clamp(0.5rem, 2vw, 0.85rem);
@@ -300,7 +309,7 @@ export const Navbar = () => {
             justify-content: space-between;
           }
           .nav-toggle {
-            display: grid;
+            display: grid !important;
             width: 2.25rem;
             height: 2.25rem;
           }
