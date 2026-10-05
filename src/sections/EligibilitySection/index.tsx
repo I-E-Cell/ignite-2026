@@ -7,7 +7,6 @@ const criteria = [
   {
     icon: UserCheck,
     badge: "Academic Year",
-    display: "FE/SE/TE",
     title: "FE / SE / TE — Any Year",
     description: "First-year (FE), second-year (SE), and third-year (TE) students from any undergraduate program are eligible to participate.",
     highlightText: "Open to all undergraduate years",
@@ -15,7 +14,6 @@ const criteria = [
   {
     icon: Users2,
     badge: "Team Formation",
-    display: "1–4",
     title: "Solo or Teams of 2–4",
     description: "Apply as an individual visionary or assemble a multidisciplinary crew of up to four students to execute faster.",
     highlightText: "1 to 4 members per squad",
@@ -23,7 +21,6 @@ const criteria = [
   {
     icon: Shuffle,
     badge: "Cross-Disciplinary",
-    display: "Mixed",
     title: "Mixed Branches Welcome",
     description: "You don't need a team of only developers. Mix computer science, design, business, mechanical, or electrical backgrounds.",
     highlightText: "Diversity strengthens startups",
@@ -31,7 +28,6 @@ const criteria = [
   {
     icon: Lock,
     badge: "Focus Rule",
-    display: "1",
     title: "One Team Per Student",
     description: "Each participant can only be registered with one team to ensure full devotion, integrity, and focus to your venture.",
     highlightText: "100% commitment to 1 idea",
@@ -55,31 +51,27 @@ const glassCardStyle = {
 const CardBody = memo(({ item }: { item: Criterion }) => {
   const Icon = item.icon;
   return (
-    <div className="relative h-full w-full min-w-0 flex flex-1 flex-col justify-between gap-6 lg:gap-0 text-left text-[#151515] break-words">
+    <div className="relative h-full w-full min-w-0 flex flex-1 flex-col justify-between text-left text-[#151515] break-words">
       <div>
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="w-9 h-9 rounded-lg bg-black/5 border border-black/10 flex items-center justify-center shrink-0">
-            <Icon className="w-[18px] h-[18px]" />
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-black/[0.05] border border-black/10 flex items-center justify-center shrink-0 shadow-xs">
+            <Icon className="w-5 h-5 text-neutral-800" strokeWidth={1.8} />
           </div>
-          <span className="text-[10px] lg:text-[9px] font-semibold font-geist_mono uppercase tracking-wider px-2 py-1 rounded-full bg-white/40 border border-black/15 whitespace-nowrap">
+          <span className="text-[10px] lg:text-[9.5px] font-semibold font-geist_mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/60 border border-black/15 text-neutral-700 whitespace-nowrap shadow-2xs">
             {item.badge}
           </span>
         </div>
-        <div className="font-headingNow font-bold tracking-[-0.03em] leading-none text-[2rem] lg:text-[1.9rem] whitespace-nowrap max-w-full overflow-hidden">
-          {item.display}
-        </div>
-      </div>
-      <div>
-        <h3 className="text-[20px] lg:text-[17px] leading-tight font-bold font-headingNow tracking-tight mb-1.5">
+        <h3 className="text-[19px] lg:text-[17px] leading-snug font-bold font-headingNow tracking-tight text-[#141412] mb-2">
           {item.title}
         </h3>
-        <p className="text-[14px] lg:text-[11.5px] font-dm_sans text-[#30352F] leading-relaxed lg:leading-snug">
+        <p className="text-[14px] lg:text-[12px] font-dm_sans text-[#30352F] leading-relaxed">
           {item.description}
         </p>
-        <div className="pt-2 mt-2.5 border-t border-black/20 flex items-center gap-1.5 text-[11px] lg:text-[10px] font-semibold font-geist_mono text-[#252B24]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#151515] shrink-0" />
-          <span>{item.highlightText}</span>
-        </div>
+      </div>
+
+      <div className="pt-3 border-t border-black/15 flex items-center gap-2 text-[11px] lg:text-[10.5px] font-semibold font-geist_mono text-[#252B24]">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#5C8C3A] shrink-0" />
+        <span className="tracking-tight">{item.highlightText}</span>
       </div>
     </div>
   );
@@ -179,7 +171,7 @@ export const EligibilitySection = () => {
         {isDesktop ? (
           <motion.div
             ref={rowRef}
-            className="relative w-full h-[460px]"
+            className="relative w-full h-[420px]"
             onViewportEnter={() => setOpen(true)}
             viewport={{ once: true, amount: 0.6 }}
             onMouseEnter={() => setOpen(true)}
@@ -201,9 +193,9 @@ export const EligibilitySection = () => {
                     left: "50%",
                     top: "50%",
                     width: cardWidth || "calc((100% - 72px) / 4)",
-                    height: 390,
+                    height: 350,
                     marginLeft: cardWidth ? -cardWidth / 2 : "calc((72px - 100%) / 8)",
-                    marginTop: -195,
+                    marginTop: -175,
                     borderRadius: 24,
                     padding: cardWidth >= 240 ? 22 : 18,
                     transformOrigin: "50% 50%",
@@ -231,7 +223,7 @@ export const EligibilitySection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
-                className="flex min-w-0 flex-col rounded-[24px] p-5 sm:p-6 min-h-[300px]"
+                className="flex min-w-0 flex-col rounded-[24px] p-5 sm:p-6 min-h-[240px]"
                 style={glassCardStyle}
               >
                 <CardBody item={item} />
