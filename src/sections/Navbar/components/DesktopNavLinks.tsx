@@ -17,7 +17,7 @@ export const DesktopNavLinks = ({ isDark = false }: DesktopNavLinksProps) => {
   }`;
 
   return (
-    <div className="items-center box-border caret-transparent gap-x-1 hidden outline-none px-1 md:flex">
+    <div className="nav-desktop-links items-center box-border caret-transparent gap-x-1 outline-none px-1">
       <a href={getAnchor("timeline")} className={linkClass}>
         Timeline
       </a>
