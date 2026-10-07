@@ -515,10 +515,10 @@ export const IntroOverlay: React.FC = () => {
 
               <h1 className="intro-welcome-title" aria-label="Hi There, Founders!">
                 <span className="intro-welcome-word">
-                  <span className="intro-welcome-word-i text-[#FBFAF8]">Hi</span>
+                  <span className="intro-welcome-word-i text-[#141412]">Hi</span>
                 </span>
                 <span className="intro-welcome-word">
-                  <span className="intro-welcome-word-i text-[#FBFAF8]">There,</span>
+                  <span className="intro-welcome-word-i text-[#141412]">There,</span>
                 </span>
                 <span className="intro-welcome-word">
                   <span className="intro-welcome-word-i intro-founders-highlight">Founders!</span>
@@ -601,7 +601,7 @@ export const IntroOverlay: React.FC = () => {
           min-height: 100dvh;
           z-index: 9999;
           overflow: hidden;
-          background: #0a140c;
+          background: #ccd1b9;
           opacity: 1;
           pointer-events: auto;
           -webkit-tap-highlight-color: transparent;
@@ -618,7 +618,7 @@ export const IntroOverlay: React.FC = () => {
           min-height: 100vh;
           min-height: 100dvh;
           overflow: hidden;
-          background: #0a140c;
+          background: #ccd1b9;
           opacity: 1;
           contain: layout paint style;
         }
@@ -630,7 +630,7 @@ export const IntroOverlay: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: radial-gradient(circle at 50% 50%, #000000 0%, #000000 40%, #1A3413 65%, #0B1909 85%, #000000 100%);
+          background: transparent;
           pointer-events: none;
           overflow: hidden;
           will-change: opacity;
@@ -646,6 +646,7 @@ export const IntroOverlay: React.FC = () => {
           width: 100%;
           max-width: 760px;
           padding: 0 1.5rem;
+          transform: translateY(-50px);
         }
 
         .intro-artifact-mark {
@@ -669,8 +670,8 @@ export const IntroOverlay: React.FC = () => {
           height: clamp(38px, 6vh, 48px);
           width: auto;
           display: block;
-          color: #FBFAF8;
-          filter: drop-shadow(0 2px 14px rgba(143, 196, 90, 0.4));
+          color: #141412;
+          filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.55));
         }
 
         .intro-welcome-block {
@@ -692,7 +693,7 @@ export const IntroOverlay: React.FC = () => {
           font-weight: 600;
           letter-spacing: clamp(0.18em, 0.4vw, 0.26em);
           text-transform: uppercase;
-          color: #A8A69B;
+          color: #3f4a3a;
           margin-bottom: 0.75rem;
         }
 
@@ -713,8 +714,8 @@ export const IntroOverlay: React.FC = () => {
           line-height: 1.08;
           letter-spacing: -0.03em;
           text-transform: none;
-          color: #FBFAF8;
-          text-shadow: 0 4px 28px rgba(0, 0, 0, 0.8);
+          color: #141412;
+          text-shadow: 0 2px 14px rgba(255, 255, 255, 0.6);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -740,10 +741,10 @@ export const IntroOverlay: React.FC = () => {
         }
 
         .intro-founders-highlight {
-          background: linear-gradient(135deg, #CEF585 0%, #8FC45A 45%, #5C8C3A 100%);
+          background: linear-gradient(135deg, #8FC45A 0%, #5C8C3A 45%, #2F5527 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          filter: drop-shadow(0 0 24px rgba(143, 196, 90, 0.45));
+          filter: drop-shadow(0 1px 10px rgba(255, 255, 255, 0.55));
           display: inline-block;
         }
 
@@ -759,15 +760,15 @@ export const IntroOverlay: React.FC = () => {
           font-weight: 600;
           letter-spacing: clamp(0.18em, 0.4vw, 0.26em);
           text-transform: uppercase;
-          color: rgba(251, 250, 248, 0.8);
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.09);
+          color: #2d4d29;
+          background: rgba(20, 20, 18, 0.06);
+          border: 1px solid rgba(20, 20, 18, 0.14);
           border-radius: 4px;
           padding: 0.35rem 0.85rem;
           display: inline-flex;
           align-items: center;
           gap: 0.45rem;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2px 12px rgba(20, 20, 18, 0.08);
         }
 
         .intro-sub-bullet {
@@ -778,7 +779,7 @@ export const IntroOverlay: React.FC = () => {
           position: absolute;
           inset: 0;
           overflow: hidden;
-          background-color: #0b150d;
+          background-color: transparent;
         }
 
         .intro-media {
@@ -821,9 +822,7 @@ export const IntroOverlay: React.FC = () => {
           position: absolute;
           inset: 0;
           pointer-events: none;
-          background:
-            radial-gradient(120% 90% at 50% 116%, rgba(6,14,9,0) 32%, rgba(6,14,9,0.8) 76%, rgba(4,10,7,0.96) 100%),
-            linear-gradient(180deg, rgba(6,13,9,0.7) 0%, rgba(6,13,9,0.24) 46%, rgba(6,13,9,0.48) 100%);
+          background: transparent;
         }
 
         .intro-bloom {
@@ -880,8 +879,8 @@ export const IntroOverlay: React.FC = () => {
           font-size: clamp(1.8rem, 4.2vw, 3.6rem);
           line-height: 1.15;
           letter-spacing: -0.025em;
-          color: #eef3e8;
-          text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+          color: #141412;
+          text-shadow: 0 1px 12px rgba(255, 255, 255, 0.65);
         }
 
         .intro-word {
@@ -900,8 +899,8 @@ export const IntroOverlay: React.FC = () => {
         }
 
         .intro-word.is-accent .intro-word-i {
-          color: #a6e06a;
-          text-shadow: 0 0 16px rgba(143, 196, 90, 0.45);
+          color: #2F5527;
+          text-shadow: 0 1px 8px rgba(255, 255, 255, 0.7);
         }
 
         @media (max-width: 767px) {
@@ -927,7 +926,7 @@ export const IntroOverlay: React.FC = () => {
           bottom: 0;
           height: 2px;
           z-index: 1001;
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(20, 20, 18, 0.14);
         }
 
         .intro-progress-fill {
@@ -935,7 +934,7 @@ export const IntroOverlay: React.FC = () => {
           width: 100%;
           transform: scaleX(0);
           transform-origin: left center;
-          background: linear-gradient(90deg, #5c8c3a, #a6e06a);
+          background: linear-gradient(90deg, #2f5527, #8fc45a);
         }
 
         .intro-skip-wrap {
