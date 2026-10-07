@@ -10,7 +10,7 @@ const steps = [
     title: "Idea Submission",
     timeline: "12–18 Oct · Online Submission",
     description:
-      "Submit your problem statement, early target audience, and initial hypothesis between October 12 and 18. No working code required — just clear problem articulation, domain insight, and conviction. Already have a prototype or MVP? Submitting a prototype, MVP, or anything extra along with it will get you extra marks.",
+      "Submit your problem statement, early target audience, and initial hypothesis between October 12 and 18 — all you need is clear problem articulation, domain insight, and conviction. Already have a prototype or MVP? Submitting a prototype, MVP, or anything extra along with it will get you extra marks.",
     tags: ["12–18 Oct", "Problem Statement", "Target Users", "No Code Needed"],
     highlight: false,
   },
@@ -21,8 +21,8 @@ const steps = [
     title: "2 Mentor Rounds",
     timeline: "12–18 Oct · Mentorship",
     description:
-      "Between October 12 and 18, teams participate in 2 intensive mentorship rounds with seasoned founders, tech architects, and operators to pressure-test problem-solution fit and sharpen venture viability.",
-    tags: ["12–18 Oct", "2 Mentor Rounds", "Founder Guidance", "Model Validation"],
+      "Between October 12 and 18, teams get 2 hands-on mentorship rounds to pressure-test their idea, refine problem-solution fit, and strengthen viability.",
+    tags: ["12–18 Oct", "2 Mentor Rounds", "Mentor Feedback", "Model Validation"],
     highlight: false,
   },
   {
@@ -32,7 +32,7 @@ const steps = [
     title: "Offline Round & Shortlisting",
     timeline: "25 Oct · Round 1 Finale",
     description:
-      "The offline evaluation round takes place on October 25th to conclude Round 1. Teams present in person, after which an esteemed jury shortlists the Top 10 most promising ventures to enter the flagship IGNITE Incubation cohort.",
+      "The offline evaluation round takes place on October 25th to conclude Round 1. Teams present in person, after which a jury shortlists the Top 10 most promising ventures to enter the IGNITE Incubation cohort.",
     tags: ["25 Oct", "Offline Round", "Round 1 Finale", "Top 10 Selection"],
     highlight: false,
   },
@@ -54,8 +54,8 @@ const steps = [
     title: "Final Pitch / Demo Day",
     timeline: "Grand Finale",
     description:
-      "Present working traction, active users, and company milestones before institutional venture funds, angels, and industry leaders to win from the ₹1,00,000 grant pool.",
-    tags: ["₹1,00,000 Grant", "Demo Day", "VC & Angel Pitch"],
+      "Present your working traction, active users, and milestones in front of investors to compete for the ₹1,00,000 grant pool.",
+    tags: ["₹1,00,000 Grant", "Demo Day", "Investor Pitch"],
     highlight: true,
   },
 ];
