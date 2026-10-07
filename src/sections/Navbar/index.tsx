@@ -404,6 +404,7 @@ export const Navbar = () => {
         .limelq-list {
           display: flex;
           flex-direction: column;
+          align-items: center;
           gap: clamp(0.55rem, 1.4vh, 0.8rem);
           width: 100%;
           margin-block: auto;
@@ -412,10 +413,10 @@ export const Navbar = () => {
         .limelq-item {
           display: flex;
           align-items: center;
-          width: 100%;
+          width: min(88%, 30rem);
           padding: clamp(0.7rem, 2vh, 1rem) clamp(0.9rem, 3.5vw, 1.25rem);
           border: 1px solid rgba(18, 26, 18, 0.14);
-          border-radius: 16px;
+          border-radius: 10px;
           background: rgba(255, 255, 255, 0.55);
           box-shadow:
             0 8px 20px rgba(18, 26, 18, 0.07),

@@ -453,7 +453,7 @@ export const RegistrationPage = () => {
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
       "Ignite 2026 — Round 1 Kickoff Week (12–18 Oct)"
     )}&dates=20261012/20261019&details=${encodeURIComponent(
-      `Ignite 2026 No-Code Startup Accelerator — Round 1 kickoff week (12–18 Oct 2026): submit your problem statement, early target audience and initial hypothesis. No working code required.\nOffline Round & Top 10 shortlisting: 25 Oct 2026.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
+      `Ignite 2026 No-Code Startup Accelerator — Round 1 kickoff week (12–18 Oct 2026): submit your problem statement, early target audience and initial hypothesis.\nOffline Round & Top 10 shortlisting: 25 Oct 2026.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
     )}&location=${encodeURIComponent("Army Institute of Technology, Pune / Virtual Stage")}`;
 
     return (
