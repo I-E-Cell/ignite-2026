@@ -367,7 +367,7 @@ const InteractiveDomainCard: React.FC<{ domain: DomainItem }> = ({ domain }) => 
           transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
         },
       }}
-      className="relative rounded-2xl group cursor-pointer select-none active:scale-[0.98] transition-transform duration-200"
+      className="relative h-full rounded-2xl group cursor-pointer select-none active:scale-[0.98] transition-transform duration-200"
     >
       <motion.div
         style={{
@@ -376,7 +376,7 @@ const InteractiveDomainCard: React.FC<{ domain: DomainItem }> = ({ domain }) => 
           transformStyle: "preserve-3d",
         }}
         className={cn(
-          "relative flex flex-col justify-between rounded-2xl p-6 sm:p-7 min-h-[350px] sm:min-h-[370px] overflow-hidden",
+          "relative flex flex-col justify-between rounded-2xl p-6 sm:p-7 min-h-[350px] sm:min-h-[370px] h-full overflow-hidden",
           "bg-gradient-to-b from-[#111913]/90 via-[#0a110d]/95 to-[#060907]/98",
           "border border-white/[0.08] transition-colors duration-300",
           "group-hover:border-white/[0.22]"
