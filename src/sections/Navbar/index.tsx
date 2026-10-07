@@ -404,6 +404,7 @@ export const Navbar = () => {
         .limelq-list {
           display: flex;
           flex-direction: column;
+          gap: clamp(0.55rem, 1.4vh, 0.8rem);
           width: 100%;
           margin-block: auto;
         }
@@ -412,34 +413,48 @@ export const Navbar = () => {
           display: flex;
           align-items: center;
           width: 100%;
-          padding-block: clamp(0.6rem, 1.8vh, 0.95rem);
-          border-bottom: 1px solid rgba(18, 26, 18, 0.2);
+          padding: clamp(0.7rem, 2vh, 1rem) clamp(0.9rem, 3.5vw, 1.25rem);
+          border: 1px solid rgba(18, 26, 18, 0.14);
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.55);
+          box-shadow:
+            0 8px 20px rgba(18, 26, 18, 0.07),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
           text-decoration: none;
           color: #121A12;
-          transition: transform 180ms var(--ease-out), color 180ms ease;
-        }
-        .limelq-item:first-child {
-          border-top: 1px solid rgba(18, 26, 18, 0.2);
+          box-sizing: border-box;
+          transition: transform 180ms var(--ease-out), color 180ms ease,
+                      background-color 180ms ease, border-color 180ms ease,
+                      box-shadow 180ms ease;
         }
         .limelq-item:hover,
         .limelq-item:active {
           transform: translateX(6px);
           color: #2D5824;
+          background: rgba(255, 255, 255, 0.88);
+          border-color: rgba(45, 88, 36, 0.45);
+          box-shadow:
+            0 12px 26px rgba(18, 26, 18, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
         .limelq-bullet {
           display: inline-block;
-          width: 5px;
-          height: 5px;
+          width: 7px;
+          height: 7px;
+          border-radius: 3px;
           background: #121A12;
           margin-right: clamp(0.75rem, 2.5vw, 1.1rem);
           flex-shrink: 0;
-          transition: background-color 180ms ease, transform 180ms ease;
+          transition: background-color 180ms ease, transform 180ms ease, border-radius 180ms ease;
         }
         .limelq-item:hover .limelq-bullet,
         .limelq-item:active .limelq-bullet {
           background: #2D5824;
           transform: scale(1.3);
+          border-radius: 50%;
         }
 
         .limelq-text {

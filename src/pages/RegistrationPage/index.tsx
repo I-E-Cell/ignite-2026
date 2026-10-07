@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { triggerConfetti } from "@/utils/confetti";
 import { submitRegistration } from "@/lib/supabase";
-import { detectVideoPlatform, isSafeEmbedUrl } from "@/utils/embed";
+import { detectVideoPlatform, isSafeEmbedUrl, normalizeUrl } from "@/utils/embed";
 
 interface TeamMemberData {
   name: string;
@@ -207,7 +207,7 @@ export const RegistrationPage = () => {
         errs.leadPhone = "Please enter a valid 10-digit mobile number";
       }
       if (formData.leadSocial?.trim() && !isSafeEmbedUrl(formData.leadSocial)) {
-        errs.leadSocial = "Please enter a valid profile URL (http or https)";
+        errs.leadSocial = "Please enter a valid profile URL";
       }
     }
 
@@ -258,12 +258,12 @@ export const RegistrationPage = () => {
         errs.tools = "Please enter at least 1 tool or technology in your stack";
       }
       if (formData.projectLink?.trim() && !isSafeEmbedUrl(formData.projectLink)) {
-        errs.projectLink = "Please enter a valid prototype URL (http or https)";
+        errs.projectLink = "Please enter a valid prototype URL";
       }
       if (!formData.videoLink?.trim()) {
         errs.videoLink = "Pitch / Walkthrough video link is compulsory";
       } else if (!isSafeEmbedUrl(formData.videoLink)) {
-        errs.videoLink = "Please enter a valid video URL (http or https)";
+        errs.videoLink = "Please enter a valid video URL";
       }
       if (!formData.agreedToTerms) {
         errs.agreedToTerms = "You must agree to the Code of Conduct & IP terms";
@@ -441,12 +441,19 @@ export const RegistrationPage = () => {
     }
   };
 
+  // Auto-prefix https:// when leaving a link field, so typing the protocol is never required
+  const normalizeUrlField = (value: string): string => {
+    const v = (value || "").trim();
+    if (!v) return "";
+    return normalizeUrl(v);
+  };
+
   // ── Success State Screen ──
   if (isSubmitted) {
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      "Ignite 2026: 20-Week Accelerator Kickoff"
-    )}&dates=20260415T133000Z/20260415T153000Z&details=${encodeURIComponent(
-      `Ignite 2026 No-Code Startup Accelerator Kickoff.\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
+      "Ignite 2026 — Round 1 Kickoff Week (12–18 Oct)"
+    )}&dates=20261012/20261019&details=${encodeURIComponent(
+      `Ignite 2026 No-Code Startup Accelerator — Round 1 kickoff week (12–18 Oct 2026): submit your problem statement, early target audience and initial hypothesis. No working code required.\nOffline Round & Top 10 shortlisting: 25 Oct 2026.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
     )}&location=${encodeURIComponent("Army Institute of Technology, Pune / Virtual Stage")}`;
 
     return (
@@ -990,10 +997,15 @@ export const RegistrationPage = () => {
                     LinkedIn / Portfolio URL (Optional)
                   </label>
                   <input
-                    type="url"
-                    placeholder="https://linkedin.com/in/username"
+                    type="text"
+                    inputMode="url"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    placeholder="linkedin.com/in/username (https:// optional)"
                     value={formData.leadSocial}
                     onChange={(e) => setFormData({ ...formData, leadSocial: e.target.value })}
+                    onBlur={(e) => setFormData({ ...formData, leadSocial: normalizeUrlField(e.target.value) })}
                     className="w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
                   />
                   {errors.leadSocial && (
@@ -1373,8 +1385,12 @@ export const RegistrationPage = () => {
                       <Globe className="w-4 h-4" />
                     </div>
                     <input
-                      type="url"
-                      placeholder="https://my-startup.framer.app or https://myproject.bubbleapps.io"
+                      type="text"
+                      inputMode="url"
+                      autoCapitalize="off"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      placeholder="my-startup.framer.app or myproject.bubbleapps.io"
                       value={formData.projectLink}
                       onChange={(e) =>
                         setFormData({
@@ -1383,6 +1399,14 @@ export const RegistrationPage = () => {
                           prototypeLink: e.target.value,
                         })
                       }
+                      onBlur={(e) => {
+                        const normalized = normalizeUrlField(e.target.value);
+                        setFormData({
+                          ...formData,
+                          projectLink: normalized,
+                          prototypeLink: normalized,
+                        });
+                      }}
                       className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
                     />
                   </div>
@@ -1391,6 +1415,9 @@ export const RegistrationPage = () => {
                   )}
                   <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
                     💡 An interactive embed frame of this project will be showcased on the official Ignite 2026 Showcase page so evaluators and attendees can test it live.
+                    <span className="block mt-1 text-neutral-400">
+                      No need to type https:// — we add it automatically when you move on.
+                    </span>
                   </p>
                 </div>
 
@@ -1409,14 +1436,21 @@ export const RegistrationPage = () => {
                       <Video className="w-4 h-4" />
                     </div>
                     <input
-                      type="url"
+                      type="text"
+                      inputMode="url"
+                      autoCapitalize="off"
+                      autoCorrect="off"
+                      spellCheck={false}
                       required
-                      placeholder="https://youtu.be/... or https://drive.google.com/file/d/..."
+                      placeholder="youtu.be/... or drive.google.com/file/d/..."
                       value={formData.videoLink}
                       onChange={(e) => {
                         setFormData({ ...formData, videoLink: e.target.value });
                         if (errors.videoLink) setErrors({ ...errors, videoLink: "" });
                       }}
+                      onBlur={(e) =>
+                        setFormData({ ...formData, videoLink: normalizeUrlField(e.target.value) })
+                      }
                       className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 ${
                         errors.videoLink
                           ? "border-rose-400 focus:ring-rose-500/20"
