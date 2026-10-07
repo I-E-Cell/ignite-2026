@@ -29,14 +29,14 @@ export const HeroActions = () => {
           flex-direction: row;
           justify-content: center;
           align-items: center;
-          gap: 8px;
-          padding: 11px 24px;
+          gap: 10px;
+          padding: 16px 38px;
           border-radius: 50px;
           font-family: 'Inter', system-ui, sans-serif;
           font-style: normal;
-          font-weight: 400;
-          font-size: 13px;
-          line-height: 18px;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 22px;
           text-decoration: none;
           white-space: nowrap;
           cursor: pointer;
@@ -68,11 +68,11 @@ export const HeroActions = () => {
 
         .pill-btn-primary .dot {
           display: inline-block;
-          width: 8px;
-          height: 8px;
+          width: 9px;
+          height: 9px;
           border-radius: 50%;
           background: #8FC45A;
-          box-shadow: 0 0 7px #8FC45A;
+          box-shadow: 0 0 8px #8FC45A;
         }
 
         @media (max-width: 600px) {

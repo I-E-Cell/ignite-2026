@@ -10,7 +10,7 @@ const steps = [
     title: "Idea Submission",
     timeline: "12–18 Oct · Online Submission",
     description:
-      "Submit your problem statement, early target audience, and initial hypothesis between October 12 and 18. No working code required — just clear problem articulation, domain insight, and conviction.",
+      "Submit your problem statement, early target audience, and initial hypothesis between October 12 and 18. No working code required — just clear problem articulation, domain insight, and conviction. Already have a prototype or MVP? Submitting a prototype, MVP, or anything extra along with it will get you extra marks.",
     tags: ["12–18 Oct", "Problem Statement", "Target Users", "No Code Needed"],
     highlight: false,
   },
