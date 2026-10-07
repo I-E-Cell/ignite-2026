@@ -260,7 +260,9 @@ export const RegistrationPage = () => {
       if (formData.projectLink?.trim() && !isSafeEmbedUrl(formData.projectLink)) {
         errs.projectLink = "Please enter a valid prototype URL (http or https)";
       }
-      if (formData.videoLink?.trim() && !isSafeEmbedUrl(formData.videoLink)) {
+      if (!formData.videoLink?.trim()) {
+        errs.videoLink = "Pitch / Walkthrough video link is compulsory";
+      } else if (!isSafeEmbedUrl(formData.videoLink)) {
         errs.videoLink = "Please enter a valid video URL (http or https)";
       }
       if (!formData.agreedToTerms) {
@@ -1396,10 +1398,10 @@ export const RegistrationPage = () => {
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
                     <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
-                      Pitch / Walkthrough Video Link
+                      Pitch / Walkthrough Video Link <span className="text-rose-500">*</span>
                     </label>
-                    <span className="text-[11px] font-medium text-neutral-500">
-                      YouTube or Google Drive
+                    <span className="text-[11px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
+                      Compulsory
                     </span>
                   </div>
                   <div className="relative">
@@ -1408,10 +1410,18 @@ export const RegistrationPage = () => {
                     </div>
                     <input
                       type="url"
+                      required
                       placeholder="https://youtu.be/... or https://drive.google.com/file/d/..."
                       value={formData.videoLink}
-                      onChange={(e) => setFormData({ ...formData, videoLink: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
+                      onChange={(e) => {
+                        setFormData({ ...formData, videoLink: e.target.value });
+                        if (errors.videoLink) setErrors({ ...errors, videoLink: "" });
+                      }}
+                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 ${
+                        errors.videoLink
+                          ? "border-rose-400 focus:ring-rose-500/20"
+                          : "border-black/15 focus:ring-[#5C8C3A]"
+                      }`}
                     />
                   </div>
                   {errors.videoLink && (
@@ -1443,7 +1453,7 @@ export const RegistrationPage = () => {
                   )}
                   {!formData.videoLink && (
                     <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
-                      Share a 2-minute elevator pitch or product demonstration. This video player will be embedded directly in your project showcase card.
+                      Compulsory: Share a 2-minute elevator pitch or product demonstration (YouTube or Google Drive). This player will be embedded directly in your project showcase card.
                     </p>
                   )}
                 </div>
