@@ -98,11 +98,11 @@ export const Navbar = () => {
       <nav className="nav-root">
         <div className="nav-glass-container">
           <div
-            className={`relative isolate overflow-hidden select-none pointer-events-auto w-full nav-pill-glass ${
+            className={`relative isolate overflow-hidden select-none pointer-events-auto nav-pill-glass ${
               isDarkNavbar ? "is-dark" : ""
             }`}
             style={{
-              borderRadius: "4px",
+              borderRadius: "9999px",
               background: isDarkNavbar
                 ? "rgba(14, 18, 14, 0.78)"
                 : "rgba(255, 255, 255, 0.42)",
@@ -111,12 +111,9 @@ export const Navbar = () => {
               boxShadow: isDarkNavbar
                 ? "0 14px 44px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.15), inset 0 -1px 2px rgba(143, 196, 90, 0.08)"
                 : "0 14px 44px rgba(14, 30, 16, 0.24), inset 0 1px 1px rgba(255, 255, 255, 0.7), inset 0 -1px 2px rgba(47, 85, 39, 0.08)",
-              borderTop: isDarkNavbar
+              border: isDarkNavbar
                 ? "1px solid rgba(255, 255, 255, 0.14)"
-                : "1px solid rgba(255, 255, 255, 0.7)",
-              borderBottom: isDarkNavbar
-                ? "1px solid rgba(143, 196, 90, 0.12)"
-                : "1px solid rgba(47, 85, 39, 0.06)",
+                : "1px solid rgba(255, 255, 255, 0.65)",
               transition:
                 "background-color 350ms cubic-bezier(0.23, 1, 0.32, 1), border-color 350ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 350ms cubic-bezier(0.23, 1, 0.32, 1)",
             }}
@@ -222,8 +219,8 @@ export const Navbar = () => {
 
         .nav-glass-container {
           pointer-events: auto;
-          width: 100%;
-          max-width: 100%;
+          width: max-content;
+          max-width: calc(100vw - 2rem);
         }
 
         .nav-glass-pill-layout {
@@ -231,8 +228,8 @@ export const Navbar = () => {
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          gap: 0.5rem;
-          padding: 0.35rem 0.75rem;
+          gap: clamp(1.25rem, 2.5vw, 2.5rem);
+          padding: 0.35rem 0.65rem 0.35rem 0.85rem;
           box-sizing: border-box;
         }
 
@@ -304,9 +301,14 @@ export const Navbar = () => {
             top: clamp(0.5rem, 1.5vh, 0.85rem);
             padding-inline: clamp(0.5rem, 2vw, 0.85rem);
           }
+          .nav-glass-container {
+            width: 100%;
+            max-width: 100%;
+          }
           .nav-glass-pill-layout {
             padding: 0.35rem 0.6rem;
             justify-content: space-between;
+            gap: 0.5rem;
           }
           .nav-toggle {
             display: grid !important;

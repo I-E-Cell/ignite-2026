@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FlipClock, type ClockUnit } from "./components/FlipClock";
 
 export const CountdownSection = () => {
-  const targetTime = new Date("2026-10-18T18:29:59Z").getTime();
+  const targetTime = new Date("2026-10-24T18:29:59Z").getTime();
 
   const getUnits = (): ClockUnit[] => {
     const diffSeconds = Math.floor(Math.max(0, targetTime - Date.now()) / 1000);
@@ -96,8 +96,8 @@ export const CountdownSection = () => {
                 <rect x="9.2" y="11.8" width="3.6" height="3.6" rx="1" fill="url(#cdp-cal)" />
               </svg>
 
-              <time className="cd-plaque-date font-medium" dateTime="2026-10-18T23:59:59+05:30">
-                October 18, 2026
+              <time className="cd-plaque-date font-medium" dateTime="2026-10-24T23:59:59+05:30">
+                October 24, 2026
               </time>
             </span>
 

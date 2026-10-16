@@ -451,9 +451,9 @@ export const RegistrationPage = () => {
   // ── Success State Screen ──
   if (isSubmitted) {
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      "Ignite 2026 — Round 1 Kickoff Week (12–18 Oct)"
-    )}&dates=20261012/20261019&details=${encodeURIComponent(
-      `Ignite 2026 No-Code Startup Accelerator — Round 1 kickoff week (12–18 Oct 2026): submit your problem statement, early target audience and initial hypothesis.\nOffline Round & Top 10 shortlisting: 25 Oct 2026.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
+      "Ignite 2026 — Round 1 Kickoff Week (17–24 Oct)"
+    )}&dates=20261017/20261025&details=${encodeURIComponent(
+      `Ignite 2026 No-Code Startup Accelerator — Round 1 (17–24 Oct 2026): submit your problem statement, early target audience and initial hypothesis.\n2 Mentor Sessions in between.\nOffline Presentation & Top 10 shortlisting: 25 Oct 2026.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
     )}&location=${encodeURIComponent("Army Institute of Technology, Pune / Virtual Stage")}`;
 
     return (
@@ -1060,7 +1060,7 @@ export const RegistrationPage = () => {
                     <span className="font-bold block text-neutral-900 mb-0.5">
                       Solo Founder Registration
                     </span>
-                    You are registering as a solo builder. You can always invite co-founders before the Round 1 milestone lock on October 08!
+                    You are registering as a solo builder. You can always invite co-founders before the Round 1 milestone lock on October 24!
                   </div>
                 </div>
               ) : (
