@@ -36,7 +36,7 @@ const benefits = [
   {
     "id": "support",
     "title": "Program Support & Credits",
-    "badge": "20-Week Backbone",
+    "badge": "Program Backbone",
     "description": "Hands-on venture management, dedicated maker lab access, cloud credits, and no-code tool stacks."
   }
 ];

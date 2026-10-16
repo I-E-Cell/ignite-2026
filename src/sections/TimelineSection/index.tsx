@@ -40,11 +40,11 @@ const steps = [
     num: "04",
     icon: Hammer,
     phase: "Phase 04",
-    title: "The 20 Weeks",
+    title: "Built Over Weeks",
     timeline: "Incubation & Acceleration",
     description:
-      "20 weeks of intensive execution: sprint reviews, no-code MVP development (Airtable/Webflow/Bubble), customer interviews, prototype testing, and ecosystem visits.",
-    tags: ["20-Week Incubation", "No-Code MVP", "Weekly Sprints"],
+      "Intensive venture building over weeks: sprint reviews, no-code MVP development (Airtable/Webflow/Bubble), customer interviews, prototype testing, and ecosystem visits.",
+    tags: ["Incubation", "No-Code MVP", "Weekly Sprints"],
     highlight: true,
   },
   {
@@ -268,7 +268,7 @@ export const TimelineSection = () => {
   }, [reduce]);
 
   return (
-    <section id="timeline" aria-label="IGNITE 20 Weeks Timeline" className="relative w-full pt-20 pb-28 px-5 md:px-12 lg:px-16 text-neutral-900 bg-transparent">
+    <section id="timeline" aria-label="IGNITE Program Timeline" className="relative w-full pt-20 pb-28 px-5 md:px-12 lg:px-16 text-neutral-900 bg-transparent">
       <style>{`
         #timeline .tl5-stage { position:relative; width:100%; max-width:1280px; margin:0 auto; }
         #timeline .tl5-header { position:relative; width:100%; margin:0 0 96px; }

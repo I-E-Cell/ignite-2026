@@ -4,7 +4,7 @@ import { LiquidMetalButton } from "./LiquidMetalButton";
 
 const lines = [
   { words: ["It's", "not", "a", "weekend", "hackathon."] },
-  { words: ["It's", "a", "startup,", "built", "over", "20", "weeks."] },
+  { words: ["It's", "a", "startup,", "built", "over", "weeks."] },
   { words: ["No", "code", "required.", "Just", "pure", "conviction."], accent: "conviction" },
   { words: ["Let's", "IGNITE."] },
 ];
