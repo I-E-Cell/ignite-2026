@@ -18,9 +18,9 @@ const faqItems: FaqCardItem[] = [
       "A total grant pool of ₹1,00,000 is available for the selected Top 10 teams.\n\nThe grant amount for each team is decided based on startup-related expenses and bills submitted by the team. It can be used for genuine development needs such as prototyping, materials, software tools, testing, and hosting.",
   },
   {
-    question: "What does the 20-week mentorship program involve?",
+    question: "What does the mentorship program involve?",
     answer:
-      "Being selected in the Top 10 means joining an end-to-end 20-week venture building journey:\nIdea → Validation → Prototype/MVP → Testing → Refinement → Business Model → Market Readiness → Startup.\n\nTeams receive periodic guidance from mentors across the startup ecosystem, along with startup ecosystem visits.",
+      "Being selected in the Top 10 means joining an end-to-end venture building journey built over weeks:\nIdea → Validation → Prototype/MVP → Testing → Refinement → Business Model → Market Readiness → Startup.\n\nTeams receive periodic guidance from mentors across the startup ecosystem, along with startup ecosystem visits.",
   },
   {
     question: "Who owns the idea, intellectual property, and creations?",
@@ -30,7 +30,7 @@ const faqItems: FaqCardItem[] = [
   {
     question: "What is the selection process across the rounds?",
     answer:
-      "Round 1 begins with Online Idea Submission from October 17–24, during which teams participate in 2 mentor sessions in between to pressure-test and refine their ideas.\n\nOn October 25th, teams participate in the Offline Presentation to conclude Round 1, where the jury evaluates ventures and shortlists the Top 10 teams to advance into the 20-week incubation cohort and Demo Day.",
+      "Round 1 begins with Online Idea Submission from October 17–24, during which teams participate in 2 mentor sessions in between to pressure-test and refine their ideas.\n\nOn October 25th, teams participate in the Offline Presentation to conclude Round 1, where the jury evaluates ventures and shortlists the Top 10 teams to advance into the incubation cohort and Demo Day.",
   },
   {
     question: "Can we add, remove, or change team members later?",
@@ -87,7 +87,7 @@ export const FaqSection = () => {
 
             {/* Description */}
             <p className="mt-6 text-[15px] sm:text-[16px] text-stone-600 font-dm_sans leading-relaxed max-w-md">
-              Everything you need to know about the 20-week journey, ₹1,00,000 grant,
+              Everything you need to know about the venture journey, ₹1,00,000 grant,
               eligibility rules, and launching your startup with IGNITE 2026.
             </p>
           </div>

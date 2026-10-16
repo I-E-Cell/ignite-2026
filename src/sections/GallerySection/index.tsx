@@ -49,7 +49,7 @@ const ITEMS: GalleryItem[] = [
     id: "g5",
     category: ["top10", "demoday"],
     title: "Top 10 Cohort Felicitation",
-    subtitle: "Recognizing outstanding finalists entering the flagship 20-week incubation accelerator.",
+    subtitle: "Recognizing outstanding finalists entering the flagship incubation accelerator.",
     image: BASE + "awards-trophy-handover.jpeg",
     badge: "Top 10 Reveal",
   },

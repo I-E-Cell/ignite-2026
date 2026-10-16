@@ -599,7 +599,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
             Cohort Project Showcase
           </h1>
           <p className="text-base md:text-lg text-[#2d4d29]/90 font-medium leading-relaxed mb-8">
-            Explore the real-world products, MVPs, and no-code startups built over the 20-week accelerator.
+            Explore the real-world products, MVPs, and no-code startups built over weeks in the accelerator.
             Every project below was conceived, architected, and deployed by collegiate teams with conviction and modern visual builders.
           </p>
 

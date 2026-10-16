@@ -12,10 +12,10 @@ import { DomainCarousel } from "@/sections/PerksSection/DomainCarousel"
 export const Main = () => {
   return (
     <main className="box-border caret-transparent outline-[3px] no-underline">
-      {/* 1. Hero: Brand, Round 1 Pill, 20-Week Startup Tagline, CTA Actions */}
+      {/* 1. Hero: Brand, Round 1 Pill, Startup Built Over Weeks, CTA Actions */}
       <HeroSection />
 
-      {/* 2. Timeline: How the 20 Weeks Actually Happen (5 Steps, emerging from Hero bushes) */}
+      {/* 2. Timeline: How the Program Actually Happens (5 Steps, emerging from Hero bushes) */}
       <TimelineSection />
 
       {/* 3. Countdown: Real-time tick to October 24, 2026 Round 1 Deadline */}

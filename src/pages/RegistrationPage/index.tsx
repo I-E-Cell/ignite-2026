@@ -683,8 +683,8 @@ export const RegistrationPage = () => {
             Apply for Ignite 2026
           </h1>
           <p className="text-sm md:text-base text-[#2d4d29]/90 font-medium leading-relaxed">
-            The premier 20-week No-Code startup accelerator organized by the I&amp;E Cell, Army Institute of Technology, Pune.
-            Build, launch, and compete for ₹1,00,000+ in grants, VC mentorship, and ecosystem visits.
+            The premier No-Code startup accelerator organized by the I&amp;E Cell, Army Institute of Technology, Pune.
+            Build over weeks, launch, and compete for ₹1,00,000+ in grants, VC mentorship, and ecosystem visits.
           </p>
         </div>
 
