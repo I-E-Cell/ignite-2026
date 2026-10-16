@@ -7,11 +7,11 @@ const steps = [
     num: "01",
     icon: FileText,
     phase: "Phase 01",
-    title: "Idea Submission",
+    title: "Idea & Pitch Submission",
     timeline: "17–24 Oct · Online Submission",
     description:
-      "Submit your problem statement, early target audience, and initial hypothesis between October 17 and 24 — all you need is clear problem articulation, domain insight, and conviction. Already have a prototype or MVP? Submitting a prototype, MVP, or anything extra along with it will get you extra marks.",
-    tags: ["17–24 Oct", "Problem Statement", "Target Users", "No Code Needed"],
+      "Submit your problem statement, early target audience, initial hypothesis, and a 2-minute pitch/walkthrough video between October 17 and 24 — articulating your domain insight and conviction. Submitting an MVP or prototype demo along with your pitch will earn extra evaluation marks.",
+    tags: ["17–24 Oct", "Problem Statement", "Pitch Video", "Target Users"],
     highlight: false,
   },
   {
