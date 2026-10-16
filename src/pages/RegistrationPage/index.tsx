@@ -261,7 +261,7 @@ export const RegistrationPage = () => {
         errs.projectLink = "Please enter a valid prototype URL";
       }
       if (!formData.videoLink?.trim()) {
-        errs.videoLink = "Pitch / Walkthrough video link is compulsory";
+        errs.videoLink = "Pitch / Walkthrough video link is compulsory (YouTube or Google Drive)";
       } else if (!isSafeEmbedUrl(formData.videoLink)) {
         errs.videoLink = "Please enter a valid video URL";
       }
@@ -476,22 +476,18 @@ export const RegistrationPage = () => {
           {/* Celebratory Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider mb-4 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
-            <span>Cohort 2026 Confirmed</span>
+            <span>Registration Confirmed</span>
           </div>
 
           <h1
             className="text-3xl sm:text-4xl md:text-5xl font-black text-[#141412] tracking-tight leading-[1.12] mb-3"
             style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
           >
-            You're in the Arena, {formData.teamName || "Founder"}!
+            Application Received, {formData.teamName || "Founder"}!
           </h1>
 
           <p className="text-sm sm:text-base text-neutral-600 max-w-xl mx-auto mb-8 font-normal leading-relaxed">
-            Your startup registration for the 20-Week No-Code Accelerator has been officially sealed into the cohort registry.
-            A confirmation receipt has been dispatched to{" "}
-            <span className="font-bold text-[#141412] bg-[#8FC45A]/20 px-1.5 py-0.5 rounded">
-              {formData.leadEmail}
-            </span>.
+            Your registration for Ignite 2026 has been successfully received. Please save your Application ID below for your team's records, mentor sessions, and milestone check-ins.
           </p>
 
           {/* ── Founder Boarding Pass (Ticket Card) ── */}
@@ -509,7 +505,7 @@ export const RegistrationPage = () => {
               </div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-[11px] font-bold text-[#BEF264]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#BEF264] animate-pulse" />
-                <span>Application Sealed</span>
+                <span>Application Submitted</span>
               </div>
             </div>
 
@@ -586,10 +582,10 @@ export const RegistrationPage = () => {
                   PHASE 01
                 </div>
                 <div className="font-bold text-xs text-[#141412] mb-1">
-                  Review &amp; Screening
+                  Idea Submission (17–24 Oct)
                 </div>
                 <div className="text-[11px] text-neutral-600 leading-snug">
-                  Evaluation team reviews your problem statement &amp; tooling stack.
+                  Online Idea Submission is open until Saturday, Oct 24. Submit problem, users, conviction &amp; tools.
                 </div>
               </div>
 
@@ -598,10 +594,10 @@ export const RegistrationPage = () => {
                   PHASE 02
                 </div>
                 <div className="font-bold text-xs text-[#141412] mb-1">
-                  Mentor Session
+                  2 Mentor Sessions
                 </div>
                 <div className="text-[11px] text-neutral-600 leading-snug">
-                  Get suggestions and workarounds with domain-expert founders, angels, and VC scout network.
+                  Participate in 2 mentor sessions in between to pressure-test your idea, refine problem-solution fit, and strengthen viability.
                 </div>
               </div>
 
@@ -610,10 +606,10 @@ export const RegistrationPage = () => {
                   PHASE 03
                 </div>
                 <div className="font-bold text-xs text-[#141412] mb-1">
-                  Showcase Day
+                  Offline Presentation (25 Oct)
                 </div>
                 <div className="text-[11px] text-neutral-600 leading-snug">
-                  Present your Startup to judges and investors for funding and mentorship opportunities.
+                  Present in person on Sunday, Oct 25. The jury will evaluate ventures and shortlist the Top 10 teams.
                 </div>
               </div>
             </div>
@@ -646,7 +642,7 @@ export const RegistrationPage = () => {
             <span>
               {savedToDatabase
                 ? "Stored securely in the Ignite 2026 Cloud Registry"
-                : "Stored securely in the Ignite 2026 encrypted registry"}
+                : "Application received and recorded for Ignite 2026"}
             </span>
           </div>
         </div>
@@ -1012,6 +1008,20 @@ export const RegistrationPage = () => {
                     <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.leadSocial}</p>
                   )}
                 </div>
+
+                {/* College / Institution */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
+                    College / Institution
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Army Institute of Technology, Pune"
+                    value={formData.leadCollege}
+                    onChange={(e) => setFormData({ ...formData, leadCollege: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
+                  />
+                </div>
               </div>
             </div>
           )}
@@ -1132,7 +1142,23 @@ export const RegistrationPage = () => {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                          <label className="block text-[11px] font-bold uppercase text-neutral-600 mb-1">
+                            College / Institution
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Army Institute of Technology, Pune"
+                            value={member.college || formData.leadCollege || "Army Institute of Technology, Pune"}
+                            onChange={(e) => {
+                              const updated = [...formData.members];
+                              updated[index].college = e.target.value;
+                              setFormData({ ...formData, members: updated });
+                            }}
+                            className="w-full px-3 py-2 rounded-md bg-white border border-black/15 text-xs text-[#141412] focus:outline-none focus:ring-1 focus:ring-[#5C8C3A]"
+                          />
+                        </div>
                         <div>
                           <label className="block text-[11px] font-bold uppercase text-neutral-600 mb-1">
                             Branch
@@ -1428,7 +1454,7 @@ export const RegistrationPage = () => {
                       Pitch / Walkthrough Video Link <span className="text-rose-500">*</span>
                     </label>
                     <span className="text-[11px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
-                      Compulsory
+                      Compulsory · Required
                     </span>
                   </div>
                   <div className="relative">
@@ -1487,7 +1513,7 @@ export const RegistrationPage = () => {
                   )}
                   {!formData.videoLink && (
                     <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
-                      Compulsory: Share a 2-minute elevator pitch or product demonstration (YouTube or Google Drive). This player will be embedded directly in your project showcase card.
+                      Compulsory: Share a 2-minute elevator pitch or product demonstration (YouTube or Google Drive). This video will be evaluated by the jury and embedded in your project card.
                     </p>
                   )}
                 </div>
