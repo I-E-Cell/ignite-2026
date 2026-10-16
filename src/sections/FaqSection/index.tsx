@@ -30,7 +30,7 @@ const faqItems: FaqCardItem[] = [
   {
     question: "What is the selection process across the rounds?",
     answer:
-      "Round 1 begins with Online Idea Submission from October 12–18, during which teams go through 2 mentorship rounds to pressure-test and refine their ideas.\n\nOn October 25th, teams participate in the Offline Round to conclude Round 1, where the jury evaluates ventures and shortlists the Top 10 teams to advance into the 20-week incubation cohort and Demo Day.",
+      "Round 1 begins with Online Idea Submission from October 17–24, during which teams participate in 2 mentor sessions in between to pressure-test and refine their ideas.\n\nOn October 25th, teams participate in the Offline Presentation to conclude Round 1, where the jury evaluates ventures and shortlists the Top 10 teams to advance into the 20-week incubation cohort and Demo Day.",
   },
   {
     question: "Can we add, remove, or change team members later?",

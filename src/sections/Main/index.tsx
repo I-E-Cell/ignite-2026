@@ -18,7 +18,7 @@ export const Main = () => {
       {/* 2. Timeline: How the 20 Weeks Actually Happen (5 Steps, emerging from Hero bushes) */}
       <TimelineSection />
 
-      {/* 3. Countdown: Real-time tick to September 2026 Round 1 Deadline */}
+      {/* 3. Countdown: Real-time tick to October 24, 2026 Round 1 Deadline */}
       <CountdownSection />
 
       {/* 4. Dark Zone: What You Get (₹1L Grant, VCs, Visits, Support) */}

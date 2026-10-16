@@ -1,7 +1,7 @@
 /* --- STYLE BLOCK 1 --- */
 
         .nav-root {
-          position: absolute;
+          position: fixed;
           top: clamp(0.75rem, 2vh, 1.25rem);
           left: 0;
           right: 0;
@@ -9,6 +9,7 @@
           z-index: 100;
           display: flex;
           justify-content: center;
+          align-items: center;
           pointer-events: none;
           padding-inline: clamp(0.85rem, 2.5vw, 2.25rem);
           box-sizing: border-box;
@@ -16,8 +17,8 @@
 
         .nav-glass-container {
           pointer-events: auto;
-          width: 100%;
-          max-width: 100%;
+          width: max-content;
+          max-width: calc(100vw - 2rem);
         }
 
         .nav-glass-pill-layout {
@@ -25,8 +26,8 @@
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          gap: 0.5rem;
-          padding: 0.35rem 0.75rem;
+          gap: clamp(1.25rem, 2.5vw, 2.5rem);
+          padding: 0.35rem 0.65rem 0.35rem 0.85rem;
           box-sizing: border-box;
         }
 
@@ -498,10 +499,16 @@
             padding-inline: clamp(0.5rem, 2vw, 0.85rem);
           }
 
+          .nav-glass-container {
+            width: 100%;
+            max-width: 100%;
+          }
+
           .nav-glass-pill-layout {
             padding: 0.35rem 0.6rem;
             justify-content: space-between;
             width: 100%;
+            gap: 0.5rem;
           }
 
           .nav-brand {
@@ -548,6 +555,7 @@
               0 8px 32px rgba(0, 0, 0, 0.06),
               inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
             border: 1px solid rgba(255, 255, 255, 0.22) !important;
+            border-radius: 9999px !important;
           }
         }
       
