@@ -1394,233 +1394,197 @@ export const RegistrationPage = () => {
                 {errors.tools && <p className="mt-1.5 text-xs text-rose-500">{errors.tools}</p>}
               </div>
 
-              {/* Project Link & Pitch Video Section */}
-              <div className="p-5 rounded-xl bg-[#F8F7F4] border border-black/10 space-y-5">
-                <div className="flex items-center gap-2 pb-3 border-b border-black/8">
-                  <Sparkles className="w-4 h-4 text-[#5C8C3A]" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-neutral-800">
-                    Showcase &amp; Pitch Deliverables
+              {/* Deliverables Section Divider */}
+              <div className="pt-4 border-t border-black/10">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
+                  <span>Round 1 Deliverables</span>
+                </h3>
+                <p className="text-xs text-neutral-500">
+                  Submit your pitch presentation and video for jury scoring and mentor feedback.
+                </p>
+              </div>
+
+              {/* 1. Pitch Deck / PPT Link (Compulsory) */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5 gap-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700">
+                    Pitch Deck (PPT) Link <span className="text-rose-500">*</span>
+                  </label>
+                  <a
+                    href="https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jl25V-Uau?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5527] hover:text-[#182a14] hover:underline transition-colors shrink-0"
+                  >
+                    <FileText className="w-3 h-3 text-[#5C8C3A]" />
+                    <span>Official Template ↗</span>
+                  </a>
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <input
+                    type="text"
+                    inputMode="url"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    required
+                    placeholder="drive.google.com/... or canva.com/design/..."
+                    value={formData.pptLink}
+                    onChange={(e) => {
+                      setFormData({ ...formData, pptLink: e.target.value });
+                      if (errors.pptLink) setErrors({ ...errors, pptLink: "" });
+                    }}
+                    onBlur={(e) =>
+                      setFormData({ ...formData, pptLink: normalizeUrlField(e.target.value) })
+                    }
+                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${
+                      errors.pptLink ? "border-rose-400 bg-rose-50/30" : "border-black/15"
+                    }`}
+                  />
+                </div>
+                {errors.pptLink && (
+                  <p className="mt-1 text-xs text-rose-500">{errors.pptLink}</p>
+                )}
+                <p className="mt-1 text-[11px] text-neutral-500">
+                  Build your deck using the official template above. Ensure share permissions are set to &ldquo;Anyone with the link can view&rdquo;.
+                </p>
+              </div>
+
+              {/* 2. Pitch / Walkthrough Video Link (Compulsory) */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700">
+                    Pitch Video Link <span className="text-rose-500">*</span>
+                  </label>
+                  <span className="text-[11px] text-neutral-400 font-medium">
+                    YouTube or Google Drive
                   </span>
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2F5527]/10 text-[#2F5527] ml-auto">
-                    Visible in Showcase
-                  </span>
                 </div>
-
-                {/* 1. Project Link / Prototype */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
-                      Live Project / Prototype Link
-                    </label>
-                    <span className="text-[11px] font-medium text-neutral-500">
-                      Framer, Webflow, Bubble, Vercel, or Figma demo
-                    </span>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                    <Video className="w-4 h-4" />
                   </div>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                      <Globe className="w-4 h-4" />
-                    </div>
-                    <input
-                      type="text"
-                      inputMode="url"
-                      autoCapitalize="off"
-                      autoCorrect="off"
-                      spellCheck={false}
-                      placeholder="my-startup.framer.app or myproject.bubbleapps.io"
-                      value={formData.projectLink}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          projectLink: e.target.value,
-                          prototypeLink: e.target.value,
-                        })
-                      }
-                      onBlur={(e) => {
-                        const normalized = normalizeUrlField(e.target.value);
-                        setFormData({
-                          ...formData,
-                          projectLink: normalized,
-                          prototypeLink: normalized,
-                        });
-                      }}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
-                    />
-                  </div>
-                  {errors.projectLink && (
-                    <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.projectLink}</p>
-                  )}
-                  <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
-                    💡 An interactive embed frame of this project will be showcased on the official Ignite 2026 Showcase page so evaluators and attendees can test it live.
-                    <span className="block mt-1 text-neutral-400">
-                      No need to type https:// — we add it automatically when you move on.
-                    </span>
-                  </p>
+                  <input
+                    type="text"
+                    inputMode="url"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    required
+                    placeholder="youtu.be/... or drive.google.com/file/d/..."
+                    value={formData.videoLink}
+                    onChange={(e) => {
+                      setFormData({ ...formData, videoLink: e.target.value });
+                      if (errors.videoLink) setErrors({ ...errors, videoLink: "" });
+                    }}
+                    onBlur={(e) =>
+                      setFormData({ ...formData, videoLink: normalizeUrlField(e.target.value) })
+                    }
+                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${
+                      errors.videoLink ? "border-rose-400 bg-rose-50/30" : "border-black/15"
+                    }`}
+                  />
                 </div>
-
-                {/* 2. Pitch / Demo Video Link */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
-                      Pitch / Walkthrough Video Link <span className="text-rose-500">*</span>
-                    </label>
-                    <span className="text-[11px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
-                      Compulsory · Required
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                      <Video className="w-4 h-4" />
-                    </div>
-                    <input
-                      type="text"
-                      inputMode="url"
-                      autoCapitalize="off"
-                      autoCorrect="off"
-                      spellCheck={false}
-                      required
-                      placeholder="youtu.be/... or drive.google.com/file/d/..."
-                      value={formData.videoLink}
-                      onChange={(e) => {
-                        setFormData({ ...formData, videoLink: e.target.value });
-                        if (errors.videoLink) setErrors({ ...errors, videoLink: "" });
-                      }}
-                      onBlur={(e) =>
-                        setFormData({ ...formData, videoLink: normalizeUrlField(e.target.value) })
-                      }
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 ${
-                        errors.videoLink
-                          ? "border-rose-400 focus:ring-rose-500/20"
-                          : "border-black/15 focus:ring-[#5C8C3A]"
-                      }`}
-                    />
-                  </div>
-                  {errors.videoLink && (
-                    <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.videoLink}</p>
-                  )}
-
-                  {/* Real-time Video Platform Status Badge */}
-                  {formData.videoLink && (
-                    <div className="mt-2 flex items-center gap-2">
-                      {detectVideoPlatform(formData.videoLink) === "youtube" && (
-                        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-red-700 bg-red-50 border border-red-200 px-2.5 py-1 rounded-md">
-                          <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-                          YouTube Video Detected · Ready for Inline Player Embed
-                        </span>
-                      )}
-                      {detectVideoPlatform(formData.videoLink) === "drive" && (
-                        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-md">
-                          <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                          Google Drive Link Detected · (Ensure permission is set to "Anyone with the link can view")
-                        </span>
-                      )}
-                      {detectVideoPlatform(formData.videoLink) === "other" && (
-                        <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-md">
-                          <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
-                          Tip: For embedded playback on the Showcase, provide a YouTube or Google Drive link.
-                        </span>
-                      )}
-                    </div>
-                  )}
-                  {!formData.videoLink && (
-                    <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
-                      Compulsory: Share a 2-minute elevator pitch or product demonstration (YouTube or Google Drive). This video will be evaluated by the jury and embedded in your project card.
-                    </p>
-                  )}
-                </div>
-
-                {/* 3. Pitch Deck / PPT Link (Compulsory) */}
-                <div className="pt-4 border-t border-black/10">
-                  {/* Template Download Banner */}
-                  <div className="p-3.5 rounded-xl bg-white border border-[#5C8C3A]/30 shadow-2xs mb-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5">
-                      <span className="p-2 rounded-lg bg-[#2F5527] text-white shrink-0">
-                        <FileText className="w-4 h-4" />
+                {errors.videoLink && (
+                  <p className="mt-1 text-xs text-rose-500">{errors.videoLink}</p>
+                )}
+                {formData.videoLink && (
+                  <div className="mt-1.5 flex items-center gap-1.5 text-xs">
+                    {detectVideoPlatform(formData.videoLink) === "youtube" && (
+                      <span className="text-emerald-700 font-medium flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        YouTube video detected
                       </span>
-                      <div>
-                        <div className="text-xs font-bold text-[#141412] flex items-center gap-1.5">
-                          <span>Official IGNITE PPT Template</span>
-                          <span className="text-[10px] font-semibold px-2 py-0.2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            Required Format
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-neutral-600 mt-0.5">
-                          Make a copy of the official slide deck, customize with your team's details, and paste your view link below.
-                        </p>
-                      </div>
-                    </div>
-                    <a
-                      href="https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jl25V-Uau?usp=sharing"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-bold shrink-0 transition-all shadow-xs hover:scale-[1.02] active:scale-95 cursor-pointer"
-                    >
-                      <span>Download Template</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-[#8FC45A]" />
-                    </a>
+                    )}
+                    {detectVideoPlatform(formData.videoLink) === "drive" && (
+                      <span className="text-emerald-700 font-medium flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        Google Drive video detected (ensure link is set to &ldquo;Anyone with link can view&rdquo;)
+                      </span>
+                    )}
                   </div>
-
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
-                      Pitch Deck / Presentation Link <span className="text-rose-500">*</span>
-                    </label>
-                    <span className="text-[11px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
-                      Compulsory · Required
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                      <FileText className="w-4 h-4" />
-                    </div>
-                    <input
-                      type="text"
-                      inputMode="url"
-                      autoCapitalize="off"
-                      autoCorrect="off"
-                      spellCheck={false}
-                      required
-                      placeholder="drive.google.com/file/d/... or canva.com/design/..."
-                      value={formData.pptLink}
-                      onChange={(e) => {
-                        setFormData({ ...formData, pptLink: e.target.value });
-                        if (errors.pptLink) setErrors({ ...errors, pptLink: "" });
-                      }}
-                      onBlur={(e) =>
-                        setFormData({ ...formData, pptLink: normalizeUrlField(e.target.value) })
-                      }
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 ${
-                        errors.pptLink
-                          ? "border-rose-400 focus:ring-rose-500/20"
-                          : "border-black/15 focus:ring-[#5C8C3A]"
-                      }`}
-                    />
-                  </div>
-                  {errors.pptLink && (
-                    <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.pptLink}</p>
-                  )}
-                  <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
-                    Compulsory: Paste your completed presentation deck URL (Google Drive or Canva link). Please verify sharing access is set to <strong>"Anyone with the link can view"</strong>.
+                )}
+                {!formData.videoLink && (
+                  <p className="mt-1 text-[11px] text-neutral-500">
+                    A ~2-minute elevator pitch or product demonstration.
                   </p>
+                )}
+              </div>
+
+              {/* 3. Live Project / Prototype Link (Optional) */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700">
+                    Live Demo or Prototype URL
+                  </label>
+                  <span className="text-[11px] text-neutral-400 font-medium">
+                    Optional
+                  </span>
                 </div>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                    <Globe className="w-4 h-4" />
+                  </div>
+                  <input
+                    type="text"
+                    inputMode="url"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    placeholder="my-startup.framer.app, vercel.app, or figma.com"
+                    value={formData.projectLink}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        projectLink: e.target.value,
+                        prototypeLink: e.target.value,
+                      })
+                    }
+                    onBlur={(e) => {
+                      const normalized = normalizeUrlField(e.target.value);
+                      setFormData({
+                        ...formData,
+                        projectLink: normalized,
+                        prototypeLink: normalized,
+                      });
+                    }}
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border border-black/15 text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A]"
+                  />
+                </div>
+                {errors.projectLink && (
+                  <p className="mt-1 text-xs text-rose-500">{errors.projectLink}</p>
+                )}
+                <p className="mt-1 text-[11px] text-neutral-500">
+                  Optional. If you have an active prototype or landing page, share it for live testing.
+                </p>
               </div>
 
               {/* Terms and IP Agreement Checkbox */}
-              <div className="p-4 rounded-xl bg-[#F4F3F0] border border-black/10">
-                <label className="flex items-start gap-3 cursor-pointer">
+              <div className="pt-2 border-t border-black/10">
+                <label className="flex items-start gap-3 cursor-pointer group select-none">
                   <input
                     type="checkbox"
                     checked={formData.agreedToTerms}
-                    onChange={(e) => setFormData({ ...formData, agreedToTerms: e.target.checked })}
-                    className="mt-0.5 w-4 h-4 rounded text-[#2F5527] focus:ring-[#5C8C3A]"
+                    onChange={(e) => {
+                      setFormData({ ...formData, agreedToTerms: e.target.checked });
+                      if (errors.agreedToTerms) setErrors({ ...errors, agreedToTerms: "" });
+                    }}
+                    className="mt-0.5 w-4 h-4 rounded text-[#2F5527] focus:ring-[#5C8C3A] cursor-pointer"
                   />
-                  <div className="text-xs text-neutral-700 leading-relaxed">
-                    <span className="font-bold text-neutral-900 block mb-0.5">
-                      Code of Conduct &amp; Intellectual Property Ownership
+                  <div className="text-xs text-neutral-600 leading-relaxed group-hover:text-neutral-800 transition-colors">
+                    <span className="font-bold text-neutral-900">
+                      Code of Conduct &amp; IP Ownership
                     </span>
+                    {" — "}
                     Our team agrees to adhere to the Ignite 2026 Code of Conduct. We acknowledge that our founding team retains 100% ownership of all IP, code, designs, and business equity created during the accelerator.
                   </div>
                 </label>
                 {errors.agreedToTerms && (
-                  <p className="mt-2 text-xs text-rose-500">{errors.agreedToTerms}</p>
+                  <p className="mt-1.5 text-xs text-rose-500">{errors.agreedToTerms}</p>
                 )}
               </div>
             </div>
