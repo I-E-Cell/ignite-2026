@@ -25,6 +25,8 @@ import {
   Video,
   Cpu,
   X,
+  FileText,
+  ExternalLink,
 } from "lucide-react";
 import { triggerConfetti } from "@/utils/confetti";
 import { submitRegistration } from "@/lib/supabase";
@@ -66,6 +68,7 @@ interface RegistrationFormData {
   tools: string[];
   projectLink: string;
   videoLink: string;
+  pptLink: string;
   prototypeLink: string;
   referral: string;
   agreedToTerms: boolean;
@@ -138,6 +141,7 @@ const INITIAL_FORM: RegistrationFormData = {
   tools: [],
   projectLink: "",
   videoLink: "",
+  pptLink: "",
   prototypeLink: "",
   referral: "",
   agreedToTerms: false,
@@ -265,6 +269,11 @@ export const RegistrationPage = () => {
       } else if (!isSafeEmbedUrl(formData.videoLink)) {
         errs.videoLink = "Please enter a valid video URL";
       }
+      if (!formData.pptLink?.trim()) {
+        errs.pptLink = "Pitch Deck / PPT link is compulsory (Google Drive, Canva, or presentation link)";
+      } else if (!isSafeEmbedUrl(formData.pptLink)) {
+        errs.pptLink = "Please enter a valid presentation URL";
+      }
       if (!formData.agreedToTerms) {
         errs.agreedToTerms = "You must agree to the Code of Conduct & IP terms";
       }
@@ -356,6 +365,7 @@ export const RegistrationPage = () => {
         tools: finalTools,
         projectLink: formData.projectLink,
         videoLink: formData.videoLink,
+        pptLink: formData.pptLink,
         prototypeLink: formData.projectLink || formData.prototypeLink,
         referral: formData.referral,
       });
@@ -1516,6 +1526,80 @@ export const RegistrationPage = () => {
                       Compulsory: Share a 2-minute elevator pitch or product demonstration (YouTube or Google Drive). This video will be evaluated by the jury and embedded in your project card.
                     </p>
                   )}
+                </div>
+
+                {/* 3. Pitch Deck / PPT Link (Compulsory) */}
+                <div className="pt-4 border-t border-black/10">
+                  {/* Template Download Banner */}
+                  <div className="p-3.5 rounded-xl bg-white border border-[#5C8C3A]/30 shadow-2xs mb-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <span className="p-2 rounded-lg bg-[#2F5527] text-white shrink-0">
+                        <FileText className="w-4 h-4" />
+                      </span>
+                      <div>
+                        <div className="text-xs font-bold text-[#141412] flex items-center gap-1.5">
+                          <span>Official IGNITE PPT Template</span>
+                          <span className="text-[10px] font-semibold px-2 py-0.2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            Required Format
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-neutral-600 mt-0.5">
+                          Make a copy of the official slide deck, customize with your team's details, and paste your view link below.
+                        </p>
+                      </div>
+                    </div>
+                    <a
+                      href="https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jl25V-Uau?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-bold shrink-0 transition-all shadow-xs hover:scale-[1.02] active:scale-95 cursor-pointer"
+                    >
+                      <span>Download Template</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-[#8FC45A]" />
+                    </a>
+                  </div>
+
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-800">
+                      Pitch Deck / Presentation Link <span className="text-rose-500">*</span>
+                    </label>
+                    <span className="text-[11px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
+                      Compulsory · Required
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="text"
+                      inputMode="url"
+                      autoCapitalize="off"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      required
+                      placeholder="drive.google.com/file/d/... or canva.com/design/..."
+                      value={formData.pptLink}
+                      onChange={(e) => {
+                        setFormData({ ...formData, pptLink: e.target.value });
+                        if (errors.pptLink) setErrors({ ...errors, pptLink: "" });
+                      }}
+                      onBlur={(e) =>
+                        setFormData({ ...formData, pptLink: normalizeUrlField(e.target.value) })
+                      }
+                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 ${
+                        errors.pptLink
+                          ? "border-rose-400 focus:ring-rose-500/20"
+                          : "border-black/15 focus:ring-[#5C8C3A]"
+                      }`}
+                    />
+                  </div>
+                  {errors.pptLink && (
+                    <p className="mt-1.5 text-xs text-rose-500 font-semibold">{errors.pptLink}</p>
+                  )}
+                  <p className="mt-1.5 text-[11px] text-neutral-500 leading-normal">
+                    Compulsory: Paste your completed presentation deck URL (Google Drive or Canva link). Please verify sharing access is set to <strong>"Anyone with the link can view"</strong>.
+                  </p>
                 </div>
               </div>
 
