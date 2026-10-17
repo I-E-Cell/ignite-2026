@@ -54,6 +54,7 @@ export interface RegistrationSubmitPayload {
   tools: string[];
   projectLink?: string;
   videoLink?: string;
+  pptLink?: string;
   prototypeLink?: string;
   referral?: string;
 }
@@ -72,11 +73,13 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
 
   const rawProject = payload.projectLink?.trim() || payload.prototypeLink?.trim() || "";
   const rawVideo = payload.videoLink?.trim() || "";
+  const rawPpt = payload.pptLink?.trim() || "";
   const rawSocial = payload.leadSocial?.trim() || "";
 
   // Validate and sanitize URLs to prevent malicious schemes (e.g. javascript:, data:)
   const projectUrl = rawProject && isSafeEmbedUrl(rawProject) ? normalizeUrl(rawProject) : "";
   const videoUrl = rawVideo && isSafeEmbedUrl(rawVideo) ? normalizeUrl(rawVideo) : "";
+  const pptUrl = rawPpt && isSafeEmbedUrl(rawPpt) ? normalizeUrl(rawPpt) : "";
   const socialUrl = rawSocial && isSafeEmbedUrl(rawSocial) ? normalizeUrl(rawSocial) : "";
 
   const record = {
@@ -100,24 +103,30 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
     solution: payload.solution.trim(),
     tools: payload.tools,
     prototype_link: projectUrl,
+    deck_link: pptUrl,
+    ppt_link: pptUrl,
     referral: payload.referral?.trim() || "",
     status: "submitted",
   };
 
   if (supabase) {
     try {
-      // First attempt: include optional project_link and video_link if schema supports them
+      // First attempt: include optional project_link, video_link, ppt_link if schema supports them
       const fullRecord: Record<string, any> = {
         ...record,
         ...(projectUrl ? { project_link: projectUrl } : {}),
         ...(videoUrl ? { video_link: videoUrl } : {}),
+        ...(pptUrl ? { ppt_link: pptUrl, deck_link: pptUrl } : {}),
       };
 
       let { error } = await supabase.from("ignite_registrations").insert([fullRecord]);
 
       // If missing column error (e.g. PGRST204), fallback to standard schema with prototype_link
       if (error && (error.code === "PGRST204" || error.message?.includes("column"))) {
-        const retryRes = await supabase.from("ignite_registrations").insert([record]);
+        const baseRecord: Record<string, any> = { ...record };
+        delete baseRecord.deck_link;
+        delete baseRecord.ppt_link;
+        const retryRes = await supabase.from("ignite_registrations").insert([baseRecord]);
         error = retryRes.error;
       }
 

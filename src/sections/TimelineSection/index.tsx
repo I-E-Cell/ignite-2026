@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { FileText, Users, Award, Hammer, Rocket } from "lucide-react";
+import { FileText, Users, Award, Hammer, Rocket, ExternalLink } from "lucide-react";
 
+export const PPT_TEMPLATE_URL =
+  "https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jl25V-Uau?usp=sharing";
 
 const steps = [
   {
@@ -10,8 +12,12 @@ const steps = [
     title: "Idea & Pitch Submission",
     timeline: "17–24 Oct · Online Submission",
     description:
-      "Submit your problem statement, early target audience, initial hypothesis, and a 2-minute pitch/walkthrough video between October 17 and 24 — articulating your domain insight and conviction. Submitting an MVP or prototype demo along with your pitch will earn extra evaluation marks.",
-    tags: ["17–24 Oct", "Problem Statement", "Pitch Video", "Target Users"],
+      "Submit your problem statement, early target audience, initial hypothesis, 2-minute pitch video, and completed presentation deck using the official PPT template between October 17 and 24. Submitting the PPT is compulsory. Submitting an MVP or prototype demo along with your pitch will earn extra evaluation marks.",
+    tags: ["17–24 Oct", "Problem Statement", "Pitch Video", "PPT Deck Compulsory"],
+    action: {
+      label: "Download Official PPT Template",
+      url: PPT_TEMPLATE_URL,
+    },
     highlight: false,
   },
   {
@@ -320,6 +326,19 @@ export const TimelineSection = () => {
                   <div className="tl5-meta"><Icon size={14} aria-hidden="true" /><span>{step.phase}</span><span aria-hidden="true">·</span><span>{step.timeline}</span></div>
                   <h3 className="tl5-title" style={{ color: active === i ? GREEN : "#141412" }}>{step.title}</h3>
                   <p className="tl5-description">{step.description}</p>
+                  {step.action && (
+                    <div style={{ marginTop: "12px" }}>
+                      <a
+                        href={step.action.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-semibold tracking-tight transition-all shadow-xs hover:scale-[1.02] active:scale-95 cursor-pointer"
+                      >
+                        <span>{step.action.label}</span>
+                        <ExternalLink size={12} className="text-[#8FC45A]" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="tl5-tags">{step.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
