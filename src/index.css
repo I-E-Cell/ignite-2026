@@ -182,3 +182,26 @@ span.rounded-full[class*="w-2"],
 span.rounded-full[class*="w-1"] {
   border-radius: 9999px !important;
 }
+
+/* ══════════════════════════════════════════════
+   FORM INPUTS & CARET ACCESSIBILITY
+   Ensures typing cursor is clearly visible when
+   clicking any input, textarea, or editable field.
+   ══════════════════════════════════════════════ */
+input,
+textarea,
+[contenteditable="true"] {
+  caret-color: #141412 !important;
+  cursor: text !important;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="button"],
+input[type="submit"] {
+  cursor: pointer !important;
+}
+
+select {
+  cursor: pointer !important;
+}
