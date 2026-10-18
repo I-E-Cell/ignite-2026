@@ -10,10 +10,10 @@ const steps = [
     icon: FileText,
     phase: "Phase 01",
     title: "Idea & Pitch Submission",
-    timeline: "17–24 Oct · Online Submission",
+    timeline: "18–24 Oct · Online Submission",
     description:
-      "Submit your problem statement, early target audience, initial hypothesis, 2-minute pitch video, and completed presentation deck using the official PPT template between October 17 and 24. Submitting the PPT is compulsory. Submitting an MVP or prototype demo along with your pitch will earn extra evaluation marks.",
-    tags: ["17–24 Oct", "Problem Statement", "Pitch Video", "PPT Deck Compulsory"],
+      "Submit your problem statement, early target audience, initial hypothesis, 2-minute pitch video, and completed presentation deck using the official PPT template between October 18 and 24. Submitting the PPT is compulsory. Submitting an MVP or prototype demo along with your pitch will earn extra evaluation marks.",
+    tags: ["18–24 Oct", "Problem Statement", "Pitch Video", "PPT Deck Compulsory"],
     action: {
       label: "Download Official PPT Template",
       url: PPT_TEMPLATE_URL,
@@ -22,24 +22,24 @@ const steps = [
   },
   {
     num: "02",
-    icon: Users,
-    phase: "Phase 02",
-    title: "2 Mentor Sessions",
-    timeline: "17–24 Oct · Mentorship",
-    description:
-      "Between October 17 and 24, teams get 2 hands-on mentor sessions in between to pressure-test their idea, refine problem-solution fit, and strengthen viability.",
-    tags: ["17–24 Oct", "2 Mentor Sessions", "Mentor Feedback", "Model Validation"],
-    highlight: false,
-  },
-  {
-    num: "03",
     icon: Award,
-    phase: "Phase 03",
+    phase: "Phase 02",
     title: "Offline Presentation & Shortlisting",
     timeline: "25 Oct · Round 1 Finale",
     description:
       "The offline presentation takes place on October 25th to conclude Round 1. Teams present in person, after which a jury shortlists the Top 10 most promising ventures to enter the IGNITE Incubation cohort.",
     tags: ["25 Oct", "Offline Presentation", "Round 1 Finale", "Top 10 Selection"],
+    highlight: false,
+  },
+  {
+    num: "03",
+    icon: Users,
+    phase: "Phase 03",
+    title: "2 Mentor Sessions",
+    timeline: "Mentorship",
+    description:
+      "After the offline presentation, teams get 2 hands-on mentor sessions to pressure-test their idea, refine problem-solution fit, and strengthen viability.",
+    tags: ["2 Mentor Sessions", "Mentor Feedback", "Model Validation"],
     highlight: false,
   },
   {

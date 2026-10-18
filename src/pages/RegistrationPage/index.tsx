@@ -461,9 +461,9 @@ export const RegistrationPage = () => {
   // ── Success State Screen ──
   if (isSubmitted) {
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      "Ignite 2026 — Round 1 Kickoff Week (17–24 Oct)"
-    )}&dates=20261017/20261025&details=${encodeURIComponent(
-      `Ignite 2026 No-Code Startup Accelerator — Round 1 (17–24 Oct 2026): submit your problem statement, early target audience and initial hypothesis.\n2 Mentor Sessions in between.\nOffline Presentation & Top 10 shortlisting: 25 Oct 2026.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
+      "Ignite 2026 — Round 1 Kickoff Week (18–24 Oct)"
+    )}&dates=20261018/20261025&details=${encodeURIComponent(
+      `Ignite 2026 No-Code Startup Accelerator — Round 1 (18–24 Oct 2026): submit your problem statement, early target audience and initial hypothesis.\nOffline Presentation & Top 10 shortlisting: 25 Oct 2026.\n2 Mentor Sessions after the offline presentation.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
     )}&location=${encodeURIComponent("Army Institute of Technology, Pune / Virtual Stage")}`;
 
     return (
@@ -592,7 +592,7 @@ export const RegistrationPage = () => {
                   PHASE 01
                 </div>
                 <div className="font-bold text-xs text-[#141412] mb-1">
-                  Idea Submission (17–24 Oct)
+                  Idea Submission (18–24 Oct)
                 </div>
                 <div className="text-[11px] text-neutral-600 leading-snug">
                   Online Idea Submission is open until Saturday, Oct 24. Submit problem, users, conviction &amp; tools.
@@ -604,10 +604,10 @@ export const RegistrationPage = () => {
                   PHASE 02
                 </div>
                 <div className="font-bold text-xs text-[#141412] mb-1">
-                  2 Mentor Sessions
+                  Offline Presentation (25 Oct)
                 </div>
                 <div className="text-[11px] text-neutral-600 leading-snug">
-                  Participate in 2 mentor sessions in between to pressure-test your idea, refine problem-solution fit, and strengthen viability.
+                  Present in person on Sunday, Oct 25. The jury will evaluate ventures and shortlist the Top 10 teams.
                 </div>
               </div>
 
@@ -616,10 +616,10 @@ export const RegistrationPage = () => {
                   PHASE 03
                 </div>
                 <div className="font-bold text-xs text-[#141412] mb-1">
-                  Offline Presentation (25 Oct)
+                  2 Mentor Sessions
                 </div>
                 <div className="text-[11px] text-neutral-600 leading-snug">
-                  Present in person on Sunday, Oct 25. The jury will evaluate ventures and shortlist the Top 10 teams.
+                  After the offline presentation, participate in 2 mentor sessions to pressure-test your idea, refine problem-solution fit, and strengthen viability.
                 </div>
               </div>
             </div>
