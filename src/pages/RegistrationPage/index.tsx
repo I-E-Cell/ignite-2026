@@ -682,10 +682,6 @@ export const RegistrationPage = () => {
       {/* ── Registration Page Header ── */}
       <header className="relative overflow-hidden rounded-2xl bg-white/80 border border-[#5C8C3A]/25 p-6 md:p-8 mb-8 shadow-sm backdrop-blur-md">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#182a14]/8 border border-[#5C8C3A]/30 text-xs font-bold text-[#2F5527] uppercase tracking-wider mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
-            Official Application Portal · Cohort 2026
-          </div>
           <h1
             className="text-3xl md:text-5xl font-black text-[#141412] tracking-tight leading-[1.08] mb-3"
             style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif", letterSpacing: "-0.025em" }}
@@ -1388,7 +1384,7 @@ export const RegistrationPage = () => {
                   </div>
                 ) : (
                   <p className="mt-2 text-[11px] text-neutral-500 leading-normal">
-                    💡 Enter whatever no-code tools, low-code platforms, frameworks, databases, or AI APIs your team plans to build with.
+                    Enter whatever no-code tools, low-code platforms, frameworks, databases, or AI APIs your team plans to build with.
                   </p>
                 )}
                 {errors.tools && <p className="mt-1.5 text-xs text-rose-500">{errors.tools}</p>}
@@ -1397,7 +1393,6 @@ export const RegistrationPage = () => {
               {/* Deliverables Section Divider */}
               <div className="pt-4 border-t border-black/10">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
                   <span>Round 1 Deliverables</span>
                 </h3>
                 <p className="text-xs text-neutral-500">
@@ -1441,9 +1436,8 @@ export const RegistrationPage = () => {
                     onBlur={(e) =>
                       setFormData({ ...formData, pptLink: normalizeUrlField(e.target.value) })
                     }
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${
-                      errors.pptLink ? "border-rose-400 bg-rose-50/30" : "border-black/15"
-                    }`}
+                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${errors.pptLink ? "border-rose-400 bg-rose-50/30" : "border-black/15"
+                      }`}
                   />
                 </div>
                 {errors.pptLink && (
@@ -1484,9 +1478,8 @@ export const RegistrationPage = () => {
                     onBlur={(e) =>
                       setFormData({ ...formData, videoLink: normalizeUrlField(e.target.value) })
                     }
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${
-                      errors.videoLink ? "border-rose-400 bg-rose-50/30" : "border-black/15"
-                    }`}
+                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#FBFAF8] border text-sm text-[#141412] placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#5C8C3A] ${errors.videoLink ? "border-rose-400 bg-rose-50/30" : "border-black/15"
+                      }`}
                   />
                 </div>
                 {errors.videoLink && (

@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { FileText, Users, Award, Hammer, Rocket, ExternalLink } from "lucide-react";
 
 export const PPT_TEMPLATE_URL =
-  "https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jl25V-Uau?usp=sharing";
+  "https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jI25V-Uau?usp=sharing";
 
 const steps = [
   {
     num: "01",
     icon: FileText,
     phase: "Phase 01",
-    title: "Idea & Pitch Submission",
+    title: "Idea Submission (Round 1)",
     timeline: "18–24 Oct · Online Submission",
     description:
-      "Submit your problem statement, early target audience, initial hypothesis, 2-minute pitch video, and completed presentation deck using the official PPT template between October 18 and 24. Submitting the PPT is compulsory. Submitting an MVP or prototype demo along with your pitch will earn extra evaluation marks.",
-    tags: ["18–24 Oct", "Problem Statement", "Pitch Video", "PPT Deck Compulsory"],
+      "Submit your idea online through the official submission form, using the official PPT template. Explain the problem, solution, target users, what makes it unique, its feasibility, and its impact. Existing ideas or projects are welcome if you mention their current stage. Incomplete or late entries may not be considered.",
+    tags: ["18–24 Oct", "Round 1", "Online Submission", "Official PPT Template"],
     action: {
       label: "Download Official PPT Template",
       url: PPT_TEMPLATE_URL,
@@ -22,35 +22,35 @@ const steps = [
   },
   {
     num: "02",
-    icon: Award,
+    icon: Users,
     phase: "Phase 02",
-    title: "Offline Presentation & Shortlisting",
-    timeline: "25 Oct · Round 1 Finale",
+    title: "Round 2 Pitch",
+    timeline: "Shortlist & Pitch",
     description:
-      "The offline presentation takes place on October 25th to conclude Round 1. Teams present in person, after which a jury shortlists the Top 10 most promising ventures to enter the IGNITE Incubation cohort.",
-    tags: ["25 Oct", "Offline Presentation", "Round 1 Finale", "Top 10 Selection"],
+      "The evaluation committee reviews all eligible Round 1 entries and shortlists the top-performing teams for the Round 2 pitch. Be ready to answer questions on your problem, solution, users, feasibility, business model, implementation, and scalability before a panel of experts, entrepreneurs, mentors, and VCs.",
+    tags: ["Round 2", "Expert Panel", "Shortlisting"],
     highlight: false,
   },
   {
     num: "03",
-    icon: Users,
+    icon: Award,
     phase: "Phase 03",
-    title: "2 Mentor Sessions",
-    timeline: "Mentorship",
+    title: "Top 10 & Startup Development Grant",
+    timeline: "Program Selection",
     description:
-      "After the offline presentation, teams get 2 hands-on mentor sessions to pressure-test their idea, refine problem-solution fit, and strengthen viability.",
-    tags: ["2 Mentor Sessions", "Mentor Feedback", "Model Validation"],
-    highlight: false,
+      "Ten promising startups join the main IGNITE program, chosen on innovation, feasibility, problem relevance, market potential, scalability, execution, and team commitment. A total grant of ₹1,00,000 is available for the Top 10, with each team's share decided from the startup expenses and bills it submits.",
+    tags: ["Top 10", "₹1,00,000 Grant Pool", "Expense-Based Funding"],
+    highlight: true,
   },
   {
     num: "04",
     icon: Hammer,
     phase: "Phase 04",
-    title: "Built Over Weeks",
-    timeline: "Incubation & Acceleration",
+    title: "Build with Mentorship",
+    timeline: "Phase 1 · Build & Mentorship",
     description:
-      "Intensive venture building over weeks: sprint reviews, no-code MVP development (Airtable/Webflow/Bubble), customer interviews, prototype testing, and ecosystem visits.",
-    tags: ["Incubation", "No-Code MVP", "Weekly Sprints"],
+      "Selected teams get periodic sessions with industry experts, entrepreneurs, mentors, and VCs, plus possible startup ecosystem visits. Validate your idea, build a working prototype/MVP, and show regular progress at every review. The I&E Cell guides you through startup registration when your idea is ready.",
+    tags: ["Mentor Sessions", "Prototype/MVP", "Startup Registration"],
     highlight: true,
   },
   {
@@ -58,10 +58,10 @@ const steps = [
     icon: Rocket,
     phase: "Phase 05",
     title: "Final Pitch / Demo Day",
-    timeline: "Grand Finale",
+    timeline: "25 Oct · Grand Finale",
     description:
-      "Present your working traction, active users, and milestones in front of investors to compete for the ₹1,00,000 grant pool.",
-    tags: ["₹1,00,000 Grant", "Demo Day", "Investor Pitch"],
+      "Teams present their progress at the Final Pitch / Demo Day on 25th October. Evaluation looks at your product/MVP, validation, innovation, business potential, progress, and future plans. High-performing startups may get additional recognition or opportunities.",
+    tags: ["25 Oct", "Demo Day", "Final Evaluation"],
     highlight: true,
   },
 ];

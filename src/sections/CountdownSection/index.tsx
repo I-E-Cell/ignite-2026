@@ -37,7 +37,7 @@ export const CountdownSection = () => {
         {/* Heading */}
         <div className="cd-head-wrap w-full text-center">
           <h2 className="cd-heading font-headingNow font-medium text-[clamp(2.6rem,5.8vw,4.6rem)] leading-[1.1] tracking-[-0.035em] text-[#111a12]">
-            Countdown to Round 1 Deadline
+            Countdown to Round 1
           </h2>
         </div>
 

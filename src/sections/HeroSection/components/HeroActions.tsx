@@ -14,7 +14,7 @@ export const HeroActions = () => {
       </Link>
 
       <a
-        href="/rulebook.pdf"
+        href="/IGNITE_Rb.pdf"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="View Ignite 2026 Rule Book (PDF opens in new tab)"
