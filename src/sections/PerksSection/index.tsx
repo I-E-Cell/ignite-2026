@@ -5,39 +5,39 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 const benefits = [
   {
     "id": "grant",
-    "title": "₹1,00,000 Seed Grant",
-    "badge": "Non-Dilutive Capital",
-    "description": "Milestone-based equity-free seed grant to convert your prototype into a production venture."
+    "title": "₹1,00,000 Grant Pool",
+    "badge": "Startup Development Grant",
+    "description": "A total grant of ₹1,00,000 for the Top 10 teams, with each team's share decided from the startup expenses and bills it submits."
   },
   {
     "id": "mentorship",
-    "title": "Founder & VC Sessions",
-    "badge": "1-on-1 Office Hours",
-    "description": "Weekly direct office hours with venture capitalists, funded alumni operators, and seasoned mentors."
+    "title": "Mentor Sessions",
+    "badge": "Expert Guidance",
+    "description": "Periodic sessions with industry experts, entrepreneurs, mentors, and VCs to help you validate and build your idea."
   },
   {
     "id": "visits",
-    "title": "Ecosystem & Tech Visits",
-    "badge": "Venture Immersion",
-    "description": "Curated delegation visits to premier startup incubators, tech parks, and regional VC offices."
+    "title": "Ecosystem Visits",
+    "badge": "Startup Exposure",
+    "description": "Possible visits to the startup ecosystem to help you learn, connect, and grow your idea."
   },
   {
     "id": "registration",
     "title": "Startup Registration",
-    "badge": "Legal & Entity Support",
-    "description": "End-to-end guidance on company incorporation (Pvt Ltd), DPIIT recognition, trademarking, and IP."
+    "badge": "I&E Cell Guidance",
+    "description": "The I&E Cell guides you through startup registration when your idea is ready."
   },
   {
     "id": "demo-day",
     "title": "Final Pitch / Demo Day",
-    "badge": "The Grand Stage",
-    "description": "Pitch live on stage in front of active angel syndicates, venture capitalists, corporate partners, and press."
+    "badge": "Final Evaluation",
+    "description": "Present your progress to the evaluators. High-performing startups may get additional recognition or opportunities."
   },
   {
     "id": "support",
-    "title": "Program Support & Credits",
-    "badge": "Program Backbone",
-    "description": "Hands-on venture management, dedicated maker lab access, cloud credits, and no-code tool stacks."
+    "title": "Build & Review",
+    "badge": "Prototype / MVP",
+    "description": "Validate your idea, build a working prototype/MVP, and show regular progress at every review."
   }
 ];
 

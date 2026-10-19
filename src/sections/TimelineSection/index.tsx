@@ -47,7 +47,7 @@ const steps = [
     icon: Hammer,
     phase: "Phase 04",
     title: "Build with Mentorship",
-    timeline: "Phase 1 · Build & Mentorship",
+    timeline: "Build & Mentorship",
     description:
       "Selected teams get periodic sessions with industry experts, entrepreneurs, mentors, and VCs, plus possible startup ecosystem visits. Validate your idea, build a working prototype/MVP, and show regular progress at every review. The I&E Cell guides you through startup registration when your idea is ready.",
     tags: ["Mentor Sessions", "Prototype/MVP", "Startup Registration"],
@@ -58,10 +58,10 @@ const steps = [
     icon: Rocket,
     phase: "Phase 05",
     title: "Final Pitch / Demo Day",
-    timeline: "25 Oct · Grand Finale",
+    timeline: "Grand Finale",
     description:
-      "Teams present their progress at the Final Pitch / Demo Day on 25th October. Evaluation looks at your product/MVP, validation, innovation, business potential, progress, and future plans. High-performing startups may get additional recognition or opportunities.",
-    tags: ["25 Oct", "Demo Day", "Final Evaluation"],
+      "Teams present their progress at the Final Pitch / Demo Day. Evaluation looks at your product/MVP, validation, innovation, business potential, progress, and future plans. High-performing startups may get additional recognition or opportunities.",
+    tags: ["Demo Day", "Final Evaluation"],
     highlight: true,
   },
 ];
