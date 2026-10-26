@@ -294,6 +294,7 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
   prototype_link TEXT,
   project_link TEXT,
   video_link TEXT,
+  ppt_link TEXT,
   referral TEXT,
   status TEXT DEFAULT 'submitted'
 );
@@ -302,6 +303,7 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS prototype_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS project_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS video_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS ppt_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS referral TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'submitted';
 
@@ -314,7 +316,7 @@ WITH (security_invoker = false) AS
 SELECT
   id, created_at, team_name, track, lead_name, lead_college,
   lead_year, lead_branch, lead_role, team_size, project_title,
-  pitch, problem, solution, tools, prototype_link, project_link, video_link, status
+  pitch, problem, solution, tools, prototype_link, project_link, video_link, ppt_link, status
 FROM public.ignite_registrations WHERE status = 'submitted';
 GRANT SELECT ON public.showcase_registrations_public TO anon, authenticated;
 
@@ -1708,6 +1710,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key`}
   prototype_link TEXT,
   project_link TEXT,
   video_link TEXT,
+  ppt_link TEXT,
   referral TEXT,
   status TEXT DEFAULT 'submitted'
 );
@@ -1716,6 +1719,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key`}
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS prototype_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS project_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS video_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS ppt_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS referral TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'submitted';
 
@@ -1728,7 +1732,7 @@ WITH (security_invoker = false) AS
 SELECT
   id, created_at, team_name, track, lead_name, lead_college,
   lead_year, lead_branch, lead_role, team_size, project_title,
-  pitch, problem, solution, tools, prototype_link, project_link, video_link, status
+  pitch, problem, solution, tools, prototype_link, project_link, video_link, ppt_link, status
 FROM public.ignite_registrations WHERE status = 'submitted';
 GRANT SELECT ON public.showcase_registrations_public TO anon, authenticated;
 

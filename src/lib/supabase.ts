@@ -82,7 +82,15 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
   const pptUrl = rawPpt && isSafeEmbedUrl(rawPpt) ? normalizeUrl(rawPpt) : "";
   const socialUrl = rawSocial && isSafeEmbedUrl(rawSocial) ? normalizeUrl(rawSocial) : "";
 
-  const record = {
+  // Preserve PPT link in referral field so it is never lost even before ppt_link column migration
+  const referralText = [
+    payload.referral?.trim() || "",
+    pptUrl ? `[PPT: ${pptUrl}]` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const record: Record<string, any> = {
     id: applicationId,
     created_at: new Date().toISOString(),
     team_name: payload.teamName.trim(),
@@ -103,30 +111,25 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
     solution: payload.solution.trim(),
     tools: payload.tools,
     prototype_link: projectUrl,
-    deck_link: pptUrl,
-    ppt_link: pptUrl,
-    referral: payload.referral?.trim() || "",
+    project_link: projectUrl,
+    video_link: videoUrl,
+    referral: referralText,
     status: "submitted",
   };
 
   if (supabase) {
     try {
-      // First attempt: include optional project_link, video_link, ppt_link if schema supports them
-      const fullRecord: Record<string, any> = {
-        ...record,
-        ...(projectUrl ? { project_link: projectUrl } : {}),
-        ...(videoUrl ? { video_link: videoUrl } : {}),
-        ...(pptUrl ? { ppt_link: pptUrl, deck_link: pptUrl } : {}),
-      };
+      // 1st attempt: try saving with dedicated ppt_link column (if schema migration has been applied)
+      const recordWithPpt = pptUrl ? { ...record, ppt_link: pptUrl } : { ...record };
+      let { error } = await supabase.from("ignite_registrations").insert([recordWithPpt]);
 
-      let { error } = await supabase.from("ignite_registrations").insert([fullRecord]);
-
-      // If missing column error (e.g. PGRST204), fallback to standard schema with prototype_link
-      if (error && (error.code === "PGRST204" || error.message?.includes("column"))) {
-        const baseRecord: Record<string, any> = { ...record };
-        delete baseRecord.deck_link;
-        delete baseRecord.ppt_link;
-        const retryRes = await supabase.from("ignite_registrations").insert([baseRecord]);
+      // If ppt_link column does not exist in schema cache (PGRST204), fallback to standard schema
+      // (The PPT link is safely preserved in referral and won't cause video_link or project_link to be lost)
+      if (error && (error.code === "PGRST204" || error.message?.includes("ppt_link") || error.message?.includes("column"))) {
+        console.warn("Supabase schema does not have ppt_link column yet; falling back to schema-compatible insert.");
+        const fallbackRecord = { ...record };
+        delete fallbackRecord.ppt_link;
+        const retryRes = await supabase.from("ignite_registrations").insert([fallbackRecord]);
         error = retryRes.error;
       }
 
@@ -239,6 +242,23 @@ function mapRegistrationToShowcase(reg: any): ShowcaseProject {
   const demoUrl = rawDemo ? normalizeUrl(rawDemo) : undefined;
   const videoUrl = reg.video_link?.trim() ? normalizeUrl(reg.video_link.trim()) : undefined;
 
+  let deckUrl: string | undefined = undefined;
+  if (reg.ppt_link?.trim()) {
+    deckUrl = normalizeUrl(reg.ppt_link.trim());
+  } else if (reg.deck_link?.trim()) {
+    deckUrl = normalizeUrl(reg.deck_link.trim());
+  } else if (reg.referral?.includes("[PPT:")) {
+    const match = reg.referral.match(/\[PPT:\s*([^\]]+)\]/);
+    if (match && match[1]) {
+      deckUrl = normalizeUrl(match[1].trim());
+    }
+  } else if (reg.referral?.includes("PPT:")) {
+    const match = reg.referral.match(/PPT:\s*(https?:\/\/[^\s]+)/);
+    if (match && match[1]) {
+      deckUrl = normalizeUrl(match[1].trim());
+    }
+  }
+
   return {
     id: reg.id,
     title: reg.project_title || reg.team_name,
@@ -262,6 +282,7 @@ function mapRegistrationToShowcase(reg: any): ShowcaseProject {
     links: {
       demo: demoUrl,
       video: videoUrl,
+      deck: deckUrl,
     },
     award: {
       title: "Live Applicant",
@@ -380,7 +401,7 @@ export async function fetchShowcaseProjects(): Promise<{
 
     if (regResult.data && regResult.data.length > 0) {
       regResult.data.forEach((reg: any) => {
-        if (IGNORED_TEST_IDS.has(reg.id)) return;
+        if (IGNORED_TEST_IDS.has(reg.id) || reg.id?.startsWith("IGN-TEST-")) return;
         if (!reg.project_title || reg.project_title.trim().length < 3) return;
 
         const teamSize = Math.max(
@@ -399,7 +420,7 @@ export async function fetchShowcaseProjects(): Promise<{
 
     // 3. Merge in local registrations if not yet in database
     localProjects.forEach((local) => {
-      if (IGNORED_TEST_IDS.has(local.id)) return;
+      if (IGNORED_TEST_IDS.has(local.id) || local.id?.startsWith("IGN-TEST-")) return;
       if (!existingIds.has(local.id)) {
         combinedProjects.unshift(local);
         builderCount += Math.max(1, local.team?.members?.length || 1);

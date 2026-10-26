@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
   prototype_link TEXT,
   project_link TEXT,                             -- Live prototype/project link for Showcase embed
   video_link TEXT,                               -- Pitch video (YouTube / Google Drive)
+  ppt_link TEXT,                                 -- Pitch Deck / Presentation link (Google Drive / Canva)
   referral TEXT,
   status TEXT DEFAULT 'submitted'                -- 'submitted', 'shortlisted', 'incubated'
 );
@@ -35,6 +36,7 @@ CREATE TABLE IF NOT EXISTS public.ignite_registrations (
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS prototype_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS project_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS video_link TEXT;
+ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS ppt_link TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS referral TEXT;
 ALTER TABLE public.ignite_registrations ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'submitted';
 
@@ -160,6 +162,7 @@ SELECT
   prototype_link,
   project_link,
   video_link,
+  ppt_link,
   status
 FROM public.ignite_registrations
 WHERE status = 'submitted';
