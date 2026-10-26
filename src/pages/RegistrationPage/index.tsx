@@ -264,9 +264,7 @@ export const RegistrationPage = () => {
       if (formData.projectLink?.trim() && !isSafeEmbedUrl(formData.projectLink)) {
         errs.projectLink = "Please enter a valid prototype URL";
       }
-      if (!formData.videoLink?.trim()) {
-        errs.videoLink = "Pitch / Walkthrough video link is compulsory (YouTube or Google Drive)";
-      } else if (!isSafeEmbedUrl(formData.videoLink)) {
+      if (formData.videoLink?.trim() && !isSafeEmbedUrl(formData.videoLink)) {
         errs.videoLink = "Please enter a valid video URL";
       }
       if (!formData.pptLink?.trim()) {
@@ -1448,14 +1446,14 @@ export const RegistrationPage = () => {
                 </p>
               </div>
 
-              {/* 2. Pitch / Walkthrough Video Link (Compulsory) */}
+              {/* 2. Pitch / Walkthrough Video Link (Optional) */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700">
-                    Pitch Video Link <span className="text-rose-500">*</span>
+                    Pitch Video Link
                   </label>
                   <span className="text-[11px] text-neutral-400 font-medium">
-                    YouTube or Google Drive
+                    Optional · YouTube or Google Drive
                   </span>
                 </div>
                 <div className="relative">
@@ -1468,7 +1466,6 @@ export const RegistrationPage = () => {
                     autoCapitalize="off"
                     autoCorrect="off"
                     spellCheck={false}
-                    required
                     placeholder="youtu.be/... or drive.google.com/file/d/..."
                     value={formData.videoLink}
                     onChange={(e) => {
@@ -1503,7 +1500,7 @@ export const RegistrationPage = () => {
                 )}
                 {!formData.videoLink && (
                   <p className="mt-1 text-[11px] text-neutral-500">
-                    A ~2-minute elevator pitch or product demonstration.
+                    A ~2-minute elevator pitch or product demonstration (optional).
                   </p>
                 )}
               </div>
