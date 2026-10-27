@@ -459,9 +459,9 @@ export const RegistrationPage = () => {
   // ── Success State Screen ──
   if (isSubmitted) {
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      "Ignite 2026 — Round 1 Kickoff Week (18–27 Oct)"
-    )}&dates=20261018/20261028&details=${encodeURIComponent(
-      `Ignite 2026 No-Code Startup Accelerator — Round 1 (18–27 Oct 2026): submit your problem statement, early target audience and initial hypothesis.\nOffline Presentation & Top 10 shortlisting: 28 Oct 2026.\n2 Mentor Sessions after the offline presentation.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
+      "Ignite 2026 — Round 1 Kickoff Week (18–30 Oct)"
+    )}&dates=20261018/20261031&details=${encodeURIComponent(
+      `Ignite 2026 No-Code Startup Accelerator — Round 1 (18–30 Oct 2026): submit your problem statement, early target audience and initial hypothesis.\nOffline Presentation & Top 10 shortlisting: 31 Oct 2026.\n2 Mentor Sessions after the offline presentation.\n\nVenture: ${formData.teamName}\nTrack: ${formData.track}\nFounder: ${formData.leadName}\nRegistry ID: ${applicationId}`
     )}&location=${encodeURIComponent("Army Institute of Technology, Pune / Virtual Stage")}`;
 
     return (
@@ -590,10 +590,10 @@ export const RegistrationPage = () => {
                   PHASE 01
                 </div>
                 <div className="font-bold text-xs text-[#141412] mb-1">
-                  Idea Submission (18–27 Oct)
+                  Idea Submission (18–30 Oct)
                 </div>
                 <div className="text-[11px] text-neutral-600 leading-snug">
-                  Online Idea Submission is open until Tuesday, Oct 27. Submit problem, users, conviction &amp; tools.
+                  Online Idea Submission is open until Friday, Oct 30. Submit problem, users, conviction &amp; tools.
                 </div>
               </div>
 
@@ -1074,7 +1074,7 @@ export const RegistrationPage = () => {
                     <span className="font-bold block text-neutral-900 mb-0.5">
                       Solo Founder Registration
                     </span>
-                    You are registering as a solo builder. You can always invite co-founders before the Round 1 milestone lock on October 27!
+                    You are registering as a solo builder. You can always invite co-founders before the Round 1 milestone lock on October 30!
                   </div>
                 </div>
               ) : (
