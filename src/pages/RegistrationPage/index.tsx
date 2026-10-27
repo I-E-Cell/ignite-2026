@@ -1405,7 +1405,7 @@ export const RegistrationPage = () => {
                     Pitch Deck (PPT) Link <span className="text-rose-500">*</span>
                   </label>
                   <a
-                    href="https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jl25V-Uau?usp=sharing"
+                    href="https://docs.google.com/presentation/d/19UTAm4_XG3PQeRsQwqFr_Hhhavqf3d9K/edit?usp=sharing&ouid=100074914886106076935&rtpof=true&sd=true"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5527] hover:text-[#182a14] hover:underline transition-colors shrink-0"

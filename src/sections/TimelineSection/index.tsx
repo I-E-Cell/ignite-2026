@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FileText, Users, Award, Hammer, Rocket, ExternalLink } from "lucide-react";
 
 export const PPT_TEMPLATE_URL =
-  "https://drive.google.com/drive/folders/1SazrWz4GKGJ4JEa3yAYQ3C8jI25V-Uau?usp=sharing";
+  "https://docs.google.com/presentation/d/19UTAm4_XG3PQeRsQwqFr_Hhhavqf3d9K/edit?usp=sharing&ouid=100074914886106076935&rtpof=true&sd=true";
 
 const steps = [
   {
