@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
 import { NavbarBrand } from "@/sections/Navbar/components/NavbarBrand";
 import { DesktopNavLinks } from "@/sections/Navbar/components/DesktopNavLinks";
+import { isRegistrationOpen } from "@/lib/supabase";
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDarkNavbar, setIsDarkNavbar] = useState(false);
+  const [isOpen, setIsOpen] = useState(isRegistrationOpen);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsOpen(isRegistrationOpen());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -90,7 +99,7 @@ export const Navbar = () => {
     { href: "/#eligibility", label: "Who Can Join" },
     { href: "/#gallery", label: "Gallery" },
     { href: "/#faq", label: "FAQ" },
-    { href: "/register", label: "Registrations Closed" },
+    { href: "/register", label: isOpen ? "Register for Ignite" : "Registrations Closed" },
   ];
 
   return (
@@ -195,7 +204,7 @@ export const Navbar = () => {
               className="limelq-cta-btn"
               onClick={() => setMenuOpen(false)}
             >
-              <span>Registrations Closed</span>
+              <span>{isOpen ? "Register for Ignite 2026" : "Registrations Closed"}</span>
               <span className="limelq-cta-arrow">→</span>
             </a>
           </div>

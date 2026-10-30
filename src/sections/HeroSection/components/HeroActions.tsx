@@ -1,17 +1,39 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FileText } from "lucide-react";
+import { isRegistrationOpen } from "@/lib/supabase";
 
 export const HeroActions = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(isRegistrationOpen);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsOpen(isRegistrationOpen());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="hero-ctas">
-      <Link
-        to="/register"
-        aria-label="Registrations Closed for Ignite 2026"
-        className="pill-btn pill-btn-closed"
-      >
-        <span className="dot dot-closed" aria-hidden="true" />
-        <span>Registrations Closed</span>
-      </Link>
+      {isOpen ? (
+        <Link
+          to="/register"
+          aria-label="Register for Ignite 2026 Round 1"
+          className="pill-btn pill-btn-primary"
+        >
+          <span className="dot" aria-hidden="true" />
+          <span>Register for Round 1</span>
+        </Link>
+      ) : (
+        <Link
+          to="/register"
+          aria-label="Registrations Closed for Ignite 2026"
+          className="pill-btn pill-btn-closed"
+        >
+          <span className="dot dot-closed" aria-hidden="true" />
+          <span>Registrations Closed</span>
+        </Link>
+      )}
 
       <a
         href="/IGNITE_Rb.pdf"

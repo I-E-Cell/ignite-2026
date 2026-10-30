@@ -27,7 +27,14 @@ export const supabase: SupabaseClient | null = isSupabaseConfigured()
   ? createClient(rawUrl!.trim(), rawKey!.trim())
   : null;
 
-export const REGISTRATIONS_OPEN = false;
+// Registration deadline: 12:00 AM midnight (Oct 30, 2026 23:59:59 IST)
+export const REGISTRATION_DEADLINE = new Date("2026-10-30T23:59:59+05:30").getTime();
+
+export const isRegistrationOpen = (): boolean => {
+  return Date.now() < REGISTRATION_DEADLINE;
+};
+
+export const REGISTRATIONS_OPEN = isRegistrationOpen();
 
 export interface RegistrationSubmitPayload {
   teamName: string;
@@ -70,7 +77,7 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
   savedToDatabase: boolean;
   error?: string;
 }> {
-  if (!REGISTRATIONS_OPEN) {
+  if (!isRegistrationOpen()) {
     return {
       success: false,
       applicationId: "",

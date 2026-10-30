@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { isRegistrationOpen } from "@/lib/supabase";
 
 interface DesktopNavLinksProps {
   isDark?: boolean;
@@ -7,6 +9,14 @@ interface DesktopNavLinksProps {
 export const DesktopNavLinks = ({ isDark = false }: DesktopNavLinksProps) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const [isOpen, setIsOpen] = useState<boolean>(isRegistrationOpen);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsOpen(isRegistrationOpen());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const getAnchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
 
@@ -35,22 +45,40 @@ export const DesktopNavLinks = ({ isDark = false }: DesktopNavLinksProps) => {
       </a>
 
       {/* Register CTA Button */}
-      <Link
-        to="/register"
-        className={`text-[13px] font-bold leading-[20px] outline-none no-underline text-nowrap px-3.5 py-1.5 rounded-full transition-all duration-300 shadow-xs inline-flex items-center gap-1.5 ${
-          isDark
-            ? location.pathname === "/register"
-              ? "bg-[#8FC45A] text-[#111a12] ring-2 ring-white/50"
-              : "bg-white/10 hover:bg-white/20 text-[#FBFAF8] border border-white/15"
-            : location.pathname === "/register"
-            ? "bg-[#141412] text-[#FBFAF8] ring-2 ring-[#2F5527]"
-            : "bg-[#141412] text-[#FBFAF8] hover:bg-[#252520]"
-        }`}
-        style={{ fontFamily: "'Inter', sans-serif" }}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-amber-400" aria-hidden="true" />
-        <span>Registrations Closed</span>
-      </Link>
+      {isOpen ? (
+        <Link
+          to="/register"
+          className={`text-[13px] font-bold leading-[20px] outline-none no-underline text-nowrap px-4 py-1.5 rounded-full transition-all duration-300 shadow-xs ${
+            isDark
+              ? location.pathname === "/register"
+                ? "bg-[#8FC45A] text-[#111a12] ring-2 ring-white/50"
+                : "bg-[#8FC45A] text-[#111a12] hover:bg-[#A3D96C] shadow-[0_2px_12px_rgba(143,196,90,0.35)] hover:scale-[1.02]"
+              : location.pathname === "/register"
+              ? "bg-[#8FC45A] text-[#111a12] ring-2 ring-[#2F5527]"
+              : "bg-[#141412] text-[#FBFAF8] hover:bg-[#252520]"
+          }`}
+          style={{ fontFamily: "'Inter', sans-serif" }}
+        >
+          Register Now
+        </Link>
+      ) : (
+        <Link
+          to="/register"
+          className={`text-[13px] font-bold leading-[20px] outline-none no-underline text-nowrap px-3.5 py-1.5 rounded-full transition-all duration-300 shadow-xs inline-flex items-center gap-1.5 ${
+            isDark
+              ? location.pathname === "/register"
+                ? "bg-[#8FC45A] text-[#111a12] ring-2 ring-white/50"
+                : "bg-white/10 hover:bg-white/20 text-[#FBFAF8] border border-white/15"
+              : location.pathname === "/register"
+              ? "bg-[#141412] text-[#FBFAF8] ring-2 ring-[#2F5527]"
+              : "bg-[#141412] text-[#FBFAF8] hover:bg-[#252520]"
+          }`}
+          style={{ fontFamily: "'Inter', sans-serif" }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" aria-hidden="true" />
+          <span>Registrations Closed</span>
+        </Link>
+      )}
     </div>
   );
 };

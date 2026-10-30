@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { FlipClock, type ClockUnit } from "./components/FlipClock";
+import { REGISTRATION_DEADLINE, isRegistrationOpen } from "@/lib/supabase";
 
 export const CountdownSection = () => {
-  // Submissions closed: lock countdown clock at 00:00:00:00
-  const targetTime = 0;
+  const targetTime = REGISTRATION_DEADLINE;
+  const [isOpen, setIsOpen] = useState<boolean>(isRegistrationOpen);
 
   const getUnits = (): ClockUnit[] => {
     const diffSeconds = Math.floor(Math.max(0, targetTime - Date.now()) / 1000);
@@ -22,6 +23,7 @@ export const CountdownSection = () => {
     let timeoutId: ReturnType<typeof setTimeout>;
     const tick = () => {
       setUnits(getUnits());
+      setIsOpen(isRegistrationOpen());
       timeoutId = setTimeout(tick, 1000 - (Date.now() % 1000) + 15);
     };
     timeoutId = setTimeout(tick, 1000 - (Date.now() % 1000) + 15);
@@ -38,7 +40,7 @@ export const CountdownSection = () => {
         {/* Heading */}
         <div className="cd-head-wrap w-full text-center">
           <h2 className="cd-heading font-headingNow font-medium text-[clamp(2.6rem,5.8vw,4.6rem)] leading-[1.1] tracking-[-0.035em] text-[#111a12]">
-            Round 1 Submissions Closed
+            {isOpen ? "Countdown to Round 1" : "Round 1 Submissions Closed"}
           </h2>
         </div>
 
@@ -75,7 +77,7 @@ export const CountdownSection = () => {
                     <circle cx="12" cy="12" r="1.05" fill="#2F5527" />
                   </svg>
                 </span>
-                Round 1 Submissions Closed
+                {isOpen ? "Round 1 closes in" : "Round 1 Submissions Closed"}
               </span>
 
               <span className="text-[#5C8C3A]/50">·</span>
@@ -108,7 +110,9 @@ export const CountdownSection = () => {
 
         {/* Subtitle Details */}
         <p className="cd-plaque-sub mt-2 text-xs md:text-sm font-dm_sans text-[#2d4d29]/80 font-medium">
-          Submissions are officially closed · Army Institute of Technology, Pune · Evaluation &amp; Shortlisting Underway
+          {isOpen
+            ? "23:59 IST · Army Institute of Technology, Pune · Online Idea Submission"
+            : "Submissions are officially closed · Army Institute of Technology, Pune · Evaluation & Shortlisting Underway"}
         </p>
 
         {/* Split-Flap Flip Clock */}
@@ -121,8 +125,16 @@ export const CountdownSection = () => {
         {/* Status Pill Notice */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#182a14]/6 border border-[#5C8C3A]/25 backdrop-blur-sm text-xs sm:text-sm font-semibold text-[#244626] shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <span>Submission window has closed. Evaluation and Round 2 shortlisting are underway.</span>
+            <span
+              className={`w-2 h-2 rounded-full ${
+                isOpen ? "bg-[#8FC45A] animate-pulse" : "bg-amber-500"
+              }`}
+            />
+            <span>
+              {isOpen
+                ? "Registrations & Idea Submissions Open until Midnight (23:59 IST tonight)"
+                : "Submission window has closed. Evaluation and Round 2 shortlisting are underway."}
+            </span>
           </div>
         </div>
       </div>

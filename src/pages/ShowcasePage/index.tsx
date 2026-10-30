@@ -41,6 +41,7 @@ import {
 import {
   fetchShowcaseProjects,
   upvoteProjectInSupabase,
+  isRegistrationOpen,
 } from "@/lib/supabase";
 import {
   getVideoEmbedInfo,
@@ -151,6 +152,14 @@ export const ShowcasePage = () => {
   const [deviceView, setDeviceView] = useState<"desktop" | "tablet" | "mobile">("desktop");
   const [iframeLoading, setIframeLoading] = useState<boolean>(true);
   const [iframeReloadKey, setIframeReloadKey] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState<boolean>(isRegistrationOpen);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsOpen(isRegistrationOpen());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const openProjectModal = (
     project: ShowcaseProject,
@@ -529,7 +538,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
               to="/register"
               className="font-bold text-neutral-600 hover:text-[#141412] transition-colors"
             >
-              Registrations Closed →
+              {isOpen ? "Register Your Team →" : "Registrations Closed →"}
             </Link>
           </div>
         </div>
@@ -765,7 +774,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
             to="/register"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-bold transition-all shadow-sm active:scale-95"
           >
-            <span>Registrations Closed · View Details</span>
+            <span>{isOpen ? "Register Your Team & Submit Project" : "Registrations Closed · View Details"}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -993,14 +1002,24 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to="/register"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-white/10 hover:bg-white/20 text-white font-bold text-sm transition-all border border-white/20 active:scale-95"
-            >
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              <span>Registrations Closed</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            {isOpen ? (
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-[#8FC45A] hover:bg-[#a1d769] text-[#111a12] font-bold text-sm transition-all shadow-md active:scale-95"
+              >
+                <span>Register Your Team Now</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            ) : (
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-white/10 hover:bg-white/20 text-white font-bold text-sm transition-all border border-white/20 active:scale-95"
+              >
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span>Registrations Closed</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
         </div>
 

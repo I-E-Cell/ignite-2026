@@ -29,7 +29,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { triggerConfetti } from "@/utils/confetti";
-import { submitRegistration, REGISTRATIONS_OPEN } from "@/lib/supabase";
+import { submitRegistration, isRegistrationOpen } from "@/lib/supabase";
 import { detectVideoPlatform, isSafeEmbedUrl, normalizeUrl } from "@/utils/embed";
 
 interface TeamMemberData {
@@ -168,10 +168,18 @@ export const RegistrationPage = () => {
   const [toolInput, setToolInput] = useState<string>("");
   const [botTrap, setBotTrap] = useState<string>("");
   const [rateLimitError, setRateLimitError] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(isRegistrationOpen);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsOpen(isRegistrationOpen());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, [step, isSubmitted]);
+  }, [step, isSubmitted, isOpen]);
 
   // Save draft to sessionStorage
   useEffect(() => {
@@ -295,6 +303,10 @@ export const RegistrationPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setRateLimitError("");
+    if (!isRegistrationOpen()) {
+      setIsOpen(false);
+      return;
+    }
     if (!validateStep(4)) return;
 
     // 1. Bot Honeypot: silently drop automated bots that fill hidden fields
@@ -658,8 +670,8 @@ export const RegistrationPage = () => {
     );
   }
 
-  // ── Registrations Closed Screen ──
-  if (!REGISTRATIONS_OPEN) {
+  // ── Registrations Closed Screen (shown automatically when deadline passes) ──
+  if (!isOpen) {
     return (
       <div className="relative w-full min-h-screen pt-24 pb-20 px-4 md:px-8 max-w-4xl mx-auto flex flex-col justify-center text-[#141412]">
         {/* Ambient atmospheric glows */}

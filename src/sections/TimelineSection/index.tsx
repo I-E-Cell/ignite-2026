@@ -1,19 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { FileText, Users, Award, Hammer, Rocket, ExternalLink } from "lucide-react";
+import { isRegistrationOpen } from "@/lib/supabase";
 
 export const PPT_TEMPLATE_URL =
   "https://docs.google.com/presentation/d/19UTAm4_XG3PQeRsQwqFr_Hhhavqf3d9K/edit?usp=sharing&ouid=100074914886106076935&rtpof=true&sd=true";
 
-const steps = [
+const getSteps = (isOpen: boolean) => [
   {
     num: "01",
     icon: FileText,
     phase: "Phase 01",
     title: "Idea Submission (Round 1)",
-    timeline: "18–30 Oct · Submissions Closed",
-    description:
-      "Online idea submission for Round 1 is now closed. The evaluation committee is currently reviewing all submitted ventures, pitch decks, and problem statements to shortlist teams for the Round 2 pitch.",
-    tags: ["18–30 Oct", "Round 1", "Closed", "Official PPT Template"],
+    timeline: isOpen ? "18–30 Oct · Online Submission" : "18–30 Oct · Submissions Closed",
+    description: isOpen
+      ? "Submit your idea online through the official submission form, using the official PPT template. Explain the problem, solution, target users, what makes it unique, its feasibility, and its impact. Existing ideas or projects are welcome if you mention their current stage. Incomplete or late entries may not be considered."
+      : "Online idea submission for Round 1 is now closed. The evaluation committee is currently reviewing all submitted ventures, pitch decks, and problem statements to shortlist teams for the Round 2 pitch.",
+    tags: isOpen
+      ? ["18–30 Oct", "Round 1", "Online Submission", "Official PPT Template"]
+      : ["18–30 Oct", "Round 1", "Closed", "Official PPT Template"],
     action: {
       label: "Download Official PPT Template",
       url: PPT_TEMPLATE_URL,
@@ -74,6 +78,17 @@ type Pt = { x: number; y: number };
 type Anchor = { s: number; l: number };
 
 export const TimelineSection = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(isRegistrationOpen);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsOpen(isRegistrationOpen());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const steps = getSteps(isOpen);
+
   const listRef = useRef<HTMLDivElement | null>(null);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
