@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { FlipClock, type ClockUnit } from "./components/FlipClock";
 
 export const CountdownSection = () => {
-  const targetTime = new Date("2026-10-30T23:59:59+05:30").getTime();
+  // Submissions closed: lock countdown clock at 00:00:00:00
+  const targetTime = 0;
 
   const getUnits = (): ClockUnit[] => {
     const diffSeconds = Math.floor(Math.max(0, targetTime - Date.now()) / 1000);
@@ -37,7 +38,7 @@ export const CountdownSection = () => {
         {/* Heading */}
         <div className="cd-head-wrap w-full text-center">
           <h2 className="cd-heading font-headingNow font-medium text-[clamp(2.6rem,5.8vw,4.6rem)] leading-[1.1] tracking-[-0.035em] text-[#111a12]">
-            Countdown to Round 1
+            Round 1 Submissions Closed
           </h2>
         </div>
 
@@ -74,7 +75,7 @@ export const CountdownSection = () => {
                     <circle cx="12" cy="12" r="1.05" fill="#2F5527" />
                   </svg>
                 </span>
-                Round 1 closes in
+                Round 1 Submissions Closed
               </span>
 
               <span className="text-[#5C8C3A]/50">·</span>
@@ -107,13 +108,21 @@ export const CountdownSection = () => {
 
         {/* Subtitle Details */}
         <p className="cd-plaque-sub mt-2 text-xs md:text-sm font-dm_sans text-[#2d4d29]/80 font-medium">
-          23:59 IST · Army Institute of Technology, Pune · Online Idea Submission
+          Submissions are officially closed · Army Institute of Technology, Pune · Evaluation &amp; Shortlisting Underway
         </p>
 
         {/* Split-Flap Flip Clock */}
         <div className="cd-clock-reveal mt-[clamp(2.4rem,5vh,4.2rem)] w-full">
           <div className="cd-clock-wrapper w-full flex justify-center">
             <FlipClock units={units} />
+          </div>
+        </div>
+
+        {/* Status Pill Notice */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#182a14]/6 border border-[#5C8C3A]/25 backdrop-blur-sm text-xs sm:text-sm font-semibold text-[#244626] shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span>Submission window has closed. Evaluation and Round 2 shortlisting are underway.</span>
           </div>
         </div>
       </div>

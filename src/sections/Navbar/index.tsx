@@ -90,7 +90,7 @@ export const Navbar = () => {
     { href: "/#eligibility", label: "Who Can Join" },
     { href: "/#gallery", label: "Gallery" },
     { href: "/#faq", label: "FAQ" },
-    { href: "/register", label: "Register for Ignite" },
+    { href: "/register", label: "Registrations Closed" },
   ];
 
   return (
@@ -195,7 +195,7 @@ export const Navbar = () => {
               className="limelq-cta-btn"
               onClick={() => setMenuOpen(false)}
             >
-              <span>Register for Ignite 2026</span>
+              <span>Registrations Closed</span>
               <span className="limelq-cta-arrow">→</span>
             </a>
           </div>

@@ -29,7 +29,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { triggerConfetti } from "@/utils/confetti";
-import { submitRegistration } from "@/lib/supabase";
+import { submitRegistration, REGISTRATIONS_OPEN } from "@/lib/supabase";
 import { detectVideoPlatform, isSafeEmbedUrl, normalizeUrl } from "@/utils/embed";
 
 interface TeamMemberData {
@@ -655,8 +655,152 @@ export const RegistrationPage = () => {
           </div>
         </div>
       </div>
+    );
+  }
 
+  // ── Registrations Closed Screen ──
+  if (!REGISTRATIONS_OPEN) {
+    return (
+      <div className="relative w-full min-h-screen pt-24 pb-20 px-4 md:px-8 max-w-4xl mx-auto flex flex-col justify-center text-[#141412]">
+        {/* Ambient atmospheric glows */}
+        <div
+          className="absolute top-1/4 -left-12 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-[#8FC45A]/15 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute bottom-1/4 -right-12 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-[#BEF264]/12 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
 
+        {/* ── Breadcrumb & Top Bar ── */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 relative z-10">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-xs md:text-sm font-semibold text-[#2F5527] hover:text-[#111a12] transition-colors py-1.5 px-3.5 rounded-full bg-white/80 border border-[#5C8C3A]/20 backdrop-blur-sm shadow-xs"
+          >
+            <span>← Back to Ignite Home</span>
+          </Link>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-xs font-bold text-amber-800 tracking-wider uppercase">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            <span>Registrations Closed</span>
+          </div>
+        </div>
+
+        {/* Main Announcement Card */}
+        <div className="relative rounded-3xl bg-white/95 border border-[#5C8C3A]/25 p-6 sm:p-10 md:p-12 shadow-2xl backdrop-blur-xl text-center overflow-hidden">
+          {/* Cyber-neon top glow line */}
+          <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#2F5527] via-[#8FC45A] to-[#BEF264]" />
+
+          {/* Status Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-bold text-amber-900 uppercase tracking-wider mb-4 shadow-2xs">
+            <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+            <span>Round 1 Submissions Window Closed</span>
+          </div>
+
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl font-black text-[#141412] tracking-tight leading-[1.12] mb-3"
+            style={{ fontFamily: "var(--font-headingNow), 'Plus Jakarta Sans', sans-serif" }}
+          >
+            Registrations Are Now Closed
+          </h1>
+
+          <p className="text-sm sm:text-base text-neutral-600 max-w-xl mx-auto mb-8 font-normal leading-relaxed">
+            Thank you to all the student innovators, builders, and teams who submitted their startup applications! We are officially no longer accepting submissions for Round 1. Our evaluation committee is currently reviewing all ideas and pitch decks.
+          </p>
+
+          {/* ── Status Roadmap ── */}
+          <div className="max-w-2xl mx-auto mb-8 text-left">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-[#5C8C3A]" />
+              <span>Next Phases of Ignite 2026</span>
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/10 shadow-2xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono font-black text-amber-700">PHASE 01</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-800">Closed</span>
+                </div>
+                <div className="font-bold text-xs text-[#141412] mb-1">
+                  Idea Submissions
+                </div>
+                <div className="text-[11px] text-neutral-600 leading-snug">
+                  Round 1 online idea submissions closed on October 30. All submitted projects are logged for jury review.
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/10 shadow-2xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono font-black text-[#5C8C3A]">PHASE 02</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-800">Underway</span>
+                </div>
+                <div className="font-bold text-xs text-[#141412] mb-1">
+                  Evaluation &amp; Round 2 Pitch
+                </div>
+                <div className="text-[11px] text-neutral-600 leading-snug">
+                  The evaluation committee reviews entries to shortlist the top-performing teams for the Round 2 pitch.
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/10 shadow-2xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono font-black text-[#2F5527]">PHASE 03</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-neutral-200 text-neutral-600">Upcoming</span>
+                </div>
+                <div className="font-bold text-xs text-[#141412] mb-1">
+                  Top 10 &amp; ₹1,00,000 Grant
+                </div>
+                <div className="text-[11px] text-neutral-600 leading-snug">
+                  10 selected ventures receive mentorship from seasoned founders, VCs, and access to the startup grant pool.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Registered Applicant Note Card ── */}
+          <div className="max-w-2xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#FAF9F5] to-[#F4F3F0] border border-black/10 text-left mb-8 flex items-start gap-3.5">
+            <div className="w-9 h-9 rounded-xl bg-[#182a14]/10 border border-[#5C8C3A]/25 flex items-center justify-center text-[#2F5527] shrink-0">
+              <Shield className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-bold text-xs sm:text-sm text-[#141412] mb-1">
+                Already registered your team?
+              </h3>
+              <p className="text-xs text-neutral-600 leading-relaxed">
+                If you have already submitted your team application, your record is safely archived in the Ignite registry. Please keep your Application ID (e.g. <span className="font-geist_mono font-bold text-neutral-800">IGN-2026-XXXX</span>) safe. Team leads will receive email/WhatsApp communications regarding shortlisting results and subsequent pitch rounds.
+              </p>
+            </div>
+          </div>
+
+          {/* ── Action Links ── */}
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95 cursor-pointer"
+            >
+              <span>Return to Ignite Home</span>
+              <ArrowRight className="w-4 h-4 text-[#8FC45A]" />
+            </Link>
+
+            <a
+              href="/IGNITE_Rb.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-white hover:bg-neutral-100 text-neutral-800 text-xs sm:text-sm font-bold border border-black/15 transition-all shadow-2xs active:scale-95 cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-[#5C8C3A]" />
+              <span>View Rule Book</span>
+            </a>
+          </div>
+
+          {/* ── Trust Seal ── */}
+          <div className="inline-flex items-center gap-1.5 text-xs text-neutral-500 font-medium">
+            <Shield className="w-3.5 h-3.5 text-[#5C8C3A]" />
+            <span>Innovation &amp; Entrepreneurship Cell · Army Institute of Technology, Pune</span>
+          </div>
+        </div>
+      </div>
     );
   }
 

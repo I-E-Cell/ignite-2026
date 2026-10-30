@@ -527,9 +527,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
             <Link
               to="/register"
-              className="font-bold text-[#141412] hover:underline"
+              className="font-bold text-neutral-600 hover:text-[#141412] transition-colors"
             >
-              Register Your Team →
+              Registrations Closed →
             </Link>
           </div>
         </div>
@@ -765,7 +765,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
             to="/register"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#141412] hover:bg-[#252520] text-[#FBFAF8] text-xs font-bold transition-all shadow-sm active:scale-95"
           >
-            <span>Register Your Team &amp; Submit Project</span>
+            <span>Registrations Closed · View Details</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -995,19 +995,12 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
           <div className="flex flex-wrap items-center gap-4">
             <Link
               to="/register"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-[#8FC45A] hover:bg-[#a1d769] text-[#111a12] font-bold text-sm transition-all shadow-md active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-white/10 hover:bg-white/20 text-white font-bold text-sm transition-all border border-white/20 active:scale-95"
             >
-              <span>Register Your Team Now</span>
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+              <span>Registrations Closed</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <a
-              href="https://discord.gg/SMYB7tJQf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md bg-white/10 hover:bg-white/20 text-white font-bold text-sm transition-all border border-white/15"
-            >
-              <span>Join Founder Community</span>
-            </a>
           </div>
         </div>
 

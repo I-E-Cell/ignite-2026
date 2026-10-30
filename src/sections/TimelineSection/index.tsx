@@ -10,10 +10,10 @@ const steps = [
     icon: FileText,
     phase: "Phase 01",
     title: "Idea Submission (Round 1)",
-    timeline: "18–30 Oct · Online Submission",
+    timeline: "18–30 Oct · Submissions Closed",
     description:
-      "Submit your idea online through the official submission form, using the official PPT template. Explain the problem, solution, target users, what makes it unique, its feasibility, and its impact. Existing ideas or projects are welcome if you mention their current stage. Incomplete or late entries may not be considered.",
-    tags: ["18–30 Oct", "Round 1", "Online Submission", "Official PPT Template"],
+      "Online idea submission for Round 1 is now closed. The evaluation committee is currently reviewing all submitted ventures, pitch decks, and problem statements to shortlist teams for the Round 2 pitch.",
+    tags: ["18–30 Oct", "Round 1", "Closed", "Official PPT Template"],
     action: {
       label: "Download Official PPT Template",
       url: PPT_TEMPLATE_URL,

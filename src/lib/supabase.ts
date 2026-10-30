@@ -27,6 +27,8 @@ export const supabase: SupabaseClient | null = isSupabaseConfigured()
   ? createClient(rawUrl!.trim(), rawKey!.trim())
   : null;
 
+export const REGISTRATIONS_OPEN = false;
+
 export interface RegistrationSubmitPayload {
   teamName: string;
   track: string;
@@ -68,6 +70,15 @@ export async function submitRegistration(payload: RegistrationSubmitPayload): Pr
   savedToDatabase: boolean;
   error?: string;
 }> {
+  if (!REGISTRATIONS_OPEN) {
+    return {
+      success: false,
+      applicationId: "",
+      savedToDatabase: false,
+      error: "Registrations are closed. Submissions are no longer being accepted.",
+    };
+  }
+
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
   const applicationId = `IGN-2026-${randomSuffix}`;
 

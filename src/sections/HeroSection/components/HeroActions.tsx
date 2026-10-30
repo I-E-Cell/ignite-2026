@@ -6,11 +6,11 @@ export const HeroActions = () => {
     <div className="hero-ctas">
       <Link
         to="/register"
-        aria-label="Register for Ignite 2026 Round 1"
-        className="pill-btn pill-btn-primary"
+        aria-label="Registrations Closed for Ignite 2026"
+        className="pill-btn pill-btn-closed"
       >
-        <span className="dot" aria-hidden="true" />
-        <span>Register for Round 1</span>
+        <span className="dot dot-closed" aria-hidden="true" />
+        <span>Registrations Closed</span>
       </Link>
 
       <a
@@ -87,6 +87,36 @@ export const HeroActions = () => {
           border-radius: 50%;
           background: #8FC45A;
           box-shadow: 0 0 8px #8FC45A;
+        }
+
+        .pill-btn-closed {
+          width: auto;
+          max-width: 100%;
+          background: #141412;
+          color: #E2E8F0;
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          box-shadow: 0 4px 16px rgba(20, 20, 18, 0.22);
+        }
+
+        .pill-btn-closed:hover {
+          background: #252520;
+          border-color: rgba(255, 255, 255, 0.32);
+          color: #FFFFFF;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(20, 20, 18, 0.3);
+        }
+
+        .pill-btn-closed:active {
+          transform: translateY(0) scale(0.98);
+        }
+
+        .dot-closed {
+          display: inline-block;
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: #f59e0b;
+          box-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
         }
 
         .pill-btn-secondary {
